@@ -19,7 +19,7 @@ class Inflector {
    * @returns {String}
    */
   get String() {
-    return trim(this.string);
+    return this.string;
   }
 
   /**
