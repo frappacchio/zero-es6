@@ -1,0 +1,37 @@
+{
+  "coverage": "60%",
+  "expectCount": 15,
+  "actualCount": 9,
+  "files": {
+    "src/core/component.js": {
+      "expectCount": 3,
+      "actualCount": 0,
+      "undocumentLines": [
+        3,
+        4,
+        5
+      ]
+    },
+    "src/core/dom-reader.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        1
+      ]
+    },
+    "src/index.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        4
+      ]
+    },
+    "src/utils/inflector.js": {
+      "expectCount": 10,
+      "actualCount": 9,
+      "undocumentLines": [
+        29
+      ]
+    }
+  }
+}
