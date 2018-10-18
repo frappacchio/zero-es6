@@ -1,4 +1,4 @@
-import DomReader from '../src/core/dom-reader';
+import DomReader from '../../src/core/dom-reader';
 
 const fakeNonEmptyDom = `<div data-component="pippo"></div>
       <div data-component="pippo">

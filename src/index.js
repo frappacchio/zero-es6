@@ -1,21 +1,17 @@
 import Logger from '@openmind/litelog';
+import Component from './components/component';
+import Components from './components/components';
 import DomReader from './core/dom-reader';
 
-const domReader = new DomReader();
-const fakeNonEmptyDom = `<div data-component="pippo"></div>
-      <div data-component="pippo">
-          <div data-component="gastone"></div>
-      </div>`;
-const fakeEmptyDom = '<div>Fake</div>';
-const fakeAlternativeDom = '<div data-alternative="component">Fake</div>';
-const emptyElement = document.getElementById('jhon-doe');
-document.body.innerHTML = '';
-const domNode = document.createElement('main');
-domNode.innerHTML = fakeAlternativeDom;
-// domNode.innerHTML = fakeNonEmptyDom;
-document.body.append(domNode);
-domReader.Selector = null;
-domReader.Element = emptyElement;
+const Log = new Logger('MAIN');
 
-const components = domReader.check();
-Logger.log(components);
+const domReader = new DomReader();
+const element = domReader.check();
+element.forEach((value) => {
+  const component = new Component(value);
+  Components.add({ pippo: 'pippo' });
+  Components.add(component);
+  Components.add(component);
+  Components.add([1]);
+  Log.log(Components.list);
+});

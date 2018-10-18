@@ -1,4 +1,4 @@
-import Inflector from '../src/utils/inflector';
+import Inflector from '../../src/utils/inflector';
 
 const inflector = new Inflector('puppo ciao - si è ù ego_kid MessageBusProperty       -');
 
