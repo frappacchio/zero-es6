@@ -29,15 +29,6 @@ class Inflector {
     this.string = trim(string);
   }
 
-  /**
-   *create an instance
-   * @param {String} string
-   * @returns {Inflector}
-   */
-  constructor(string) {
-    this.String = string;
-    return this;
-  }
 
   /**
    * convert the string to snake case {'Foo Bar' => 'foo_bar'}
@@ -80,6 +71,18 @@ class Inflector {
    */
   humanize() {
     return startCase(this.String);
+  }
+
+  /**
+   *create an instance
+   * @param {String} string
+   * @returns {Inflector}
+   */
+  constructor(string) {
+    /**
+     * @type {String}
+     */
+    this.String = string;
   }
 }
 export default Inflector;

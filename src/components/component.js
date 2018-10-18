@@ -2,17 +2,32 @@ import Logger from '@openmind/litelog';
 import EventWrapper from '../events/event-wrapper';
 import Broadcast from '../events/broadcats';
 
+/**
+ * The Logger
+ */
 const Log = new Logger('Component');
 /**
  * It define a basic component
  * @class
  */
-export default class Component extends EventWrapper {
+class Component extends EventWrapper {
+  /**
+   * @param {Object}
+   */
   set Messages(msg) {
+    /**
+     * @type {Object} msg the object with all messages
+     */
     this.messages = msg;
   }
 
+  /**
+   * @return {Object}
+   */
   get Messages() {
+    /**
+     * @type {Object} msg the object with all messages
+     */
     return this.messages;
   }
 
@@ -20,13 +35,19 @@ export default class Component extends EventWrapper {
    * @param {Broadcast}
    */
   set Broadcast(broadcast) {
+    /**
+     * @type {Broadcast}
+     */
     this.broadcast = broadcast;
   }
 
   /**
-   * @returns {Broadcast}
+   * @return {Broadcast}
    */
   get Broadcast() {
+    /**
+     * @type {Broadcast}
+     */
     return this.broadcast;
   }
 
@@ -34,6 +55,7 @@ export default class Component extends EventWrapper {
    * Grabs the broadcast message
    * @param {String} message message to broadcast
    * @param {Function} callback callback to exectute
+   * @returns {Component} the instance of the class
    */
   GRAB(message, callback) {
     this.Broadcast.grab(message, callback);
@@ -44,6 +66,7 @@ export default class Component extends EventWrapper {
    * Grabs the broadcast message
    * @param {String} message message to broadcast
    * @param {Function} callback callback to exectute
+   * @returns {Component} the instance of the class
    */
   UNGRAB(message, callback) {
     this.Broadcast.ungrab(message, callback);
@@ -54,6 +77,7 @@ export default class Component extends EventWrapper {
    * Broadcast a message to the broadcast
    * @param {String} message message to broadcast
    * @param  {...any} obj
+   * @returns {Component} the instance of the class
    */
   CAST(message, ...obj) {
     this.Broadcast.cast(message, obj);
@@ -63,6 +87,7 @@ export default class Component extends EventWrapper {
 
   /**
    * Destroy the component instance
+   * @returns {void}
    */
   destroy() {
     Object.keys(this.Messages).forEach((key) => {
@@ -75,6 +100,7 @@ export default class Component extends EventWrapper {
   /**
    * Create a component instance
    * @param {Element} element
+   * @param {Broadcast} [broadcast = new Broadcast()] the broadcast for this component
    */
   constructor(element, broadcast = new Broadcast()) {
     super(element);
@@ -89,3 +115,5 @@ export default class Component extends EventWrapper {
     }, 0);
   }
 }
+
+export default Component;

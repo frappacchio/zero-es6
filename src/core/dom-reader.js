@@ -1,7 +1,11 @@
 import Logger from '@openmind/litelog';
-
+/**
+ * The Logger
+ */
 const Log = new Logger('DomReader');
-
+/**
+ * @type {Object} Default settings
+ */
 const Defaults = {
   selector: '[data-component]',
   element: document,
@@ -11,7 +15,7 @@ const Defaults = {
  * Read the DOM and check for Zero Components
  * @class
  */
-export default class DomReader {
+class DomReader {
   /**
      * Set the element for all operations
      * If falsy value is passed it returns the default element `document`
@@ -55,3 +59,4 @@ export default class DomReader {
     return components;
   }
 }
+export default DomReader;

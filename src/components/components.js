@@ -1,5 +1,8 @@
 import { List } from 'immutable';
 
+/**
+ * @type {List} componentsList the list
+ */
 let componentsList = List();
 /**
  * Manage the list of components classes used within the project

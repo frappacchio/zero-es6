@@ -1,6 +1,12 @@
 import Logger from '@openmind/litelog';
 
+/**
+ * The Logger
+ */
 const Log = new Logger('Broadcast');
+/**
+ * @type {Object} Deafult settings
+ */
 const Defaults = {
   ID: 'zero-broadcaster',
   element: 'span',
@@ -63,8 +69,10 @@ class Broadcast {
   constructor() {
     const broadcaster = document.createElement(Defaults.element);
     broadcaster.setAttribute('id', Defaults.ID);
+    /**
+     * @type {Element}
+     */
     this.broadcaster = broadcaster;
-    return this;
   }
 }
 

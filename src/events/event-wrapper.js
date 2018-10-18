@@ -52,15 +52,27 @@ class EventWrapper {
     return this;
   }
 
+  /**
+   * @alias on
+   * @param  {...any} args
+   */
   addEventListener(...args) {
     return this.on(...args);
   }
 
+  /**
+   * @alias off
+   * @param  {...any} args
+   */
   removeEventListener(...args) {
     this.off(...args);
     return this;
   }
 
+  /**
+   * @alias trigger
+   * @param  {...any} args
+   */
   dispatchEvent(...args) {
     return this.trigger(...args);
   }
@@ -70,6 +82,9 @@ class EventWrapper {
    * @param {Element} domElement
    */
   set element(domElement) {
+    /**
+     * @type {Element}
+     */
     this.domElement = domElement;
   }
 
@@ -78,12 +93,18 @@ class EventWrapper {
    * @return {Element} domElement
    */
   get element() {
+    /**
+     * @type {Element}
+     */
     return this.domElement;
   }
 
+  /**
+   * Create the wrapper
+   * @param {Element} element
+   */
   constructor(element) {
     this.element = element;
-    return this;
   }
 }
 
