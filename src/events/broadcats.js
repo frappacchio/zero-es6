@@ -39,7 +39,6 @@ class Broadcast {
     });
     const event = new CustomEvent(`msg:${msg}`, detail);
     this.Broadcaster.dispatchEvent(event, obj);
-    return this;
   }
 
   /**
@@ -50,7 +49,6 @@ class Broadcast {
   grab(msg, callback) {
     Log.log(`grab:${msg}`);
     this.Broadcaster.addEventListener(`msg:${msg}`, callback, { capture: true, passive: true });
-    return this;
   }
 
   /**
@@ -60,7 +58,6 @@ class Broadcast {
    */
   ungrab(msg, callback) {
     this.Broadcaster.removeEventListener(`msg:${msg}`, callback);
-    return this;
   }
 
   /**

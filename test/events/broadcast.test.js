@@ -14,13 +14,13 @@ describe('Broadcast', () => {
   });
   test('ungrab a message', () => {
     const mockCallback = jest.fn(() => {});
-    broadCast.grab('customMessage', mockCallback);
-    broadCast.cast('customMessage');
-    broadCast.cast('customMessage');
-    broadCast.ungrab('customMessage', mockCallback);
-    broadCast.cast('customMessage');
-    broadCast.cast('customMessage');
-    broadCast.cast('customMessage');
+    broadCast.grab('newcustomMessage', mockCallback);
+    broadCast.cast('newcustomMessage');
+    broadCast.cast('newcustomMessage');
+    broadCast.ungrab('newcustomMessage', mockCallback);
+    broadCast.cast('newcustomMessage');
+    broadCast.cast('newcustomMessage');
+    broadCast.cast('newcustomMessage');
     expect(mockCallback.mock.calls.length).toBe(2);
   });
 });
