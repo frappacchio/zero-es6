@@ -19,6 +19,9 @@ class Inflector {
    * @returns {String}
    */
   get String() {
+    /**
+     * @type {String}
+     */
     return this.string;
   }
 
@@ -26,6 +29,9 @@ class Inflector {
    * @param {string} string
    */
   set String(string) {
+    /**
+     * @type {String}
+     */
     this.string = trim(string);
   }
 
