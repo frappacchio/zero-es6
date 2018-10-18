@@ -1,0 +1,1770 @@
+[
+  {
+    "__docId__": 0,
+    "kind": "file",
+    "name": "src/components/component.js",
+    "content": "import Logger from '@openmind/litelog';\nimport EventWrapper from '../events/event-wrapper';\nimport Broadcast from '../events/broadcats';\n\n/**\n * The Logger\n */\nconst Log = new Logger('Component');\n/**\n * It define a basic component\n * @class\n */\nclass Component extends EventWrapper {\n  /**\n   * @param {Object}\n   */\n  set Messages(msg) {\n    /**\n     * @type {Object} msg the object with all messages\n     */\n    this.messages = msg;\n  }\n\n  /**\n   * @return {Object}\n   */\n  get Messages() {\n    /**\n     * @type {Object} msg the object with all messages\n     */\n    return this.messages;\n  }\n\n  /**\n   * @param {Broadcast}\n   */\n  set Broadcast(broadcast) {\n    /**\n     * @type {Broadcast}\n     */\n    this.broadcast = broadcast;\n  }\n\n  /**\n   * @return {Broadcast}\n   */\n  get Broadcast() {\n    /**\n     * @type {Broadcast}\n     */\n    return this.broadcast;\n  }\n\n  /**\n   * Grabs the broadcast message\n   * @param {String} message message to broadcast\n   * @param {Function} callback callback to exectute\n   * @returns {Component} the instance of the class\n   */\n  GRAB(message, callback) {\n    this.Broadcast.grab(message, callback);\n    return this;\n  }\n\n  /**\n   * Grabs the broadcast message\n   * @param {String} message message to broadcast\n   * @param {Function} callback callback to exectute\n   * @returns {Component} the instance of the class\n   */\n  UNGRAB(message, callback) {\n    this.Broadcast.ungrab(message, callback);\n    return this;\n  }\n\n  /**\n   * Broadcast a message to the broadcast\n   * @param {String} message message to broadcast\n   * @param  {...any} obj\n   * @returns {Component} the instance of the class\n   */\n  CAST(message, ...obj) {\n    this.Broadcast.cast(message, obj);\n    return this;\n  }\n\n\n  /**\n   * Destroy the component instance\n   * @returns {void}\n   */\n  destroy() {\n    Object.keys(this.Messages).forEach((key) => {\n      this.UNGRAB(key, this.Messages[key]);\n    });\n    Log.debug('destroyed', this, 'on', this.element);\n    this.trigger('destroy', { component: this });\n  }\n\n  /**\n   * Create a component instance\n   * @param {Element} element\n   * @param {Broadcast} [broadcast = new Broadcast()] the broadcast for this component\n   */\n  constructor(element, broadcast = new Broadcast()) {\n    super(element);\n    this.Broadcast = broadcast;\n    Log.log('initializing', this);\n    Object.keys(this.Messages).forEach((key) => {\n      this.GRAB(key, this.Messages[key]);\n    });\n    this.trigger('added', { component: this });\n    setTimeout(() => {\n      this.Broadcast.cast('');\n    }, 0);\n  }\n}\n\nexport default Component;\n",
+    "static": true,
+    "longname": "/Users/francescocolonna/Desktop/dev/zero-es6/src/components/component.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 1,
+    "kind": "variable",
+    "name": "Log",
+    "memberof": "src/components/component.js",
+    "static": true,
+    "longname": "src/components/component.js~Log",
+    "access": null,
+    "export": false,
+    "importPath": "zero-es6/src/components/component.js",
+    "importStyle": null,
+    "description": "The Logger",
+    "lineNumber": 8
+  },
+  {
+    "__docId__": 2,
+    "kind": "class",
+    "name": "Component",
+    "memberof": "src/components/component.js",
+    "static": true,
+    "longname": "src/components/component.js~Component",
+    "access": null,
+    "export": true,
+    "importPath": "zero-es6/src/components/component.js",
+    "importStyle": "Component",
+    "description": "It define a basic component",
+    "lineNumber": 13,
+    "unknown": [
+      {
+        "tagName": "@class",
+        "tagValue": ""
+      }
+    ],
+    "interface": false,
+    "extends": [
+      "src/events/event-wrapper.js~EventWrapper"
+    ]
+  },
+  {
+    "__docId__": 3,
+    "kind": "set",
+    "name": "Messages",
+    "memberof": "src/components/component.js~Component",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/components/component.js~Component#Messages",
+    "access": null,
+    "description": "",
+    "lineNumber": 17,
+    "params": []
+  },
+  {
+    "__docId__": 4,
+    "kind": "member",
+    "name": "messages",
+    "memberof": "src/components/component.js~Component",
+    "static": false,
+    "longname": "src/components/component.js~Component#messages",
+    "access": null,
+    "description": "",
+    "lineNumber": 21,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 5,
+    "kind": "get",
+    "name": "Messages",
+    "memberof": "src/components/component.js~Component",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/components/component.js~Component#Messages",
+    "access": null,
+    "description": "",
+    "lineNumber": 27,
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 6,
+    "kind": "set",
+    "name": "Broadcast",
+    "memberof": "src/components/component.js~Component",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/components/component.js~Component#Broadcast",
+    "access": null,
+    "description": "",
+    "lineNumber": 37,
+    "params": []
+  },
+  {
+    "__docId__": 7,
+    "kind": "member",
+    "name": "broadcast",
+    "memberof": "src/components/component.js~Component",
+    "static": false,
+    "longname": "src/components/component.js~Component#broadcast",
+    "access": null,
+    "description": "",
+    "lineNumber": 41,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Broadcast"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 8,
+    "kind": "get",
+    "name": "Broadcast",
+    "memberof": "src/components/component.js~Component",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/components/component.js~Component#Broadcast",
+    "access": null,
+    "description": "",
+    "lineNumber": 47,
+    "return": {
+      "nullable": null,
+      "types": [
+        "Broadcast"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 9,
+    "kind": "method",
+    "name": "GRAB",
+    "memberof": "src/components/component.js~Component",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/components/component.js~Component#GRAB",
+    "access": null,
+    "description": "Grabs the broadcast message",
+    "lineNumber": 60,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Component} the instance of the class"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "message",
+        "description": "message to broadcast"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": "callback to exectute"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Component"
+      ],
+      "spread": false,
+      "description": "the instance of the class"
+    }
+  },
+  {
+    "__docId__": 10,
+    "kind": "method",
+    "name": "UNGRAB",
+    "memberof": "src/components/component.js~Component",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/components/component.js~Component#UNGRAB",
+    "access": null,
+    "description": "Grabs the broadcast message",
+    "lineNumber": 71,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Component} the instance of the class"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "message",
+        "description": "message to broadcast"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": "callback to exectute"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Component"
+      ],
+      "spread": false,
+      "description": "the instance of the class"
+    }
+  },
+  {
+    "__docId__": 11,
+    "kind": "method",
+    "name": "CAST",
+    "memberof": "src/components/component.js~Component",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/components/component.js~Component#CAST",
+    "access": null,
+    "description": "Broadcast a message to the broadcast",
+    "lineNumber": 82,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Component} the instance of the class"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "message",
+        "description": "message to broadcast"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "...any"
+        ],
+        "spread": true,
+        "optional": false,
+        "name": "obj",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Component"
+      ],
+      "spread": false,
+      "description": "the instance of the class"
+    }
+  },
+  {
+    "__docId__": 12,
+    "kind": "method",
+    "name": "destroy",
+    "memberof": "src/components/component.js~Component",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/components/component.js~Component#destroy",
+    "access": null,
+    "description": "Destroy the component instance",
+    "lineNumber": 92,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{void}"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "void"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 13,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "src/components/component.js~Component",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/components/component.js~Component#constructor",
+    "access": null,
+    "description": "Create a component instance",
+    "lineNumber": 105,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Element"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "element",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Broadcast"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": " new Broadcast()",
+        "defaultRaw": " new Broadcast()",
+        "name": "broadcast",
+        "description": "the broadcast for this component"
+      }
+    ]
+  },
+  {
+    "__docId__": 15,
+    "kind": "file",
+    "name": "src/components/components.js",
+    "content": "import { List } from 'immutable';\n\n/**\n * @type {List} componentsList the list\n */\nlet componentsList = List();\n/**\n * Manage the list of components classes used within the project\n * @class\n */\nclass Components {\n  /**\n   * @returns {List} list\n   */\n  static get list() {\n    return componentsList;\n  }\n\n  /**\n   * Check if already exists a component within the list\n   * @param {*} component\n   * @returns {undefined|*}\n   */\n  static exists(component) {\n    return componentsList.find(element => element.constructor.name === component.constructor.name);\n  }\n\n  /**\n   * Returns the index for given component\n   * Returns -1 if component does not exists\n   * @param {*} component\n   * @returns {Number}\n   */\n  static index(component) {\n    return componentsList.indexOf(component);\n  }\n\n  /**\n   * Add a component to the list if not already has been adedd\n   * @param {*} component\n   * @returns {List}\n   */\n  static add(component) {\n    if (!Components.exists(component)) {\n      componentsList = componentsList.push(component);\n    }\n    return componentsList;\n  }\n\n  /**\n   * Remove a component to the list if exists\n   * @param {*} component\n   * @returns {List}\n   */\n  static remove(component) {\n    if (Components.exists(component)) {\n      componentsList = componentsList.remove(Components.index(component));\n    }\n    return componentsList;\n  }\n}\nexport default Components;\n",
+    "static": true,
+    "longname": "/Users/francescocolonna/Desktop/dev/zero-es6/src/components/components.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 16,
+    "kind": "variable",
+    "name": "componentsList",
+    "memberof": "src/components/components.js",
+    "static": true,
+    "longname": "src/components/components.js~componentsList",
+    "access": null,
+    "export": false,
+    "importPath": "zero-es6/src/components/components.js",
+    "importStyle": null,
+    "description": "",
+    "lineNumber": 6,
+    "type": {
+      "nullable": null,
+      "types": [
+        "List"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 17,
+    "kind": "class",
+    "name": "Components",
+    "memberof": "src/components/components.js",
+    "static": true,
+    "longname": "src/components/components.js~Components",
+    "access": null,
+    "export": true,
+    "importPath": "zero-es6/src/components/components.js",
+    "importStyle": "Components",
+    "description": "Manage the list of components classes used within the project",
+    "lineNumber": 11,
+    "unknown": [
+      {
+        "tagName": "@class",
+        "tagValue": ""
+      }
+    ],
+    "interface": false
+  },
+  {
+    "__docId__": 18,
+    "kind": "get",
+    "name": "list",
+    "memberof": "src/components/components.js~Components",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/components/components.js~Components.list",
+    "access": null,
+    "description": "",
+    "lineNumber": 15,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{List} list"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "List"
+      ],
+      "spread": false,
+      "description": "list"
+    }
+  },
+  {
+    "__docId__": 19,
+    "kind": "method",
+    "name": "exists",
+    "memberof": "src/components/components.js~Components",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/components/components.js~Components.exists",
+    "access": null,
+    "description": "Check if already exists a component within the list",
+    "lineNumber": 24,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{undefined|*}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "component",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "undefined",
+        "*"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 20,
+    "kind": "method",
+    "name": "index",
+    "memberof": "src/components/components.js~Components",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/components/components.js~Components.index",
+    "access": null,
+    "description": "Returns the index for given component\nReturns -1 if component does not exists",
+    "lineNumber": 34,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Number}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "component",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Number"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 21,
+    "kind": "method",
+    "name": "add",
+    "memberof": "src/components/components.js~Components",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/components/components.js~Components.add",
+    "access": null,
+    "description": "Add a component to the list if not already has been adedd",
+    "lineNumber": 43,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{List}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "component",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "List"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 22,
+    "kind": "method",
+    "name": "remove",
+    "memberof": "src/components/components.js~Components",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/components/components.js~Components.remove",
+    "access": null,
+    "description": "Remove a component to the list if exists",
+    "lineNumber": 55,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{List}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "component",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "List"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 23,
+    "kind": "file",
+    "name": "src/core/dom-reader.js",
+    "content": "import Logger from '@openmind/litelog';\n/**\n * The Logger\n */\nconst Log = new Logger('DomReader');\n/**\n * @type {Object} Default settings\n */\nconst Defaults = {\n  selector: '[data-component]',\n  element: document,\n};\n\n/**\n * Read the DOM and check for Zero Components\n * @class\n */\nclass DomReader {\n  /**\n     * Set the element for all operations\n     * If falsy value is passed it returns the default element `document`\n     * @see https://developer.mozilla.org/en-US/docs/Glossary/Falsy\n     * @param {Element} element\n     */\n  set Element(element) {\n    this.element = element;\n  }\n\n  /**\n     * Get the element. If not defined return the document element\n     * @returns {Element|document}\n     * @see https://developer.mozilla.org/en-US/docs/Web/API/Element\n     */\n  get Element() {\n    return !this.element ? Defaults.element : this.element;\n  }\n\n  /**\n     * Set the element selector using CSS selector specs\n     * @see https://developer.mozilla.org/en-US/docs/Learn/CSS/Introduction_to_CSS/Selectors\n     * If falsy value is passed it returns the default selector [data-component]\n     * @see https://developer.mozilla.org/en-US/docs/Glossary/Falsy\n     * @param {String} selector\n     */\n  set Selector(selector) {\n    this.selector = selector;\n  }\n\n  get Selector() {\n    return !this.selector ? Defaults.selector : this.selector;\n  }\n\n  /**\n     * Return the list of components matching given selector\n     *@returns {NodeList}\n     */\n  check() {\n    const components = this.Element.querySelectorAll(this.Selector);\n    return components;\n  }\n}\nexport default DomReader;\n",
+    "static": true,
+    "longname": "/Users/francescocolonna/Desktop/dev/zero-es6/src/core/dom-reader.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 24,
+    "kind": "variable",
+    "name": "Log",
+    "memberof": "src/core/dom-reader.js",
+    "static": true,
+    "longname": "src/core/dom-reader.js~Log",
+    "access": null,
+    "export": false,
+    "importPath": "zero-es6/src/core/dom-reader.js",
+    "importStyle": null,
+    "description": "The Logger",
+    "lineNumber": 5
+  },
+  {
+    "__docId__": 25,
+    "kind": "variable",
+    "name": "Defaults",
+    "memberof": "src/core/dom-reader.js",
+    "static": true,
+    "longname": "src/core/dom-reader.js~Defaults",
+    "access": null,
+    "export": false,
+    "importPath": "zero-es6/src/core/dom-reader.js",
+    "importStyle": null,
+    "description": "",
+    "lineNumber": 9,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 26,
+    "kind": "class",
+    "name": "DomReader",
+    "memberof": "src/core/dom-reader.js",
+    "static": true,
+    "longname": "src/core/dom-reader.js~DomReader",
+    "access": null,
+    "export": true,
+    "importPath": "zero-es6/src/core/dom-reader.js",
+    "importStyle": "DomReader",
+    "description": "Read the DOM and check for Zero Components",
+    "lineNumber": 18,
+    "unknown": [
+      {
+        "tagName": "@class",
+        "tagValue": ""
+      }
+    ],
+    "interface": false
+  },
+  {
+    "__docId__": 27,
+    "kind": "set",
+    "name": "Element",
+    "memberof": "src/core/dom-reader.js~DomReader",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/core/dom-reader.js~DomReader#Element",
+    "access": null,
+    "description": "Set the element for all operations\nIf falsy value is passed it returns the default element `document`",
+    "see": [
+      "https://developer.mozilla.org/en-US/docs/Glossary/Falsy"
+    ],
+    "lineNumber": 25,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Element"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "element",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 28,
+    "kind": "member",
+    "name": "element",
+    "memberof": "src/core/dom-reader.js~DomReader",
+    "static": false,
+    "longname": "src/core/dom-reader.js~DomReader#element",
+    "access": null,
+    "description": null,
+    "lineNumber": 26,
+    "undocument": true
+  },
+  {
+    "__docId__": 29,
+    "kind": "get",
+    "name": "Element",
+    "memberof": "src/core/dom-reader.js~DomReader",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/core/dom-reader.js~DomReader#Element",
+    "access": null,
+    "description": "Get the element. If not defined return the document element",
+    "see": [
+      "https://developer.mozilla.org/en-US/docs/Web/API/Element"
+    ],
+    "lineNumber": 34,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Element|document}"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Element",
+        "document"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 30,
+    "kind": "set",
+    "name": "Selector",
+    "memberof": "src/core/dom-reader.js~DomReader",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/core/dom-reader.js~DomReader#Selector",
+    "access": null,
+    "description": "Set the element selector using CSS selector specs",
+    "see": [
+      "https://developer.mozilla.org/en-US/docs/Learn/CSS/Introduction_to_CSS/Selectors\nIf falsy value is passed it returns the default selector [data-component]",
+      "https://developer.mozilla.org/en-US/docs/Glossary/Falsy"
+    ],
+    "lineNumber": 45,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "selector",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 31,
+    "kind": "member",
+    "name": "selector",
+    "memberof": "src/core/dom-reader.js~DomReader",
+    "static": false,
+    "longname": "src/core/dom-reader.js~DomReader#selector",
+    "access": null,
+    "description": null,
+    "lineNumber": 46,
+    "undocument": true
+  },
+  {
+    "__docId__": 32,
+    "kind": "get",
+    "name": "Selector",
+    "memberof": "src/core/dom-reader.js~DomReader",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/core/dom-reader.js~DomReader#Selector",
+    "access": null,
+    "description": null,
+    "lineNumber": 49,
+    "undocument": true
+  },
+  {
+    "__docId__": 33,
+    "kind": "method",
+    "name": "check",
+    "memberof": "src/core/dom-reader.js~DomReader",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/core/dom-reader.js~DomReader#check",
+    "access": null,
+    "description": "Return the list of components matching given selector",
+    "lineNumber": 57,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{NodeList}"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "NodeList"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 34,
+    "kind": "file",
+    "name": "src/events/broadcats.js",
+    "content": "import Logger from '@openmind/litelog';\n\n/**\n * The Logger\n */\nconst Log = new Logger('Broadcast');\n/**\n * @type {Object} Deafult settings\n */\nconst Defaults = {\n  ID: 'zero-broadcaster',\n  element: 'span',\n};\n/**\n * Grab and dispatch messages throug the dom\n * @class\n */\nclass Broadcast {\n  /**\n   * Get the Broadcaster element\n   * @returns {Element} the element used as Broadcaster\n   */\n  get Broadcaster() {\n    return this.broadcaster;\n  }\n\n  /**\n   * Cast a message throug the dom\n   * @param {String} msg message to cast\n   * @param {Object} obj callback to execute on message receiving\n   * @see https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent#Polyfill\n   */\n  cast(msg, obj = {}) {\n    Log.log(`cast:${msg}`);\n    const detail = Object.assign({}, {\n      detail: {},\n    }, {\n      detail: obj,\n    });\n    const event = new CustomEvent(`msg:${msg}`, detail);\n    this.Broadcaster.dispatchEvent(event, obj);\n  }\n\n  /**\n   * Add the listener for given event and dispatch the event\n   * @param {String} msg message to cast\n   * @param {Function} callback callback to execute on message receiving\n   */\n  grab(msg, callback) {\n    Log.log(`grab:${msg}`);\n    this.Broadcaster.addEventListener(`msg:${msg}`, callback, { capture: true, passive: true });\n  }\n\n  /**\n   * Remove the listener for given message\n   * @param {String} msg message to cast\n   * @param {Function} callback callback to execute on message receiving\n   */\n  ungrab(msg, callback) {\n    this.Broadcaster.removeEventListener(`msg:${msg}`, callback);\n  }\n\n  /**\n   * Initialize the Broadcast\n   */\n  constructor() {\n    const broadcaster = document.createElement(Defaults.element);\n    broadcaster.setAttribute('id', Defaults.ID);\n    /**\n     * @type {Element}\n     */\n    this.broadcaster = broadcaster;\n  }\n}\n\nexport default Broadcast;\n",
+    "static": true,
+    "longname": "/Users/francescocolonna/Desktop/dev/zero-es6/src/events/broadcats.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 35,
+    "kind": "variable",
+    "name": "Log",
+    "memberof": "src/events/broadcats.js",
+    "static": true,
+    "longname": "src/events/broadcats.js~Log",
+    "access": null,
+    "export": false,
+    "importPath": "zero-es6/src/events/broadcats.js",
+    "importStyle": null,
+    "description": "The Logger",
+    "lineNumber": 6
+  },
+  {
+    "__docId__": 36,
+    "kind": "variable",
+    "name": "Defaults",
+    "memberof": "src/events/broadcats.js",
+    "static": true,
+    "longname": "src/events/broadcats.js~Defaults",
+    "access": null,
+    "export": false,
+    "importPath": "zero-es6/src/events/broadcats.js",
+    "importStyle": null,
+    "description": "",
+    "lineNumber": 10,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 37,
+    "kind": "class",
+    "name": "Broadcast",
+    "memberof": "src/events/broadcats.js",
+    "static": true,
+    "longname": "src/events/broadcats.js~Broadcast",
+    "access": null,
+    "export": true,
+    "importPath": "zero-es6/src/events/broadcats.js",
+    "importStyle": "Broadcast",
+    "description": "Grab and dispatch messages throug the dom",
+    "lineNumber": 18,
+    "unknown": [
+      {
+        "tagName": "@class",
+        "tagValue": ""
+      }
+    ],
+    "interface": false
+  },
+  {
+    "__docId__": 38,
+    "kind": "get",
+    "name": "Broadcaster",
+    "memberof": "src/events/broadcats.js~Broadcast",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/events/broadcats.js~Broadcast#Broadcaster",
+    "access": null,
+    "description": "Get the Broadcaster element",
+    "lineNumber": 23,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Element} the element used as Broadcaster"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Element"
+      ],
+      "spread": false,
+      "description": "the element used as Broadcaster"
+    }
+  },
+  {
+    "__docId__": 39,
+    "kind": "method",
+    "name": "cast",
+    "memberof": "src/events/broadcats.js~Broadcast",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/events/broadcats.js~Broadcast#cast",
+    "access": null,
+    "description": "Cast a message throug the dom",
+    "see": [
+      "https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent#Polyfill"
+    ],
+    "lineNumber": 33,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "msg",
+        "description": "message to cast"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "obj",
+        "description": "callback to execute on message receiving"
+      }
+    ]
+  },
+  {
+    "__docId__": 40,
+    "kind": "method",
+    "name": "grab",
+    "memberof": "src/events/broadcats.js~Broadcast",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/events/broadcats.js~Broadcast#grab",
+    "access": null,
+    "description": "Add the listener for given event and dispatch the event",
+    "lineNumber": 49,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "msg",
+        "description": "message to cast"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": "callback to execute on message receiving"
+      }
+    ]
+  },
+  {
+    "__docId__": 41,
+    "kind": "method",
+    "name": "ungrab",
+    "memberof": "src/events/broadcats.js~Broadcast",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/events/broadcats.js~Broadcast#ungrab",
+    "access": null,
+    "description": "Remove the listener for given message",
+    "lineNumber": 59,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "msg",
+        "description": "message to cast"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": "callback to execute on message receiving"
+      }
+    ]
+  },
+  {
+    "__docId__": 42,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "src/events/broadcats.js~Broadcast",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/events/broadcats.js~Broadcast#constructor",
+    "access": null,
+    "description": "Initialize the Broadcast",
+    "lineNumber": 66
+  },
+  {
+    "__docId__": 43,
+    "kind": "member",
+    "name": "broadcaster",
+    "memberof": "src/events/broadcats.js~Broadcast",
+    "static": false,
+    "longname": "src/events/broadcats.js~Broadcast#broadcaster",
+    "access": null,
+    "description": "",
+    "lineNumber": 72,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Element"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 44,
+    "kind": "file",
+    "name": "src/events/event-dictionary.js",
+    "content": "/**\n * Manage all the component events for given namespace\n *@class\n */\nexport default class EventDictionary {\n\n}\n",
+    "static": true,
+    "longname": "/Users/francescocolonna/Desktop/dev/zero-es6/src/events/event-dictionary.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 45,
+    "kind": "class",
+    "name": "EventDictionary",
+    "memberof": "src/events/event-dictionary.js",
+    "static": true,
+    "longname": "src/events/event-dictionary.js~EventDictionary",
+    "access": null,
+    "export": true,
+    "importPath": "zero-es6/src/events/event-dictionary.js",
+    "importStyle": "EventDictionary",
+    "description": "Manage all the component events for given namespace",
+    "lineNumber": 5,
+    "unknown": [
+      {
+        "tagName": "@class",
+        "tagValue": ""
+      }
+    ],
+    "interface": false
+  },
+  {
+    "__docId__": 46,
+    "kind": "file",
+    "name": "src/events/event-wrapper.js",
+    "content": "/**\n * A simple wrapper which allows to use method like .on(...), .off(...)\n * @class\n */\nclass EventWrapper {\n  /**\n   * @see https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener\n   * @alias addEventListener\n   * @param  {...any} args\n   */\n  on(...args) {\n    this.element.addEventListener(...args);\n    return this;\n  }\n\n  /**\n   * It listen only for the first occurence of the event\n   * and then it removes the listner\n   * @see https://developers.google.com/web/updates/2016/10/addeventlistener-once\n   * @alias addEventListener\n   * @param  {...any} args\n   */\n  one(...args) {\n    const params = Object.assign({}, { once: true }, args[3]);\n    this.element.addEventListener(args[0], args[1], params);\n    return this;\n  }\n\n  /**\n   * @see https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/removeEventListener\n   * @alias removeEventListener\n   * @param  {...any} args\n   */\n  off(...args) {\n    this.element.removeEventListener(...args);\n    return this;\n  }\n\n  /**\n   * @see https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/dispatchEvent\n   * @alias dispatchEvent\n   * @param  {...any} args\n   */\n  trigger(...args) {\n    const detail = Object.assign({}, {\n      detail: {},\n    }, {\n      detail: args[1],\n    });\n    const event = new CustomEvent(args[0], detail);\n    this.element.dispatchEvent(event);\n    return this;\n  }\n\n  /**\n   * @alias on\n   * @param  {...any} args\n   */\n  addEventListener(...args) {\n    return this.on(...args);\n  }\n\n  /**\n   * @alias off\n   * @param  {...any} args\n   */\n  removeEventListener(...args) {\n    this.off(...args);\n    return this;\n  }\n\n  /**\n   * @alias trigger\n   * @param  {...any} args\n   */\n  dispatchEvent(...args) {\n    return this.trigger(...args);\n  }\n\n  /**\n   * Set the Element which represent the current component\n   * @param {Element} domElement\n   */\n  set element(domElement) {\n    /**\n     * @type {Element}\n     */\n    this.domElement = domElement;\n  }\n\n  /**\n   * Get the Element which represent the current component\n   * @return {Element} domElement\n   */\n  get element() {\n    /**\n     * @type {Element}\n     */\n    return this.domElement;\n  }\n\n  /**\n   * Create the wrapper\n   * @param {Element} element\n   */\n  constructor(element) {\n    this.element = element;\n  }\n}\n\nexport default EventWrapper;\n",
+    "static": true,
+    "longname": "/Users/francescocolonna/Desktop/dev/zero-es6/src/events/event-wrapper.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 47,
+    "kind": "class",
+    "name": "EventWrapper",
+    "memberof": "src/events/event-wrapper.js",
+    "static": true,
+    "longname": "src/events/event-wrapper.js~EventWrapper",
+    "access": null,
+    "export": true,
+    "importPath": "zero-es6/src/events/event-wrapper.js",
+    "importStyle": "EventWrapper",
+    "description": "A simple wrapper which allows to use method like .on(...), .off(...)",
+    "lineNumber": 5,
+    "unknown": [
+      {
+        "tagName": "@class",
+        "tagValue": ""
+      }
+    ],
+    "interface": false
+  },
+  {
+    "__docId__": 48,
+    "kind": "method",
+    "name": "on",
+    "memberof": "src/events/event-wrapper.js~EventWrapper",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/events/event-wrapper.js~EventWrapper#on",
+    "access": null,
+    "description": "",
+    "see": [
+      "https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener"
+    ],
+    "lineNumber": 11,
+    "unknown": [
+      {
+        "tagName": "@alias",
+        "tagValue": "addEventListener"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "...any"
+        ],
+        "spread": true,
+        "optional": false,
+        "name": "args",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 49,
+    "kind": "method",
+    "name": "one",
+    "memberof": "src/events/event-wrapper.js~EventWrapper",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/events/event-wrapper.js~EventWrapper#one",
+    "access": null,
+    "description": "It listen only for the first occurence of the event\nand then it removes the listner",
+    "see": [
+      "https://developers.google.com/web/updates/2016/10/addeventlistener-once"
+    ],
+    "lineNumber": 23,
+    "unknown": [
+      {
+        "tagName": "@alias",
+        "tagValue": "addEventListener"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "...any"
+        ],
+        "spread": true,
+        "optional": false,
+        "name": "args",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 50,
+    "kind": "method",
+    "name": "off",
+    "memberof": "src/events/event-wrapper.js~EventWrapper",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/events/event-wrapper.js~EventWrapper#off",
+    "access": null,
+    "description": "",
+    "see": [
+      "https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/removeEventListener"
+    ],
+    "lineNumber": 34,
+    "unknown": [
+      {
+        "tagName": "@alias",
+        "tagValue": "removeEventListener"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "...any"
+        ],
+        "spread": true,
+        "optional": false,
+        "name": "args",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 51,
+    "kind": "method",
+    "name": "trigger",
+    "memberof": "src/events/event-wrapper.js~EventWrapper",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/events/event-wrapper.js~EventWrapper#trigger",
+    "access": null,
+    "description": "",
+    "see": [
+      "https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/dispatchEvent"
+    ],
+    "lineNumber": 44,
+    "unknown": [
+      {
+        "tagName": "@alias",
+        "tagValue": "dispatchEvent"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "...any"
+        ],
+        "spread": true,
+        "optional": false,
+        "name": "args",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 52,
+    "kind": "method",
+    "name": "addEventListener",
+    "memberof": "src/events/event-wrapper.js~EventWrapper",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/events/event-wrapper.js~EventWrapper#addEventListener",
+    "access": null,
+    "description": "",
+    "lineNumber": 59,
+    "unknown": [
+      {
+        "tagName": "@alias",
+        "tagValue": "on"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "...any"
+        ],
+        "spread": true,
+        "optional": false,
+        "name": "args",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 53,
+    "kind": "method",
+    "name": "removeEventListener",
+    "memberof": "src/events/event-wrapper.js~EventWrapper",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/events/event-wrapper.js~EventWrapper#removeEventListener",
+    "access": null,
+    "description": "",
+    "lineNumber": 67,
+    "unknown": [
+      {
+        "tagName": "@alias",
+        "tagValue": "off"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "...any"
+        ],
+        "spread": true,
+        "optional": false,
+        "name": "args",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 54,
+    "kind": "method",
+    "name": "dispatchEvent",
+    "memberof": "src/events/event-wrapper.js~EventWrapper",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/events/event-wrapper.js~EventWrapper#dispatchEvent",
+    "access": null,
+    "description": "",
+    "lineNumber": 76,
+    "unknown": [
+      {
+        "tagName": "@alias",
+        "tagValue": "trigger"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "...any"
+        ],
+        "spread": true,
+        "optional": false,
+        "name": "args",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 55,
+    "kind": "set",
+    "name": "element",
+    "memberof": "src/events/event-wrapper.js~EventWrapper",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/events/event-wrapper.js~EventWrapper#element",
+    "access": null,
+    "description": "Set the Element which represent the current component",
+    "lineNumber": 84,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Element"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "domElement",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 56,
+    "kind": "member",
+    "name": "domElement",
+    "memberof": "src/events/event-wrapper.js~EventWrapper",
+    "static": false,
+    "longname": "src/events/event-wrapper.js~EventWrapper#domElement",
+    "access": null,
+    "description": "",
+    "lineNumber": 88,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Element"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 57,
+    "kind": "get",
+    "name": "element",
+    "memberof": "src/events/event-wrapper.js~EventWrapper",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/events/event-wrapper.js~EventWrapper#element",
+    "access": null,
+    "description": "Get the Element which represent the current component",
+    "lineNumber": 95,
+    "return": {
+      "nullable": null,
+      "types": [
+        "Element"
+      ],
+      "spread": false,
+      "description": "domElement"
+    }
+  },
+  {
+    "__docId__": 58,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "src/events/event-wrapper.js~EventWrapper",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/events/event-wrapper.js~EventWrapper#constructor",
+    "access": null,
+    "description": "Create the wrapper",
+    "lineNumber": 106,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Element"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "element",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 60,
+    "kind": "file",
+    "name": "src/index.js",
+    "content": "import Logger from '@openmind/litelog';\nimport Component from './components/component';\nimport Components from './components/components';\nimport DomReader from './core/dom-reader';\nimport EventWrapper from './events/event-wrapper';\nimport Broadcast from './events/broadcats';\n\nconst Log = new Logger('MAIN');\n/*\n\nconst domReader = new DomReader();\nconst element = domReader.check();\nelement.forEach((value) => {\n  const component = new Component(value);\n  const another = new Component(value);\n  Components.add(component);\n  Components.add(another);\n  Log.log(typeof Components.list);\n});\n */\n/* const button = document.createElement('button');\nconst wrapper = new EventWrapper(button);\nwrapper.on('click', () => {\n  Log.log('click');\n});\nwrapper.trigger('click'); */\n/* Broadcast.grab('pippo', () => {\n  Log.log('grabbato');\n});\nBroadcast.cast('pippo');\nBroadcast.start();\nLog.log(Broadcast.Broadcaster); */\n/* const broadCast = new Broadcast();\n\nLog.log(broadCast.Broadcaster);\nbroadCast.grab('mesg', (obj) => {\n  Log.log(obj);\n});\nbroadCast.cast('mesg', { id: 1 }); */\n",
+    "static": true,
+    "longname": "/Users/francescocolonna/Desktop/dev/zero-es6/src/index.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 61,
+    "kind": "variable",
+    "name": "Log",
+    "memberof": "src/index.js",
+    "static": true,
+    "longname": "src/index.js~Log",
+    "access": null,
+    "export": false,
+    "importPath": "zero-es6",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 8,
+    "undocument": true
+  },
+  {
+    "__docId__": 62,
+    "kind": "file",
+    "name": "src/utils/inflector.js",
+    "content": "import trim from 'lodash/trim';\nimport snakeCase from 'lodash/snakeCase';\nimport camelcase from 'lodash/camelCase';\nimport upperFirst from 'lodash/upperFirst';\nimport kebabCase from 'lodash/kebabCase';\nimport startCase from 'lodash/startCase';\n/**\n * String manipulation utility uses Lodash\n * @class\n * {@link module:lodash/trim}\n * {@link module:lodash/snakeCase}\n * {@link module:lodash/camelCase}\n * {@link module:lodash/upperFirst}\n * {@link module:lodash/kebabCase}\n * {@link module:lodash/startCase}\n */\nclass Inflector {\n  /**\n   * @returns {String}\n   */\n  get String() {\n    /**\n     * @type {String}\n     */\n    return this.string;\n  }\n\n  /**\n   * @param {string} string\n   */\n  set String(string) {\n    /**\n     * @type {String}\n     */\n    this.string = trim(string);\n  }\n\n\n  /**\n   * convert the string to snake case {'Foo Bar' => 'foo_bar'}\n   * @see https://lodash.com/docs/4.17.10#snakeCase\n   * @returns {String}\n   */\n  underscore() {\n    return snakeCase(this.String);\n  }\n\n  /**\n   * convert the string to snake case {'Foo Bar' => 'fooBar'}\n   * @see https://lodash.com/docs/4.17.10#camelCase\n   * @returns {String}\n   */\n  camelize(firstUpperCase = false) {\n    return firstUpperCase ? upperFirst(camelcase(this.String)) : camelcase(this.String);\n  }\n\n  /**\n   * convert the string to kebab case {'Foo Bar' => 'foo-bar'}\n   * @see https://lodash.com/docs/4.17.10#kebabCase\n   * @returns {String}\n   */\n  kebab() {\n    return kebabCase(this.String);\n  }\n\n  /**\n   * @alias kebab\n   */\n  dasherize() {\n    return this.kebab();\n  }\n\n  /**\n   * convert the string to human readable string {'--foo-bar--' >= 'Foo Bar'}\n   * @see https://lodash.com/docs/4.17.10#startCase\n   * @returns {String}\n   */\n  humanize() {\n    return startCase(this.String);\n  }\n\n  /**\n   *create an instance\n   * @param {String} string\n   * @returns {Inflector}\n   */\n  constructor(string) {\n    /**\n     * @type {String}\n     */\n    this.String = string;\n  }\n}\nexport default Inflector;\n",
+    "static": true,
+    "longname": "/Users/francescocolonna/Desktop/dev/zero-es6/src/utils/inflector.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 63,
+    "kind": "class",
+    "name": "Inflector",
+    "memberof": "src/utils/inflector.js",
+    "static": true,
+    "longname": "src/utils/inflector.js~Inflector",
+    "access": null,
+    "export": true,
+    "importPath": "zero-es6/src/utils/inflector.js",
+    "importStyle": "Inflector",
+    "description": "String manipulation utility uses Lodash",
+    "lineNumber": 17,
+    "unknown": [
+      {
+        "tagName": "@class",
+        "tagValue": "{@link module:lodash/trim}\n{@link module:lodash/snakeCase}\n{@link module:lodash/camelCase}\n{@link module:lodash/upperFirst}\n{@link module:lodash/kebabCase}\n{@link module:lodash/startCase}"
+      }
+    ],
+    "interface": false
+  },
+  {
+    "__docId__": 64,
+    "kind": "get",
+    "name": "String",
+    "memberof": "src/utils/inflector.js~Inflector",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/utils/inflector.js~Inflector#String",
+    "access": null,
+    "description": "",
+    "lineNumber": 21,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{String}"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "String"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 65,
+    "kind": "set",
+    "name": "String",
+    "memberof": "src/utils/inflector.js~Inflector",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/utils/inflector.js~Inflector#String",
+    "access": null,
+    "description": "",
+    "lineNumber": 31,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "string",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 66,
+    "kind": "member",
+    "name": "string",
+    "memberof": "src/utils/inflector.js~Inflector",
+    "static": false,
+    "longname": "src/utils/inflector.js~Inflector#string",
+    "access": null,
+    "description": "",
+    "lineNumber": 35,
+    "type": {
+      "nullable": null,
+      "types": [
+        "String"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 67,
+    "kind": "method",
+    "name": "underscore",
+    "memberof": "src/utils/inflector.js~Inflector",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/utils/inflector.js~Inflector#underscore",
+    "access": null,
+    "description": "convert the string to snake case {'Foo Bar' => 'foo_bar'}",
+    "see": [
+      "https://lodash.com/docs/4.17.10#snakeCase"
+    ],
+    "lineNumber": 44,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{String}"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "String"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 68,
+    "kind": "method",
+    "name": "camelize",
+    "memberof": "src/utils/inflector.js~Inflector",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/utils/inflector.js~Inflector#camelize",
+    "access": null,
+    "description": "convert the string to snake case {'Foo Bar' => 'fooBar'}",
+    "see": [
+      "https://lodash.com/docs/4.17.10#camelCase"
+    ],
+    "lineNumber": 53,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{String}"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "String"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 69,
+    "kind": "method",
+    "name": "kebab",
+    "memberof": "src/utils/inflector.js~Inflector",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/utils/inflector.js~Inflector#kebab",
+    "access": null,
+    "description": "convert the string to kebab case {'Foo Bar' => 'foo-bar'}",
+    "see": [
+      "https://lodash.com/docs/4.17.10#kebabCase"
+    ],
+    "lineNumber": 62,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{String}"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "String"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 70,
+    "kind": "method",
+    "name": "dasherize",
+    "memberof": "src/utils/inflector.js~Inflector",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/utils/inflector.js~Inflector#dasherize",
+    "access": null,
+    "description": "",
+    "lineNumber": 69,
+    "unknown": [
+      {
+        "tagName": "@alias",
+        "tagValue": "kebab"
+      }
+    ]
+  },
+  {
+    "__docId__": 71,
+    "kind": "method",
+    "name": "humanize",
+    "memberof": "src/utils/inflector.js~Inflector",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/utils/inflector.js~Inflector#humanize",
+    "access": null,
+    "description": "convert the string to human readable string {'--foo-bar--' >= 'Foo Bar'}",
+    "see": [
+      "https://lodash.com/docs/4.17.10#startCase"
+    ],
+    "lineNumber": 78,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{String}"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "String"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 72,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "src/utils/inflector.js~Inflector",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/utils/inflector.js~Inflector#constructor",
+    "access": null,
+    "description": "create an instance",
+    "lineNumber": 87,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Inflector}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "string",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Inflector"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "kind": "index",
+    "content": "",
+    "longname": "/Users/francescocolonna/Desktop/dev/zero-es6/README.md",
+    "name": "./README.md",
+    "static": true,
+    "access": "public"
+  },
+  {
+    "kind": "packageJSON",
+    "content": "{\n  \"name\": \"zero-es6\",\n  \"version\": \"1.0.0\",\n  \"description\": \"An openmind's Zero project forked and translated in pure ES6 without jQuery dependency\",\n  \"main\": \"src/index.js\",\n  \"license\": \"MIT\",\n  \"scripts\": {\n    \"test\": \"jest --config jest.config.json\",\n    \"doc\": \"npx esdoc\",\n    \"build\": \"npx webpack --config webpack.config.js\"\n  },\n  \"devDependencies\": {\n    \"@babel/core\": \"^7.1.2\",\n    \"@babel/plugin-transform-classes\": \"^7.1.0\",\n    \"@babel/preset-env\": \"^7.1.0\",\n    \"babel-core\": \"^7.0.0-bridge.0\",\n    \"babel-jest\": \"^23.6.0\",\n    \"babel-loader\": \"^8.0.4\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-publish-markdown-plugin\": \"^1.1.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"eslint\": \"^5.7.0\",\n    \"eslint-config-airbnb-base\": \"^13.1.0\",\n    \"eslint-plugin-import\": \"^2.14.0\",\n    \"jest\": \"^23.6.0\",\n    \"regenerator-runtime\": \"^0.12.1\",\n    \"webpack\": \"^4.20.2\",\n    \"webpack-cli\": \"^3.1.2\"\n  },\n  \"dependencies\": {\n    \"immutable\": \"^3.8.2\",\n    \"@openmind/litelog\": \"^3.0.6\",\n    \"lodash\": \"^4.17.11\"\n  }\n}\n",
+    "longname": "/Users/francescocolonna/Desktop/dev/zero-es6/package.json",
+    "name": "package.json",
+    "static": true,
+    "access": "public"
+  }
+]
