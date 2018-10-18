@@ -3,6 +3,7 @@ import Component from './components/component';
 import Components from './components/components';
 import DomReader from './core/dom-reader';
 import EventWrapper from './events/event-wrapper';
+import Broadcast from './events/broadcats';
 
 const Log = new Logger('MAIN');
 /*
@@ -17,9 +18,23 @@ element.forEach((value) => {
   Log.log(typeof Components.list);
 });
  */
-const button = document.createElement('button');
+/* const button = document.createElement('button');
 const wrapper = new EventWrapper(button);
 wrapper.on('click', () => {
   Log.log('click');
 });
-wrapper.trigger('click');
+wrapper.trigger('click'); */
+/* Broadcast.grab('pippo', () => {
+  Log.log('grabbato');
+});
+Broadcast.cast('pippo');
+Broadcast.start();
+Log.log(Broadcast.Broadcaster); */
+const broadCast = new Broadcast();
+
+Log.log(broadCast.Broadcaster);
+broadCast.cast('mesg');
+broadCast.grab('mesg', () => {
+  Log.log('pippo');
+});
+broadCast.cast('mesg');
