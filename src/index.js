@@ -1,10 +1,21 @@
 import Logger from '@openmind/litelog';
-import Inflector from './utils/inflector';
+import DomReader from './core/dom-reader';
 
-const pippo = new Inflector('');
+const domReader = new DomReader();
+const fakeNonEmptyDom = `<div data-component="pippo"></div>
+      <div data-component="pippo">
+          <div data-component="gastone"></div>
+      </div>`;
+const fakeEmptyDom = '<div>Fake</div>';
+const fakeAlternativeDom = '<div data-alternative="component">Fake</div>';
+const emptyElement = document.getElementById('jhon-doe');
+document.body.innerHTML = '';
+const domNode = document.createElement('main');
+domNode.innerHTML = fakeAlternativeDom;
+// domNode.innerHTML = fakeNonEmptyDom;
+document.body.append(domNode);
+domReader.Selector = null;
+domReader.Element = emptyElement;
 
-Logger.log(pippo.underscore());
-Logger.log(pippo.camelize(true));
-Logger.log(pippo.camelize());
-Logger.log(pippo.kebab());
-Logger.log(pippo.humanize());
+const components = domReader.check();
+Logger.log(components);
