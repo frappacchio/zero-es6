@@ -9,9 +9,8 @@ const domReader = new DomReader();
 const element = domReader.check();
 element.forEach((value) => {
   const component = new Component(value);
-  Components.add({ pippo: 'pippo' });
+  const another = new Component(value);
   Components.add(component);
-  Components.add(component);
-  Components.add([1]);
-  Log.log(Components.list);
+  Components.add(another);
+  Log.log(typeof Components.list);
 });

@@ -9,7 +9,7 @@ class Components {
   }
 
   static exists(component) {
-    return Components.index(component) !== -1;
+    return componentsList.find(element => element.constructor.name === component.constructor.name);
   }
 
   static index(component) {
@@ -25,7 +25,7 @@ class Components {
 
   static remove(component) {
     if (Components.exists(component)) {
-      componentsList = componentsList.remove(Components.indexOf(component));
+      componentsList = componentsList.remove(Components.index(component));
     }
     return componentsList;
   }
