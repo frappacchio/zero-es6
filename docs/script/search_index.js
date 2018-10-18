@@ -330,6 +330,48 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/core/dom-reader.js~domreader#element",
+    "class/src/core/dom-reader.js~DomReader.html#instance-get-Element",
+    "src/core/dom-reader.js~DomReader#Element",
+    "member"
+  ],
+  [
+    "src/core/dom-reader.js~domreader#element",
+    "class/src/core/dom-reader.js~DomReader.html#instance-set-Element",
+    "src/core/dom-reader.js~DomReader#Element",
+    "member"
+  ],
+  [
+    "src/core/dom-reader.js~domreader#selector",
+    "class/src/core/dom-reader.js~DomReader.html#instance-set-Selector",
+    "src/core/dom-reader.js~DomReader#Selector",
+    "member"
+  ],
+  [
+    "src/core/dom-reader.js~domreader#selector",
+    "class/src/core/dom-reader.js~DomReader.html#instance-get-Selector",
+    "src/core/dom-reader.js~DomReader#Selector",
+    "member"
+  ],
+  [
+    "src/core/dom-reader.js~domreader#check",
+    "class/src/core/dom-reader.js~DomReader.html#instance-method-check",
+    "src/core/dom-reader.js~DomReader#check",
+    "method"
+  ],
+  [
+    "src/core/dom-reader.js~domreader#element",
+    "class/src/core/dom-reader.js~DomReader.html#instance-member-element",
+    "src/core/dom-reader.js~DomReader#element",
+    "member"
+  ],
+  [
+    "src/core/dom-reader.js~domreader#selector",
+    "class/src/core/dom-reader.js~DomReader.html#instance-member-selector",
+    "src/core/dom-reader.js~DomReader#selector",
+    "member"
+  ],
+  [
     "src/index.js",
     "file/src/index.js.html",
     "src/index.js",
@@ -343,13 +385,13 @@ window.esdocSearchIndex = [
   ],
   [
     "src/utils/inflector.js~inflector#string",
-    "class/src/utils/inflector.js~Inflector.html#instance-set-String",
+    "class/src/utils/inflector.js~Inflector.html#instance-get-String",
     "src/utils/inflector.js~Inflector#String",
     "member"
   ],
   [
     "src/utils/inflector.js~inflector#string",
-    "class/src/utils/inflector.js~Inflector.html#instance-get-String",
+    "class/src/utils/inflector.js~Inflector.html#instance-set-String",
     "src/utils/inflector.js~Inflector#String",
     "member"
   ],

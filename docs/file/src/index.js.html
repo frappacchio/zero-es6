@@ -38,15 +38,26 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/index.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Logger from &apos;@openmind/litelog&apos;;
-import Inflector from &apos;./utils/inflector&apos;;
+import DomReader from &apos;./core/dom-reader&apos;;
 
-const pippo = new Inflector(&apos;puppo ciao - si &#xE8; &#xF9; ego_kid MessageBusProperty&apos;);
+const domReader = new DomReader();
+const fakeNonEmptyDom = `&lt;div data-component=&quot;pippo&quot;&gt;&lt;/div&gt;
+      &lt;div data-component=&quot;pippo&quot;&gt;
+          &lt;div data-component=&quot;gastone&quot;&gt;&lt;/div&gt;
+      &lt;/div&gt;`;
+const fakeEmptyDom = &apos;&lt;div&gt;Fake&lt;/div&gt;&apos;;
+const fakeAlternativeDom = &apos;&lt;div data-alternative=&quot;component&quot;&gt;Fake&lt;/div&gt;&apos;;
+const emptyElement = document.getElementById(&apos;jhon-doe&apos;);
+document.body.innerHTML = &apos;&apos;;
+const domNode = document.createElement(&apos;main&apos;);
+domNode.innerHTML = fakeAlternativeDom;
+// domNode.innerHTML = fakeNonEmptyDom;
+document.body.append(domNode);
+domReader.Selector = null;
+domReader.Element = emptyElement;
 
-Logger.log(pippo.underscore());
-Logger.log(pippo.camelize(true));
-Logger.log(pippo.camelize());
-Logger.log(pippo.kebab());
-Logger.log(pippo.humanize());
+const components = domReader.check();
+Logger.log(components);
 </code></pre>
 
 </div>

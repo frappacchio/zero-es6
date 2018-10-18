@@ -651,7 +651,7 @@
     "__docId__": 54,
     "kind": "file",
     "name": "src/core/dom-reader.js",
-    "content": "export default class DomReader {\n\n}\n",
+    "content": "import Logger from '@openmind/litelog';\n\nconst Log = new Logger('DomReader');\n\nconst Defaults = {\n  selector: '[data-component]',\n  element: document,\n};\n\n/**\n * Read the DOM and check for Zero Components\n * @class\n */\nexport default class DomReader {\n  /**\n     * Set the element for all operations\n     * If falsy value is passed it returns the default element `document`\n     * @see https://developer.mozilla.org/en-US/docs/Glossary/Falsy\n     * @param {Element} element\n     */\n  set Element(element) {\n    this.element = element;\n  }\n\n  /**\n     * Get the element. If not defined return the document element\n     * @returns {Element|document}\n     * @see https://developer.mozilla.org/en-US/docs/Web/API/Element\n     */\n  get Element() {\n    return !this.element ? Defaults.element : this.element;\n  }\n\n  /**\n     * Set the element selector using CSS selector specs\n     * @see https://developer.mozilla.org/en-US/docs/Learn/CSS/Introduction_to_CSS/Selectors\n     * If falsy value is passed it returns the default selector [data-component]\n     * @see https://developer.mozilla.org/en-US/docs/Glossary/Falsy\n     * @param {String} selector\n     */\n  set Selector(selector) {\n    this.selector = selector;\n  }\n\n  get Selector() {\n    return !this.selector ? Defaults.selector : this.selector;\n  }\n\n  /**\n     * Return the list of components matching given selector\n     *@returns {NodeList}\n     */\n  check() {\n    const components = this.Element.querySelectorAll(this.Selector);\n    return components;\n  }\n}\n",
     "static": true,
     "longname": "/Users/francescocolonna/Desktop/dev/zero-es6/src/core/dom-reader.js",
     "access": "public",
@@ -660,6 +660,48 @@
   },
   {
     "__docId__": 55,
+    "kind": "variable",
+    "name": "Log",
+    "memberof": "src/core/dom-reader.js",
+    "static": true,
+    "longname": "src/core/dom-reader.js~Log",
+    "access": "public",
+    "export": false,
+    "importPath": "zero-es6/src/core/dom-reader.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 3,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 56,
+    "kind": "variable",
+    "name": "Defaults",
+    "memberof": "src/core/dom-reader.js",
+    "static": true,
+    "longname": "src/core/dom-reader.js~Defaults",
+    "access": "public",
+    "export": false,
+    "importPath": "zero-es6/src/core/dom-reader.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 5,
+    "undocument": true,
+    "type": {
+      "types": [
+        "{\"selector\": string, \"element\": *}"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 57,
     "kind": "class",
     "name": "DomReader",
     "memberof": "src/core/dom-reader.js",
@@ -669,16 +711,195 @@
     "export": true,
     "importPath": "zero-es6/src/core/dom-reader.js",
     "importStyle": "DomReader",
-    "description": null,
-    "lineNumber": 1,
-    "undocument": true,
+    "description": "Read the DOM and check for Zero Components",
+    "lineNumber": 14,
+    "unknown": [
+      {
+        "tagName": "@class",
+        "tagValue": ""
+      }
+    ],
     "interface": false
   },
   {
-    "__docId__": 56,
+    "__docId__": 58,
+    "kind": "set",
+    "name": "Element",
+    "memberof": "src/core/dom-reader.js~DomReader",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/core/dom-reader.js~DomReader#Element",
+    "access": "public",
+    "description": "Set the element for all operations\nIf falsy value is passed it returns the default element `document`",
+    "see": [
+      "https://developer.mozilla.org/en-US/docs/Glossary/Falsy"
+    ],
+    "lineNumber": 21,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Element"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "element",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 59,
+    "kind": "member",
+    "name": "element",
+    "memberof": "src/core/dom-reader.js~DomReader",
+    "static": false,
+    "longname": "src/core/dom-reader.js~DomReader#element",
+    "access": "public",
+    "description": null,
+    "lineNumber": 22,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 60,
+    "kind": "get",
+    "name": "Element",
+    "memberof": "src/core/dom-reader.js~DomReader",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/core/dom-reader.js~DomReader#Element",
+    "access": "public",
+    "description": "Get the element. If not defined return the document element",
+    "see": [
+      "https://developer.mozilla.org/en-US/docs/Web/API/Element"
+    ],
+    "lineNumber": 30,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Element|document}"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Element",
+        "document"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 61,
+    "kind": "set",
+    "name": "Selector",
+    "memberof": "src/core/dom-reader.js~DomReader",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/core/dom-reader.js~DomReader#Selector",
+    "access": "public",
+    "description": "Set the element selector using CSS selector specs",
+    "see": [
+      "https://developer.mozilla.org/en-US/docs/Learn/CSS/Introduction_to_CSS/Selectors\nIf falsy value is passed it returns the default selector [data-component]",
+      "https://developer.mozilla.org/en-US/docs/Glossary/Falsy"
+    ],
+    "lineNumber": 41,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "selector",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 62,
+    "kind": "member",
+    "name": "selector",
+    "memberof": "src/core/dom-reader.js~DomReader",
+    "static": false,
+    "longname": "src/core/dom-reader.js~DomReader#selector",
+    "access": "public",
+    "description": null,
+    "lineNumber": 42,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 63,
+    "kind": "get",
+    "name": "Selector",
+    "memberof": "src/core/dom-reader.js~DomReader",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/core/dom-reader.js~DomReader#Selector",
+    "access": "public",
+    "description": null,
+    "lineNumber": 45,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 64,
+    "kind": "method",
+    "name": "check",
+    "memberof": "src/core/dom-reader.js~DomReader",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/core/dom-reader.js~DomReader#check",
+    "access": "public",
+    "description": "Return the list of components matching given selector",
+    "lineNumber": 53,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{NodeList}"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "NodeList"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 65,
     "kind": "file",
     "name": "src/index.js",
-    "content": "import Logger from '@openmind/litelog';\nimport Inflector from './utils/inflector';\n\nconst pippo = new Inflector('puppo ciao - si è ù ego_kid MessageBusProperty');\n\nLogger.log(pippo.underscore());\nLogger.log(pippo.camelize(true));\nLogger.log(pippo.camelize());\nLogger.log(pippo.kebab());\nLogger.log(pippo.humanize());\n",
+    "content": "import Logger from '@openmind/litelog';\nimport DomReader from './core/dom-reader';\n\nconst domReader = new DomReader();\nconst fakeNonEmptyDom = `<div data-component=\"pippo\"></div>\n      <div data-component=\"pippo\">\n          <div data-component=\"gastone\"></div>\n      </div>`;\nconst fakeEmptyDom = '<div>Fake</div>';\nconst fakeAlternativeDom = '<div data-alternative=\"component\">Fake</div>';\nconst emptyElement = document.getElementById('jhon-doe');\ndocument.body.innerHTML = '';\nconst domNode = document.createElement('main');\ndomNode.innerHTML = fakeAlternativeDom;\n// domNode.innerHTML = fakeNonEmptyDom;\ndocument.body.append(domNode);\ndomReader.Selector = null;\ndomReader.Element = emptyElement;\n\nconst components = domReader.check();\nLogger.log(components);\n",
     "static": true,
     "longname": "/Users/francescocolonna/Desktop/dev/zero-es6/src/index.js",
     "access": "public",
@@ -686,12 +907,12 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 57,
+    "__docId__": 66,
     "kind": "variable",
-    "name": "pippo",
+    "name": "domReader",
     "memberof": "src/index.js",
     "static": true,
-    "longname": "src/index.js~pippo",
+    "longname": "src/index.js~domReader",
     "access": "public",
     "export": false,
     "importPath": "zero-es6",
@@ -701,16 +922,142 @@
     "undocument": true,
     "type": {
       "types": [
-        "src/utils/inflector.js~Inflector"
+        "src/core/dom-reader.js~DomReader"
       ]
     },
     "ignore": true
   },
   {
-    "__docId__": 58,
+    "__docId__": 67,
+    "kind": "variable",
+    "name": "fakeNonEmptyDom",
+    "memberof": "src/index.js",
+    "static": true,
+    "longname": "src/index.js~fakeNonEmptyDom",
+    "access": "public",
+    "export": false,
+    "importPath": "zero-es6",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 5,
+    "undocument": true,
+    "type": {
+      "types": [
+        "string"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 68,
+    "kind": "variable",
+    "name": "fakeEmptyDom",
+    "memberof": "src/index.js",
+    "static": true,
+    "longname": "src/index.js~fakeEmptyDom",
+    "access": "public",
+    "export": false,
+    "importPath": "zero-es6",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 9,
+    "undocument": true,
+    "type": {
+      "types": [
+        "string"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 69,
+    "kind": "variable",
+    "name": "fakeAlternativeDom",
+    "memberof": "src/index.js",
+    "static": true,
+    "longname": "src/index.js~fakeAlternativeDom",
+    "access": "public",
+    "export": false,
+    "importPath": "zero-es6",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 10,
+    "undocument": true,
+    "type": {
+      "types": [
+        "string"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 70,
+    "kind": "variable",
+    "name": "emptyElement",
+    "memberof": "src/index.js",
+    "static": true,
+    "longname": "src/index.js~emptyElement",
+    "access": "public",
+    "export": false,
+    "importPath": "zero-es6",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 11,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 71,
+    "kind": "variable",
+    "name": "domNode",
+    "memberof": "src/index.js",
+    "static": true,
+    "longname": "src/index.js~domNode",
+    "access": "public",
+    "export": false,
+    "importPath": "zero-es6",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 13,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 72,
+    "kind": "variable",
+    "name": "components",
+    "memberof": "src/index.js",
+    "static": true,
+    "longname": "src/index.js~components",
+    "access": "public",
+    "export": false,
+    "importPath": "zero-es6",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 20,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 73,
     "kind": "file",
     "name": "src/utils/inflector.js",
-    "content": "import trim from 'lodash/trim';\nimport snakeCase from 'lodash/snakeCase';\nimport camelcase from 'lodash/camelCase';\nimport upperFirst from 'lodash/upperFirst';\nimport kebabCase from 'lodash/kebabCase';\nimport startCase from 'lodash/startCase';\n/**\n * String manipulation utility uses Lodash\n * @class\n * {@link module:lodash/trim}\n * {@link module:lodash/snakeCase}\n * {@link module:lodash/camelCase}\n * {@link module:lodash/upperFirst}\n * {@link module:lodash/kebabCase}\n * {@link module:lodash/startCase}\n */\nclass Inflector {\n  /**\n   * @returns {String}\n   */\n  get String() {\n    return trim(this.string);\n  }\n\n  /**\n   * @param {string} string\n   */\n  set String(string) {\n    this.string = trim(string);\n  }\n\n  /**\n   *create an instance\n   * @param {String} string\n   * @returns {Inflector}\n   */\n  constructor(string) {\n    this.String = string;\n    return this;\n  }\n\n  /**\n   * convert the string to snake case {'Foo Bar' => 'foo_bar'}\n   * @see https://lodash.com/docs/4.17.10#snakeCase\n   * @returns {String}\n   */\n  underscore() {\n    return snakeCase(this.String);\n  }\n\n  /**\n   * convert the string to snake case {'Foo Bar' => 'fooBar'}\n   * @see https://lodash.com/docs/4.17.10#camelCase\n   * @returns {String}\n   */\n  camelize(firstUpperCase = false) {\n    return firstUpperCase ? upperFirst(camelcase(this.String)) : camelcase(this.String);\n  }\n\n  /**\n   * convert the string to kebab case {'Foo Bar' => 'foo-bar'}\n   * @see https://lodash.com/docs/4.17.10#kebabCase\n   * @returns {String}\n   */\n  kebab() {\n    return kebabCase(this.String);\n  }\n\n  /**\n   * @alias kebab\n   */\n  dasherize() {\n    return this.kebab();\n  }\n\n  /**\n   * convert the string to human readable string {'--foo-bar--' >= 'Foo Bar'}\n   * @see https://lodash.com/docs/4.17.10#startCase\n   * @returns {String}\n   */\n  humanize() {\n    return startCase(this.String);\n  }\n}\nexport default Inflector;\n",
+    "content": "import trim from 'lodash/trim';\nimport snakeCase from 'lodash/snakeCase';\nimport camelcase from 'lodash/camelCase';\nimport upperFirst from 'lodash/upperFirst';\nimport kebabCase from 'lodash/kebabCase';\nimport startCase from 'lodash/startCase';\n/**\n * String manipulation utility uses Lodash\n * @class\n * {@link module:lodash/trim}\n * {@link module:lodash/snakeCase}\n * {@link module:lodash/camelCase}\n * {@link module:lodash/upperFirst}\n * {@link module:lodash/kebabCase}\n * {@link module:lodash/startCase}\n */\nclass Inflector {\n  /**\n   * @returns {String}\n   */\n  get String() {\n    return this.string;\n  }\n\n  /**\n   * @param {string} string\n   */\n  set String(string) {\n    this.string = trim(string);\n  }\n\n  /**\n   *create an instance\n   * @param {String} string\n   * @returns {Inflector}\n   */\n  constructor(string) {\n    this.String = string;\n    return this;\n  }\n\n  /**\n   * convert the string to snake case {'Foo Bar' => 'foo_bar'}\n   * @see https://lodash.com/docs/4.17.10#snakeCase\n   * @returns {String}\n   */\n  underscore() {\n    return snakeCase(this.String);\n  }\n\n  /**\n   * convert the string to snake case {'Foo Bar' => 'fooBar'}\n   * @see https://lodash.com/docs/4.17.10#camelCase\n   * @returns {String}\n   */\n  camelize(firstUpperCase = false) {\n    return firstUpperCase ? upperFirst(camelcase(this.String)) : camelcase(this.String);\n  }\n\n  /**\n   * convert the string to kebab case {'Foo Bar' => 'foo-bar'}\n   * @see https://lodash.com/docs/4.17.10#kebabCase\n   * @returns {String}\n   */\n  kebab() {\n    return kebabCase(this.String);\n  }\n\n  /**\n   * @alias kebab\n   */\n  dasherize() {\n    return this.kebab();\n  }\n\n  /**\n   * convert the string to human readable string {'--foo-bar--' >= 'Foo Bar'}\n   * @see https://lodash.com/docs/4.17.10#startCase\n   * @returns {String}\n   */\n  humanize() {\n    return startCase(this.String);\n  }\n}\nexport default Inflector;\n",
     "static": true,
     "longname": "/Users/francescocolonna/Desktop/dev/zero-es6/src/utils/inflector.js",
     "access": "public",
@@ -718,7 +1065,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 59,
+    "__docId__": 74,
     "kind": "class",
     "name": "Inflector",
     "memberof": "src/utils/inflector.js",
@@ -739,7 +1086,7 @@
     "interface": false
   },
   {
-    "__docId__": 60,
+    "__docId__": 75,
     "kind": "get",
     "name": "String",
     "memberof": "src/utils/inflector.js~Inflector",
@@ -771,7 +1118,7 @@
     }
   },
   {
-    "__docId__": 61,
+    "__docId__": 76,
     "kind": "set",
     "name": "String",
     "memberof": "src/utils/inflector.js~Inflector",
@@ -796,7 +1143,7 @@
     ]
   },
   {
-    "__docId__": 62,
+    "__docId__": 77,
     "kind": "member",
     "name": "string",
     "memberof": "src/utils/inflector.js~Inflector",
@@ -813,7 +1160,7 @@
     }
   },
   {
-    "__docId__": 63,
+    "__docId__": 78,
     "kind": "constructor",
     "name": "constructor",
     "memberof": "src/utils/inflector.js~Inflector",
@@ -852,7 +1199,7 @@
     }
   },
   {
-    "__docId__": 65,
+    "__docId__": 80,
     "kind": "method",
     "name": "underscore",
     "memberof": "src/utils/inflector.js~Inflector",
@@ -883,7 +1230,7 @@
     "params": []
   },
   {
-    "__docId__": 66,
+    "__docId__": 81,
     "kind": "method",
     "name": "camelize",
     "memberof": "src/utils/inflector.js~Inflector",
@@ -924,7 +1271,7 @@
     ]
   },
   {
-    "__docId__": 67,
+    "__docId__": 82,
     "kind": "method",
     "name": "kebab",
     "memberof": "src/utils/inflector.js~Inflector",
@@ -955,7 +1302,7 @@
     "params": []
   },
   {
-    "__docId__": 68,
+    "__docId__": 83,
     "kind": "method",
     "name": "dasherize",
     "memberof": "src/utils/inflector.js~Inflector",
@@ -980,7 +1327,7 @@
     }
   },
   {
-    "__docId__": 69,
+    "__docId__": 84,
     "kind": "method",
     "name": "humanize",
     "memberof": "src/utils/inflector.js~Inflector",
@@ -1020,7 +1367,7 @@
   },
   {
     "kind": "packageJSON",
-    "content": "{\n  \"name\": \"zero-es6\",\n  \"version\": \"1.0.0\",\n  \"description\": \"An openmind's Zero project forked and translated in pure ES6 without jQuery dependency\",\n  \"main\": \"src/index.js\",\n  \"license\": \"MIT\",\n  \"scripts\": {\n    \"doc\":\"npx esdoc\",\n    \"build\": \"npx webpack --config webpack.config.js\"\n  },\n  \"devDependencies\": {\n    \"@babel/core\": \"^7.1.2\",\n    \"@babel/plugin-transform-classes\": \"^7.1.0\",\n    \"@babel/preset-env\": \"^7.1.0\",\n    \"babel-loader\": \"^8.0.4\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-publish-markdown-plugin\": \"^1.1.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"eslint\": \"^5.7.0\",\n    \"eslint-config-airbnb-base\": \"^13.1.0\",\n    \"eslint-plugin-import\": \"^2.14.0\",\n    \"webpack\": \"^4.20.2\",\n    \"webpack-cli\": \"^3.1.2\"\n  },\n  \"dependencies\": {\n    \"@openmind/litelog\": \"^3.0.6\",\n    \"lodash\": \"^4.17.11\"\n  }\n}\n",
+    "content": "{\n  \"name\": \"zero-es6\",\n  \"version\": \"1.0.0\",\n  \"description\": \"An openmind's Zero project forked and translated in pure ES6 without jQuery dependency\",\n  \"main\": \"src/index.js\",\n  \"license\": \"MIT\",\n  \"scripts\": {\n    \"test\": \"jest --config jest.config.json\",\n    \"doc\": \"npx esdoc\",\n    \"build\": \"npx webpack --config webpack.config.js\"\n  },\n  \"devDependencies\": {\n    \"@babel/core\": \"^7.1.2\",\n    \"@babel/plugin-transform-classes\": \"^7.1.0\",\n    \"@babel/preset-env\": \"^7.1.0\",\n    \"babel-core\": \"^7.0.0-bridge.0\",\n    \"babel-jest\": \"^23.6.0\",\n    \"babel-loader\": \"^8.0.4\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-publish-markdown-plugin\": \"^1.1.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"eslint\": \"^5.7.0\",\n    \"eslint-config-airbnb-base\": \"^13.1.0\",\n    \"eslint-plugin-import\": \"^2.14.0\",\n    \"jest\": \"^23.6.0\",\n    \"regenerator-runtime\": \"^0.12.1\",\n    \"webpack\": \"^4.20.2\",\n    \"webpack-cli\": \"^3.1.2\"\n  },\n  \"dependencies\": {\n    \"@openmind/litelog\": \"^3.0.6\",\n    \"lodash\": \"^4.17.11\"\n  }\n}\n",
     "longname": "/Users/francescocolonna/Desktop/dev/zero-es6/package.json",
     "name": "package.json",
     "static": true,
