@@ -22,14 +22,17 @@ class Broadcast {
    * Cast a message throug the dom
    * @param {String} msg message to cast
    * @param {Object} obj callback to execute on message receiving
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent#Polyfill
    */
   cast(msg, obj = {}) {
     Log.log(`cast:${msg}`);
-    const details = Object.assign({}, obj, {
+    const detail = Object.assign({}, {
       detail: {},
+    }, {
+      detail: obj,
     });
-    const event = new CustomEvent(`msg:${msg}`, details);
-    this.Broadcaster.dispatchEvent(event);
+    const event = new CustomEvent(`msg:${msg}`, detail);
+    this.Broadcaster.dispatchEvent(event, obj);
     return this;
   }
 
@@ -40,7 +43,7 @@ class Broadcast {
    */
   grab(msg, callback) {
     Log.log(`grab:${msg}`);
-    this.Broadcaster.addEventListener(`msg:${msg}`, callback);
+    this.Broadcaster.addEventListener(`msg:${msg}`, callback, { capture: true, passive: true });
     return this;
   }
 

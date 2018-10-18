@@ -42,7 +42,12 @@ class EventWrapper {
    * @param  {...any} args
    */
   trigger(...args) {
-    const event = new Event(args[0]);
+    const detail = Object.assign({}, {
+      detail: {},
+    }, {
+      detail: args[1],
+    });
+    const event = new CustomEvent(args[0], detail);
     this.element.dispatchEvent(event);
     return this;
   }

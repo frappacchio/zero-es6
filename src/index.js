@@ -30,11 +30,10 @@ wrapper.trigger('click'); */
 Broadcast.cast('pippo');
 Broadcast.start();
 Log.log(Broadcast.Broadcaster); */
-const broadCast = new Broadcast();
+/* const broadCast = new Broadcast();
 
 Log.log(broadCast.Broadcaster);
-broadCast.cast('mesg');
-broadCast.grab('mesg', () => {
-  Log.log('pippo');
+broadCast.grab('mesg', (obj) => {
+  Log.log(obj);
 });
-broadCast.cast('mesg');
+broadCast.cast('mesg', { id: 1 }); */
