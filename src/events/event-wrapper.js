@@ -1,3 +1,7 @@
+/**
+ * A simple wrapper which allows to use method like .on(...), .off(...)
+ * @class
+ */
 class EventWrapper {
   /**
    * @see https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener

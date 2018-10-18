@@ -4,7 +4,12 @@
     "collectCoverageFrom": [
       "**/*.{js}",
       "!**/node_modules/**",
-      "!**/vendor/**"
+      "!**/vendor/**",
+      "!**/docs/**",
+      "!**/dist/**",
+      "!**/jest-coverage-report/**",
+      "!webpack.config.js",
+      "!src/index.js"
     ],
     "coverageDirectory":"./jest-coverage-report"
 }
