@@ -17,9 +17,13 @@ const Defaults = {
  * @class
  */
 class Broadcast {
+  /**
+   * get the event map
+   * @return {EventMap}
+   */
   get EventDictionary() {
     /**
-     * @type {EventDictionary}
+     * @type {EventMap}
      */
     return this.eventDictionary;
   }
@@ -46,7 +50,7 @@ class Broadcast {
    * @see https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent#Polyfill
    */
   cast(msg, obj = {}) {
-    Log.log(`cast:${msg}`);
+    Log.log(`cast => ${msg}`);
     const detail = Object.assign({}, {
       detail: {},
     }, {
@@ -64,7 +68,7 @@ class Broadcast {
    * @param {Object} options
    */
   grab(msg, callback, options = {}) {
-    Log.log(`grab:${msg}`);
+    Log.log(`grab => ${msg}`);
     this.EventDictionary.addEvent(Broadcast.namespace(msg), callback);
     this.Broadcaster.addEventListener(Broadcast.namespace(msg), callback, options);
   }

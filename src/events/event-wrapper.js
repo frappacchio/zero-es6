@@ -54,6 +54,7 @@ class EventWrapper {
    * @param  {...any} args
    */
   on(...args) {
+    this.EventMap.addEvent(args[0], args[1]);
     this.element.addEventListener(...args);
     return this;
   }
@@ -67,6 +68,7 @@ class EventWrapper {
    */
   one(...args) {
     const params = Object.assign({}, { once: true }, args[3]);
+    this.EventMap.addEvent(args[0], args[1]);
     this.element.addEventListener(args[0], args[1], params);
     return this;
   }
@@ -77,6 +79,7 @@ class EventWrapper {
    * @param  {...any} args
    */
   off(...args) {
+    this.EventMap.deleteEvent(args[0], args[1]);
     this.element.removeEventListener(...args);
     return this;
   }

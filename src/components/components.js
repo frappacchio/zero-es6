@@ -1,62 +1,47 @@
-import { List } from 'immutable';
+import UserException from '../core/user-exception';
 
 /**
- * @type {List} componentsList the list
+ * It store the list of components and instances and allow to register and create a component
+ * @type {Object}
  */
-let componentsList = List();
-/**
- * Manage the list of components classes used within the project
- * @class
- */
-class Components {
-  /**
-   * @returns {List} list
-   */
-  static get list() {
-    return componentsList;
-  }
-
+const Components = {
+  List: new Map(),
+  Intances: new Map(),
   /**
    * Check if already exists a component within the list
    * @param {*} component
    * @returns {undefined|*}
    */
-  static exists(component) {
-    return componentsList.find(element => element.constructor.name === component.constructor.name);
-  }
-
+  exists(component) {
+    return Components.List.has(component.name);
+  },
   /**
-   * Returns the index for given component
-   * Returns -1 if component does not exists
+   * Register new component and add it to the List
    * @param {*} component
-   * @returns {Number}
    */
-  static index(component) {
-    return componentsList.indexOf(component);
-  }
-
-  /**
-   * Add a component to the list if not already has been adedd
-   * @param {*} component
-   * @returns {List}
-   */
-  static add(component) {
+  register(component) {
     if (!Components.exists(component)) {
-      componentsList = componentsList.push(component);
+      Components.List.set(component.name, component);
+    } else {
+      throw new UserException(`The component '${component.name}' already exists`);
     }
-    return componentsList;
-  }
-
+  },
   /**
-   * Remove a component to the list if exists
+   * Create an instance of the new component and add it to the Intances list
+   * @param {Element} element
    * @param {*} component
-   * @returns {List}
+   * @returns {*} instance
+   * @throws {UserException} if the component has not been registered
    */
-  static remove(component) {
-    if (Components.exists(component)) {
-      componentsList = componentsList.remove(Components.index(component));
+  create(element, component) {
+    if (Components.List.has(component.name)) {
+      const ClassName = Components.List.get(component.name);
+      const instance = new ClassName(element);
+      Components.Intances.set(element, instance);
+      return instance;
     }
-    return componentsList;
-  }
-}
+    throw new UserException(`You have to register class '${component.name}' before create a component`);
+  },
+};
+
 export default Components;

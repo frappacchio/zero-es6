@@ -1,6 +1,7 @@
 import Logger from '@openmind/litelog';
 import EventWrapper from '../events/event-wrapper';
 import Broadcast from '../events/broadcats';
+import Inflector from '../utils/inflector';
 
 /**
  * The Logger
@@ -11,6 +12,13 @@ const Log = new Logger('Component');
  * @class
  */
 class Component extends EventWrapper {
+  /**
+   * @returns {String} the kebab-case name of given component class
+   */
+  static get Name() {
+    return new Inflector(this.name).dasherize();
+  }
+
   /**
    * @return {Object}
    */
@@ -85,8 +93,9 @@ class Component extends EventWrapper {
         this.UNGRAB(key, this.Messages[key]);
       });
     }
-    Log.log('destroyed', this, 'on', this.element);
-    this.trigger('destroy', { component: this });
+    Log.log('destroyed', this.constructor.name, 'on', this.element);
+    // this.trigger(`${this.constructor.name}:destroy`, { component: this });
+    // this.Broadcast.cast(`${this.constructor.name}:destroy`);
   }
 
   /**
@@ -96,17 +105,20 @@ class Component extends EventWrapper {
    */
   constructor(element = document.createElement('span'), broadcast = new Broadcast()) {
     super(element);
+    if (!this.element.getAttribute('[data-component]')) {
+      this.element.setAttribute('data-component', this.Name);
+    }
     this.Broadcast = broadcast;
-    Log.log('initializing', this.constructor.name);
+    Log.log(`initializing ${this.constructor.name} with [data-component="${this.Name}"]`);
     if (Object.keys(this.Messages).length !== 0) {
       Object.keys(this.Messages).forEach((key) => {
         this.GRAB(key, this.Messages[key]);
       });
     }
-    this.trigger('added', { component: this });
-    setTimeout(() => {
-      this.Broadcast.cast('');
-    }, 0);
+    // this.trigger(`${this.Name}:create`, { component: this });
+    /* setTimeout(() => {
+      this.Broadcast.cast(`${this.Name}:create`);
+    }, 100); */
   }
 }
 

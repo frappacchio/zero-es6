@@ -1,41 +1,26 @@
-import { List } from 'immutable';
 import Components from '../../src/components/components';
 import Component from '../../src/components/component';
+import UserException from '../../src/core/user-exception';
 
-const componentInstance = new Component();
 
 describe('Components', () => {
-  test('it adds a new component instance to the ComponentsList and return the new List', () => {
-    expect(Components.add(componentInstance).size).toBe(1);
+  test('Add a component to the list', () => {
+    Components.register(Component);
+    expect(Components.List.size).toBe(1);
   });
-  test('it adds a new component instance to the ComponentsList and return the new List', () => {
-
+  test('Cannot add the same component twice to the list', () => {
+    expect(() => {
+      Components.register(Component);
+    }).toThrow(UserException);
   });
-  test('it will not add a new equal component to the list if already exists', () => {
-    const anotherInstance = new Component();
-    Components.add(anotherInstance);
-    expect(Components.list.size).toBe(1);
+  test('Cannot create an instance of component which has not been registered', () => {
+    expect(() => {
+      Components.create(document.createElement('span'), Function);
+    }).toThrow(UserException);
   });
-  test('it removes a component instance from the ComponentsList and return the new List', () => {
-    expect(Components.remove(componentInstance).size).toBe(0);
-  });
-  test('check if the component exists and returns it', () => {
-    Components.add(componentInstance);
-    expect(Components.exists(componentInstance)).not.toBeUndefined();
-  });
-  test('if does not exists a component instance it returns undefined', () => {
-    Components.remove(componentInstance);
-    expect(Components.exists()).toBeUndefined();
-  });
-  test('check the index for existing component instance', () => {
-    Components.add(componentInstance);
-    expect(Components.index(componentInstance)).toBe(0);
-  });
-  test('returns -1 for non existing component', () => {
-    Components.remove(componentInstance);
-    expect(Components.index(componentInstance)).toBe(-1);
-  });
-  test('returns -1 for non existing component', () => {
-    expect(Components.remove(componentInstance).size).toBe(0);
+  test('Create a component instance after correctly register', () => {
+    const el = document.createElement('span');
+    Components.create(el, Component);
+    expect(Components.Intances.size).toBe(1);
   });
 });
