@@ -37,3 +37,19 @@ broadCast.grab('mesg', (obj) => {
   Log.log(obj);
 });
 broadCast.cast('mesg', { id: 1 }); */
+
+const broadCast = new Broadcast();
+
+function pippo(event) {
+  Log.log('pippoMessage');
+}
+broadCast.grab('pippoMessage', () => {
+  Log.log('anonimous');
+});
+broadCast.grab('pippoMessage', pippo);
+broadCast.cast('pippoMessage');
+broadCast.ungrab('pippoMessage', pippo);
+broadCast.ungrab('pippoMessage');
+broadCast.cast('pippoMessage');
+broadCast.cast('pippoMessage');
+broadCast.cast('pippoMessage');

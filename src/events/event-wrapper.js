@@ -1,8 +1,53 @@
+import EventMap from './event-map';
 /**
  * A simple wrapper which allows to use method like .on(...), .off(...)
  * @class
  */
 class EventWrapper {
+  /**
+   * Set the event map
+   * @param {EventMap} map
+   */
+  set EventMap(map) {
+    /**
+     * @type {EventMap}
+     */
+    this.eventMap = map;
+  }
+
+  /**
+   * Get the event map
+   * @return {EventMap} the map
+   */
+  get EventMap() {
+    /**
+     * @type {EventMap}
+     */
+    return this.eventMap;
+  }
+
+  /**
+   * Set the Element which represent the current component
+   * @param {Element} domElement
+   */
+  set element(domElement) {
+    /**
+     * @type {Element}
+     */
+    this.domElement = domElement;
+  }
+
+  /**
+   * Get the Element which represent the current component
+   * @return {Element} domElement
+   */
+  get element() {
+    /**
+     * @type {Element}
+     */
+    return this.domElement;
+  }
+
   /**
    * @see https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
    * @alias addEventListener
@@ -78,33 +123,12 @@ class EventWrapper {
   }
 
   /**
-   * Set the Element which represent the current component
-   * @param {Element} domElement
-   */
-  set element(domElement) {
-    /**
-     * @type {Element}
-     */
-    this.domElement = domElement;
-  }
-
-  /**
-   * Get the Element which represent the current component
-   * @return {Element} domElement
-   */
-  get element() {
-    /**
-     * @type {Element}
-     */
-    return this.domElement;
-  }
-
-  /**
    * Create the wrapper
    * @param {Element} element
    */
   constructor(element) {
     this.element = element;
+    this.EventMap = new EventMap();
   }
 }
 

@@ -1,4 +1,5 @@
 import Logger from '@openmind/litelog';
+import EventMap from './event-map';
 
 /**
  * The Logger
@@ -16,12 +17,26 @@ const Defaults = {
  * @class
  */
 class Broadcast {
+  get EventDictionary() {
+    /**
+     * @type {EventDictionary}
+     */
+    return this.eventDictionary;
+  }
+
   /**
    * Get the Broadcaster element
    * @returns {Element} the element used as Broadcaster
    */
   get Broadcaster() {
     return this.broadcaster;
+  }
+
+  /**
+   * @param {String} msg the message
+   */
+  static namespace(msg) {
+    return `msg:${msg}`;
   }
 
   /**
@@ -37,7 +52,8 @@ class Broadcast {
     }, {
       detail: obj,
     });
-    const event = new CustomEvent(`msg:${msg}`, detail);
+    const event = new CustomEvent(Broadcast.namespace(msg), detail);
+    // const event = new Event(Broadcast.namespace(msg), obj);
     this.Broadcaster.dispatchEvent(event, obj);
   }
 
@@ -45,10 +61,12 @@ class Broadcast {
    * Add the listener for given event and dispatch the event
    * @param {String} msg message to cast
    * @param {Function} callback callback to execute on message receiving
+   * @param {Object} options
    */
-  grab(msg, callback) {
+  grab(msg, callback, options = {}) {
     Log.log(`grab:${msg}`);
-    this.Broadcaster.addEventListener(`msg:${msg}`, callback, { capture: true, passive: true });
+    this.EventDictionary.addEvent(Broadcast.namespace(msg), callback);
+    this.Broadcaster.addEventListener(Broadcast.namespace(msg), callback, options);
   }
 
   /**
@@ -57,7 +75,10 @@ class Broadcast {
    * @param {Function} callback callback to execute on message receiving
    */
   ungrab(msg, callback) {
-    this.Broadcaster.removeEventListener(`msg:${msg}`, callback);
+    const deleteCallback = this.EventDictionary.deleteEvent(Broadcast.namespace(msg), callback);
+    if (deleteCallback) {
+      this.Broadcaster.removeEventListener(Broadcast.namespace(msg), deleteCallback.callback);
+    }
   }
 
   /**
@@ -70,6 +91,10 @@ class Broadcast {
      * @type {Element}
      */
     this.broadcaster = broadcaster;
+    /**
+     * @type {EventMap}
+     */
+    this.eventDictionary = new EventMap();
   }
 }
 
