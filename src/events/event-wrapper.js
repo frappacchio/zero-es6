@@ -1,4 +1,9 @@
+import Logger from '@openmind/litelog';
 import EventMap from './event-map';
+/**
+ * The Logger
+ */
+const Log = new Logger('EventWrapper');
 /**
  * A simple wrapper which allows to use method like .on(...), .off(...)
  * @class
@@ -55,7 +60,7 @@ class EventWrapper {
    */
   on(...args) {
     this.EventMap.addEvent(args[0], args[1]);
-    this.element.addEventListener(...args);
+    this.element.addEventListener(args[0], args[1]);
     return this;
   }
 
@@ -79,8 +84,10 @@ class EventWrapper {
    * @param  {...any} args
    */
   off(...args) {
-    this.EventMap.deleteEvent(args[0], args[1]);
-    this.element.removeEventListener(...args);
+    const deletedEvent = this.EventMap.deleteEvent(args[0], args[1]);
+    deletedEvent.forEach((event) => {
+      this.element.removeEventListener(event.message, event.callback);
+    });
     return this;
   }
 
@@ -88,6 +95,7 @@ class EventWrapper {
    * @see https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/dispatchEvent
    * @alias dispatchEvent
    * @param  {...any} args
+   * @see @see https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent#Polyfill
    */
   trigger(...args) {
     const detail = Object.assign({}, {
@@ -129,7 +137,8 @@ class EventWrapper {
    * Create the wrapper
    * @param {Element} element
    */
-  constructor(element) {
+  constructor(element = document.createElement('span')) {
+    // Controllo sulla configurazione dell'app
     this.element = element;
     this.EventMap = new EventMap();
   }

@@ -89,6 +89,8 @@ class Inflector {
      * @type {String}
      */
     this.String = string;
+    // If you want to make a Singleton return This (nome della classe)
+    // return Inflector;
   }
 }
 export default Inflector;

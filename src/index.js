@@ -18,6 +18,46 @@ component.on('click', () => {
 });
 Log.log(component);
  */
-Components.register(Component);
+/* Components.register(Component);
 const el = document.createElement('span');
 Components.create(el, Component);
+ */
+
+// Zero.use( FakeDom );
+// Zero.use( DomReader );
+
+// const fakeDom = new FakeDoma("soan");
+// const zeroDom = new ZDom('soan');
+
+// https://github.com/jsdom/jsdom
+
+/* const fakeDom = { addEventListener: () => {} };
+const fakeDomBroadcast = { addEventListener: () => {}, dispatchEvent: () => {} };
+
+const broadcats = new Broadcast(fakeDomBroadcast);
+
+const component = new Component(fakeDom, broadcats);
+
+
+component.GRAB('message', () => {
+  Log.log('pippo');
+});
+
+broadcats.cast('message');
+ */
+
+const component = new Component();
+component.on('messaggio', () => {
+  Log.log('pippo');
+});
+component.on('messaggio', () => {
+  Log.log('pluto');
+});
+Log.log(component.EventMap.Map[0].callback.name === '');
+component.trigger('messaggio');
+component.trigger('messaggio');
+component.trigger('messaggio');
+component.off('messaggio');
+component.trigger('messaggio');
+component.trigger('messaggio');
+component.trigger('messaggio');

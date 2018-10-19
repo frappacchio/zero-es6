@@ -1,64 +1,48 @@
 import Logger from '@openmind/litelog';
-import EventMap from './event-map';
+import EventWrapper from './event-wrapper';
 
 /**
  * The Logger
  */
 const Log = new Logger('Broadcast');
 /**
- * @type {Object} Deafult settings
- */
-const Defaults = {
-  ID: 'zero-broadcaster',
-  element: 'span',
-};
-/**
  * Grab and dispatch messages throug the dom
  * @class
  */
-class Broadcast {
+class Broadcast extends EventWrapper {
   /**
-   * get the event map
-   * @return {EventMap}
+   * Get the default settings
    */
-  get EventDictionary() {
+  get Defaults() {
     /**
-     * @type {EventMap}
+     * @return {Object}
      */
-    return this.eventDictionary;
+    return this.defaults;
   }
 
   /**
-   * Get the Broadcaster element
-   * @returns {Element} the element used as Broadcaster
+   * Set the configuration
+   * @param {Object}
    */
-  get Broadcaster() {
-    return this.broadcaster;
+  set Defaults(options) {
+    this.defaults = options;
   }
 
   /**
    * @param {String} msg the message
    */
-  static namespace(msg) {
-    return `msg:${msg}`;
+  getNamespace(msg) {
+    return `${this.Defaults.namespace}:${msg}`;
   }
 
   /**
    * Cast a message throug the dom
    * @param {String} msg message to cast
    * @param {Object} obj callback to execute on message receiving
-   * @see https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent#Polyfill
    */
   cast(msg, obj = {}) {
-    Log.log(`cast => ${msg}`);
-    const detail = Object.assign({}, {
-      detail: {},
-    }, {
-      detail: obj,
-    });
-    const event = new CustomEvent(Broadcast.namespace(msg), detail);
-    // const event = new Event(Broadcast.namespace(msg), obj);
-    this.Broadcaster.dispatchEvent(event, obj);
+    Log.log(`cast => ${this.getNamespace(msg)}`);
+    this.trigger(this.getNamespace(msg), obj);
   }
 
   /**
@@ -68,9 +52,8 @@ class Broadcast {
    * @param {Object} options
    */
   grab(msg, callback, options = {}) {
-    Log.log(`grab => ${msg}`);
-    this.EventDictionary.addEvent(Broadcast.namespace(msg), callback);
-    this.Broadcaster.addEventListener(Broadcast.namespace(msg), callback, options);
+    Log.log(`grab => ${this.getNamespace(msg)}`);
+    this.on(this.getNamespace(msg), callback, options);
   }
 
   /**
@@ -79,26 +62,12 @@ class Broadcast {
    * @param {Function} callback callback to execute on message receiving
    */
   ungrab(msg, callback) {
-    const deleteCallback = this.EventDictionary.deleteEvent(Broadcast.namespace(msg), callback);
-    if (deleteCallback) {
-      this.Broadcaster.removeEventListener(Broadcast.namespace(msg), deleteCallback.callback);
-    }
+    this.off(this.getNamespace(msg), callback);
   }
 
-  /**
-   * Initialize the Broadcast
-   */
-  constructor() {
-    const broadcaster = document.createElement(Defaults.element);
-    broadcaster.setAttribute('id', Defaults.ID);
-    /**
-     * @type {Element}
-     */
-    this.broadcaster = broadcaster;
-    /**
-     * @type {EventMap}
-     */
-    this.eventDictionary = new EventMap();
+  constructor(element, options = { namespace: 'msg' }) {
+    super(element);
+    this.Defaults = Object.assign({}, options);
   }
 }
 

@@ -2,27 +2,44 @@ import Broadcast from '../../src/events/broadcats';
 
 
 describe('Broadcast', () => {
-  test('Broadcaster is a `span` tag', () => {
-    const broadCast = new Broadcast();
-    expect(broadCast.Broadcaster.tagName).toBe('SPAN');
+  test('the deafult namespace is `msg`', () => {
+    const broadcats = new Broadcast(document.createElement('span'));
+    expect(broadcats.Defaults.namespace).toBe('msg');
   });
-  test('Cast and grab a message', () => {
-    const broadCast = new Broadcast();
-    const mockCallback = jest.fn(() => {});
-    broadCast.grab('customMessage', mockCallback);
-    broadCast.cast('customMessage');
-    expect(mockCallback.mock.calls.length).toBe(1);
+  test('an event name will be composed by the passed name and the namespace', () => {
+    const broadcats = new Broadcast(document.createElement('span'));
+    expect(broadcats.getNamespace('test')).toBe('msg:test');
   });
-  test('ungrab a message', () => {
-    const broadCast = new Broadcast();
-    const mockCallback = jest.fn(() => {});
-    broadCast.grab('newcustomMessage', mockCallback);
-    broadCast.cast('newcustomMessage');
-    broadCast.cast('newcustomMessage');
-    broadCast.ungrab('newcustomMessage', mockCallback);
-    broadCast.cast('newcustomMessage');
-    broadCast.cast('newcustomMessage');
-    broadCast.cast('newcustomMessage');
-    expect(mockCallback.mock.calls.length).toBe(2);
+  test('if an event is casted the broadcast listen to it', () => {
+    const mokedCallback = jest.fn(() => {});
+    const broadcats = new Broadcast(document.createElement('span'));
+    broadcats.grab('testEvent', mokedCallback);
+    broadcats.cast('testEvent');
+    expect(mokedCallback.mock.calls.length).toBe(1);
+  });
+  test('if i ungrab en event it will not be listened anymore', () => {
+    const mokedCallback = jest.fn(() => {});
+    const broadcats = new Broadcast(document.createElement('span'));
+    broadcats.grab('testEvent', mokedCallback);
+    broadcats.cast('testEvent');
+    broadcats.cast('testEvent');
+    broadcats.ungrab('testEvent', mokedCallback);
+    broadcats.cast('testEvent');
+    broadcats.cast('testEvent');
+    broadcats.cast('testEvent');
+    expect(mokedCallback.mock.calls.length).toBe(2);
+  });
+  test('it\'s possible to use arrow functions or anonimous functions', () => {
+    const broadcats = new Broadcast(document.createElement('span'));
+    let variable = 0;
+    broadcats.grab('testEvent', () => {
+      variable += 1;
+    });
+    broadcats.cast('testEvent');
+    broadcats.cast('testEvent');
+    broadcats.ungrab('testEvent');
+    broadcats.cast('testEvent');
+    broadcats.cast('testEvent');
+    expect(variable).toBe(2);
   });
 });

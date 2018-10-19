@@ -15,8 +15,8 @@ class Component extends EventWrapper {
   /**
    * @returns {String} the kebab-case name of given component class
    */
-  static get Name() {
-    return new Inflector(this.name).dasherize();
+  get Name() {
+    return new Inflector(this.constructor.name).dasherize();
   }
 
   /**
@@ -26,7 +26,14 @@ class Component extends EventWrapper {
     /**
      * @type {Object} msg the object with all messages
      */
-    return {};
+    return this.messages;
+  }
+
+  /**
+   * @return {Object}
+   */
+  set Messages(messages) {
+    this.messages = messages;
   }
 
   /**
@@ -55,8 +62,8 @@ class Component extends EventWrapper {
    * @param {Function} callback callback to exectute
    * @returns {Component} the instance of the class
    */
-  GRAB(message, callback) {
-    this.Broadcast.grab(message, callback);
+  GRAB(...args) {
+    this.Broadcast.on(this.Broadcast.getNamespace(args[0]), args[1]);
     return this;
   }
 
@@ -66,8 +73,8 @@ class Component extends EventWrapper {
    * @param {Function} callback callback to exectute
    * @returns {Component} the instance of the class
    */
-  UNGRAB(message, callback) {
-    this.Broadcast.ungrab(message, callback);
+  UNGRAB(...args) {
+    this.Broadcast.off(args[0], args[1]);
     return this;
   }
 
@@ -103,22 +110,19 @@ class Component extends EventWrapper {
    * @param {Element} element
    * @param {Broadcast} [broadcast = new Broadcast()] the broadcast for this component
    */
-  constructor(element = document.createElement('span'), broadcast = new Broadcast()) {
+  constructor(element, broadcast = new Broadcast()) {
     super(element);
     if (!this.element.getAttribute('[data-component]')) {
       this.element.setAttribute('data-component', this.Name);
     }
     this.Broadcast = broadcast;
+    this.Messages = Object.assign({}, this.Messages);
     Log.log(`initializing ${this.constructor.name} with [data-component="${this.Name}"]`);
     if (Object.keys(this.Messages).length !== 0) {
       Object.keys(this.Messages).forEach((key) => {
         this.GRAB(key, this.Messages[key]);
       });
     }
-    // this.trigger(`${this.Name}:create`, { component: this });
-    /* setTimeout(() => {
-      this.Broadcast.cast(`${this.Name}:create`);
-    }, 100); */
   }
 }
 
