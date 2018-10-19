@@ -27,18 +27,6 @@ class EventMap {
   }
 
   /**
-   * Check if given event already exists
-   * and returns the index in the map if exists
-   * or -1 if not exists
-   * @param {String} message
-   * @param {*} callback
-   * @returns {Number}
-   */
-  exists(message, callback = { name: '' }) {
-    return this.Map.findIndex(obj => obj.message === message && obj.callback.name === callback.name);
-  }
-
-  /**
    * Add event to the map
    * @param {String} message
    * @param {Function} callback
