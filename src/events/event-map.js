@@ -1,29 +1,27 @@
 import EventItem from './event-item';
 
 /**
- * Manage all the component events for given namespace
- *@class
+ * Stores all the events to an `Array`
+ *
+ * @class EventMap
  */
 class EventMap {
   /**
-   * @type {Array}
+   * Returns the Map
+   * @returns {Array}
+   * @readonly
+   * @memberof EventMap
    */
   get Map() {
     return this.map;
   }
 
-  /**
-   * @param {Array} map
-   */
-  set Map(map) {
-    this.map = map;
-  }
-
 
   /**
    * Returns the index of given `eventItem` within the map
+   * If no event match the name will returns -1
    * @param {EventItem} eventItem
-   * @returns {Number}
+   * @returns {number}
    */
   eventIndex(eventItem) {
     return this.Map.indexOf(eventItem);
@@ -33,7 +31,7 @@ class EventMap {
    * Add event to the map
    * @param {String} eventName
    * @param {Function} callback
-   * @returns {Map} map
+   * @returns {EventItem}
    */
   addEvent(eventName, callback) {
     const eventItem = new EventItem(eventName, callback);
@@ -67,11 +65,8 @@ class EventMap {
     return this.Map.filter(obj => obj.event === eventName && obj.uuid === uuid);
   }
 
-  /**
-   * Create an empty Map
-   */
   constructor() {
-    this.Map = [];
+    this.map = [];
   }
 }
 export default EventMap;

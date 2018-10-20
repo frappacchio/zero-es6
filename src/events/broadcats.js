@@ -13,6 +13,7 @@ class Broadcast extends EventWrapper {
   /**
    * Get the default settings
    * @return {object}
+   * @memberof Broadcast
    */
   get Defaults() {
     return this.defaults;
@@ -21,6 +22,7 @@ class Broadcast extends EventWrapper {
   /**
    * Set the configuration
    * @param {object} options
+   * @memberof Broadcast
    */
   set Defaults(options) {
     this.defaults = options;
@@ -50,21 +52,22 @@ class Broadcast extends EventWrapper {
   /**
    * An alias for {@link #broadcastlisten listen} method
    * @param {string} msg message to cast
-   * @param {function} callback callback to execute on message receiving
+   * @param {function} [callback=()=>{}]  callback to execute on message receiving
    * @param {object} options
+   * @returns {void}
    * @deprecated use `listen`
    */
-  grab(msg, callback, options = {}) {
+  grab(msg, callback = () => {}, options = {}) {
     this.listen(msg, callback, options);
   }
 
   /**
    * Add the listener for given event and dispatch the event
    * @param {string} msg message to cast
-   * @param {function} callback callback to execute on message receiving
+   * @param {function} [callback=()=>{}] callback to execute on message receiving
    * @param {object} options
    */
-  listen(msg, callback, options = {}) {
+  listen(msg, callback = () => {}, options = {}) {
     Log.log(`listen => ${msg}`);
     return this.on(msg, callback, options);
   }
@@ -72,19 +75,19 @@ class Broadcast extends EventWrapper {
   /**
    * An alias for {@link #broadcastunlisten unlisten} method
    * @param {string} msg message to remove the listen to
-   * @param {function} callback callback to execute on message receiving
+   * @param {function} [callback=()=>{}] callback to execute on message receiving
    * @deprecated use `unlisten`
    */
-  ungrab(msg, callback) {
+  ungrab(msg, callback = () => {}) {
     this.unlisten(msg, callback);
   }
 
   /**
    * Remove the listener for given message
    * @param {string} msg message to cast
-   * @param {function} callback callback to execute on message receiving
+   * @param {function} [callback=()=>{}] callback to execute on message receiving
    */
-  unlisten(msg, callback) {
+  unlisten(msg, callback = () => {}) {
     Log.log(`ungrab => ${msg}`);
     const strictMode = typeof callback === 'string' && callback.length > 1;
     this.off(msg, callback, strictMode);

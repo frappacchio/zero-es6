@@ -6,17 +6,30 @@ import EventMap from '../events/event-map';
 
 const Log = new Logger('Component');
 /**
- * It define a basic component
- * @class
+ * A basic component class
+ * @param {element} element the DOM element which represents the component
+ * @param {Broadcast} [broadcast = new Broadcast()] the Broadcast for this component
+ * @class Component
+ * @extends {EventWrapper}
  */
 class Component extends EventWrapper {
   /**
-   * @returns {String} the kebab-case name of given component class
+   * Gets the kebab-case name of component
+   * @example `SuperClass` will returns `super-class`
+   * @readonly
+   * @memberof Component
+   * @returns {string}
    */
   get Name() {
     return kebabCase(this.constructor.name);
   }
 
+  /**
+   * Gets the component messages
+   * @returns {object}
+   * @readonly
+   * @memberof Component
+   */
   get Messages() {
     return this.messages;
   }
@@ -24,86 +37,111 @@ class Component extends EventWrapper {
   /**
    * Set all message which will be read from the component
    * by the Broadcast
-   * @set
-   * @param {Object} messages
+   * @param {object} messages
+   * @memberof Component
    */
   set Messages(messages) {
     this.messages = messages;
   }
 
   /**
-   * Set the broadcast
-   * @param {Broadcast} broadcast
+   * Returns the Broadcast for the component instance
+   * @returns {Broadcast}
+   * @readonly
+   * @memberof Component
    */
-  set Broadcast(broadcast) {
-    this.broadcast = broadcast;
-  }
-
   get Broadcast() {
     return this.broadcast;
   }
 
   /**
-   * Grabs the broadcast message
-   * @param {...any} args message to broadcast
-   * @returns {Component} the instance of the class
-   * @deprecated
+   * Set the broadcast
+   * @param {Broadcast} broadcast
+   * @memberof Component
    */
-  grab(...args) {
-    const emitter = this.Broadcast.grab(args[0], args[1]);
-    this.broadcastMap.Map.push(emitter);
-    return this;
+  set Broadcast(broadcast) {
+    this.broadcast = broadcast;
+  }
+
+
+  /**
+   * An alias for {@link #componentlisten listen} method
+   * @param {string} msg message to broadcast
+   * @param {function} callback message to broadcast
+   * @returns {void}
+   * @deprecated use `listen`
+   */
+  grab(msg, callback = () => {}) {
+    this.listen(msg, callback);
   }
 
   /**
-   * Grabs the broadcast message
-   * @param {...any} args message to broadcast
-   * @returns {Component} the instance of the class
+   * Listen to the broadcast message
+   * @param {string} msg message to broadcast
+   * @param {function} [callback = ()=>{}] message to broadcast
+   * @returns {void}
    */
-  ungrab(...args) {
+  listen(msg, callback = () => {}) {
+    const emitter = this.Broadcast.listen(msg, callback);
+    this.broadcastMap.Map.push(emitter);
+  }
+
+  /**
+   * An alias for {@link #componentunlisten unlisten} method
+   * @param {string} msg message to broadcast
+   * @returns {void}
+   * @deprecated use `unlisten`
+   */
+  ungrab(msg) {
+    return this.unlisten(msg);
+  }
+
+  /**
+   * Stop listen to the given message
+   * @param {string} msg message to broadcast
+   * @returns {void}
+   * @deprecated use `unlisten`
+   */
+  unlisten(msg) {
     this.broadcastMap.Map.filter((obj) => {
       const deletedEvent = this.broadcastMap.strictDeleteEvent(obj.event, obj.uuid);
       deletedEvent.forEach((event) => {
-        this.Broadcast.ungrab(args[0], event.uuid);
+        this.Broadcast.ungrab(msg, event.uuid);
       });
       return deletedEvent;
     });
-    return this;
   }
 
   /**
-   * Broadcast a message to the broadcast
-   * @param {String} message message to broadcast
-   * @param  {...any} obj
-   * @returns {Component} the instance of the class
+   * An alias for {@link #componentcast cast} method
+   * @param {string} message
+   * @param {object} [object={}]
+   * @deprecated user `emit`
    */
-  cast(message, ...obj) {
-    this.Broadcast.cast(message, obj);
-    return this;
+  cast(message, object = {}) {
+    return this.emit(message, object);
   }
 
+  /**
+   * Emit the message to the component Broadcast
+   * @param {string} message
+   * @param {object} [object={}]
+   */
+  emit(message, object = {}) {
+    this.Broadcast.emit(message, object);
+  }
 
   /**
-   * Destroy the component instance
-   * @returns {void}
+   * Destroy and stop to listen for Broadcast messages
    */
   destroy() {
-    /* Object.keys(this.Messages).forEach((key) => {
-      this.UNGRAB(key);
-    }); */
     this.broadcastMap.Map.forEach((obj) => {
-      this.UNGRAB(obj.event.replace(`${this.Broadcast.Defaults.namespace}:`, ''), obj.uuid);
+      this.unlisten(obj.event.replace(`${this.Broadcast.Defaults.namespace}:`, ''), obj.uuid);
     });
     Log.log('destroyed', this.constructor.name, 'on', this.element);
-    // this.trigger(`${this.constructor.name}:destroy`, { component: this });
-    // this.Broadcast.cast(`${this.constructor.name}:destroy`);
+    this.Broadcast.emit(`${this.constructor.name}:destroy`);
   }
 
-  /**
-   * Create a component instance
-   * @param {Element} element
-   * @param {Broadcast} [broadcast = new Broadcast()] the broadcast for this component
-   */
   constructor(element, broadcast = new Broadcast()) {
     super(element);
     if (!this.element.getAttribute('[data-component]')) {
@@ -112,10 +150,11 @@ class Component extends EventWrapper {
     this.Broadcast = broadcast;
     this.broadcastMap = new EventMap();
     this.Messages = Object.assign({}, this.Messages);
-    Log.log(`initializing ${this.constructor.name} with [data-component="${this.Name}"]`);
     Object.keys(this.Messages).forEach((key) => {
-      this.GRAB(key, this.Messages[key]);
+      this.listen(key, this.Messages[key]);
     });
+    Log.log(`initializing ${this.constructor.name} with [data-component="${this.Name}"]`);
+    this.Broadcast.emit(`${this.constructor.name}:create`);
   }
 }
 

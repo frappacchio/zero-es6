@@ -1,9 +1,12 @@
 /**
- * Should extends Error
+ * UserException
+ * @param {string} message the message to Throw
+ * @param {string} [type='UserException'] the type of exception
+ * @class UserException
  */
 class UserException {
-  constructor(msg, type = 'UserException') {
-    this.message = msg;
+  constructor(message, type = 'UserException') {
+    this.message = message;
     this.type = type;
   }
 }
