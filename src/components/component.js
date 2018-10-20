@@ -47,8 +47,9 @@ class Component extends EventWrapper {
    * Grabs the broadcast message
    * @param {...any} args message to broadcast
    * @returns {Component} the instance of the class
+   * @deprecated
    */
-  GRAB(...args) {
+  grab(...args) {
     const emitter = this.Broadcast.grab(args[0], args[1]);
     this.broadcastMap.Map.push(emitter);
     return this;
@@ -59,7 +60,7 @@ class Component extends EventWrapper {
    * @param {...any} args message to broadcast
    * @returns {Component} the instance of the class
    */
-  UNGRAB(...args) {
+  ungrab(...args) {
     this.broadcastMap.Map.filter((obj) => {
       const deletedEvent = this.broadcastMap.strictDeleteEvent(obj.event, obj.uuid);
       deletedEvent.forEach((event) => {
@@ -76,7 +77,7 @@ class Component extends EventWrapper {
    * @param  {...any} obj
    * @returns {Component} the instance of the class
    */
-  CAST(message, ...obj) {
+  cast(message, ...obj) {
     this.Broadcast.cast(message, obj);
     return this;
   }
