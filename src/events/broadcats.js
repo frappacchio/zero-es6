@@ -53,7 +53,7 @@ class Broadcast extends EventWrapper {
    */
   grab(msg, callback, options = {}) {
     Log.log(`grab => ${this.getNamespace(msg)}`);
-    this.on(this.getNamespace(msg), callback, options);
+    return this.on(this.getNamespace(msg), callback, options);
   }
 
   /**

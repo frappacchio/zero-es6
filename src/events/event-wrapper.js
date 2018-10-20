@@ -59,9 +59,9 @@ class EventWrapper {
    * @param  {...any} args
    */
   on(...args) {
-    this.EventMap.addEvent(args[0], args[1]);
+    const eventItem = this.EventMap.addEvent(args[0], args[1]);
     this.element.addEventListener(args[0], args[1]);
-    return this;
+    return eventItem;
   }
 
   /**
@@ -73,9 +73,7 @@ class EventWrapper {
    */
   one(...args) {
     const params = Object.assign({}, { once: true }, args[3]);
-    this.EventMap.addEvent(args[0], args[1]);
-    this.element.addEventListener(args[0], args[1], params);
-    return this;
+    return this.on(args[1], args[2], params);
   }
 
   /**
@@ -88,7 +86,7 @@ class EventWrapper {
     deletedEvent.forEach((event) => {
       this.element.removeEventListener(event.message, event.callback);
     });
-    return this;
+    return deletedEvent;
   }
 
   /**

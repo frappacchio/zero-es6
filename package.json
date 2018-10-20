@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "license": "MIT",
   "scripts": {
-    "markdown":"jsdoc2md ./src/**/*.js",
+    "markdown": "jsdoc2md ./src/**/*.js",
     "test": "jest --config jest.config.json",
     "doc": "npx esdoc",
     "build": "npx webpack --config webpack.config.js"
@@ -29,8 +29,9 @@
     "webpack-cli": "^3.1.2"
   },
   "dependencies": {
-    "immutable": "^3.8.2",
     "@openmind/litelog": "^3.0.6",
-    "lodash": "^4.17.11"
+    "immutable": "^3.8.2",
+    "lodash": "^4.17.11",
+    "uuid": "^3.3.2"
   }
 }

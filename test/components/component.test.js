@@ -12,4 +12,7 @@ describe('Component', () => {
       customMessage: mockCallback,
     };
   });
+  test('destroy component', () => {
+
+  });
 });

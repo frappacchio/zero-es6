@@ -53,7 +53,10 @@ component.on('messaggio', () => {
 component.on('messaggio', () => {
   Log.log('pluto');
 });
-Log.log(component.EventMap.Map[0].callback.name === '');
+component.on('messaggio', () => {
+  Log.log('pluto');
+});
+Log.log(test);
 component.trigger('messaggio');
 component.trigger('messaggio');
 component.trigger('messaggio');

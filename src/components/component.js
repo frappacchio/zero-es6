@@ -63,7 +63,8 @@ class Component extends EventWrapper {
    * @returns {Component} the instance of the class
    */
   GRAB(...args) {
-    this.Broadcast.on(this.Broadcast.getNamespace(args[0]), args[1]);
+    const emitter = this.Broadcast.on(this.Broadcast.getNamespace(args[0]), args[1]);
+    Log.log(emitter);
     return this;
   }
 
@@ -95,11 +96,9 @@ class Component extends EventWrapper {
    * @returns {void}
    */
   destroy() {
-    if (Object.keys(this.Messages).length !== 0) {
-      Object.keys(this.Messages).forEach((key) => {
-        this.UNGRAB(key, this.Messages[key]);
-      });
-    }
+    Object.keys(this.Messages).forEach((key) => {
+      this.UNGRAB(key, this.Messages[key]);
+    });
     Log.log('destroyed', this.constructor.name, 'on', this.element);
     // this.trigger(`${this.constructor.name}:destroy`, { component: this });
     // this.Broadcast.cast(`${this.constructor.name}:destroy`);
@@ -118,11 +117,9 @@ class Component extends EventWrapper {
     this.Broadcast = broadcast;
     this.Messages = Object.assign({}, this.Messages);
     Log.log(`initializing ${this.constructor.name} with [data-component="${this.Name}"]`);
-    if (Object.keys(this.Messages).length !== 0) {
-      Object.keys(this.Messages).forEach((key) => {
-        this.GRAB(key, this.Messages[key]);
-      });
-    }
+    Object.keys(this.Messages).forEach((key) => {
+      this.GRAB(key, this.Messages[key]);
+    });
   }
 }
 
