@@ -1,8 +1,6 @@
 
 import Logger from '@openmind/litelog';
-/**
- * The Logger
- */
+
 const Log = new Logger('DomReader');
 /**
  * @type {Object} Default settings

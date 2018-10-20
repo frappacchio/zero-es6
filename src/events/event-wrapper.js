@@ -1,9 +1,7 @@
 import Logger from '@openmind/litelog';
 import EventMap from './event-map';
 import EventItem from './event-item';
-/**
- * The Logger
- */
+
 const Log = new Logger('EventWrapper');
 /**
  * A simple wrapper which allows to use method like .on(...), .off(...)

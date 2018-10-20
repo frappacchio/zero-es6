@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "license": "MIT",
   "scripts": {
-    "markdown": "jsdoc2md ./src/**/*.js",
+    "documentation": "npx documentation build src/** -f html -o docs",
     "test": "jest --config jest.config.json",
     "doc": "rm -rf ./docs; npx esdoc;",
     "build": "npx webpack --config webpack.config.js"
@@ -17,6 +17,7 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.4",
+    "documentation": "9.0.0-alpha.0",
     "esdoc": "^1.1.0",
     "esdoc-publish-markdown-plugin": "^1.1.0",
     "esdoc-standard-plugin": "^1.0.0",

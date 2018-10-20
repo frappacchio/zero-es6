@@ -1,9 +1,6 @@
 import Logger from '@openmind/litelog';
 import EventWrapper from './event-wrapper';
 
-/**
- * The Logger
- */
 const Log = new Logger('Broadcast');
 // Log.mute = true;
 /**
@@ -13,21 +10,17 @@ const Log = new Logger('Broadcast');
 class Broadcast extends EventWrapper {
   /**
    * Get the default settings
+   * @return {Object}
    */
   get Defaults() {
-    /**
-     * @type {Object}
-     */
     return this.defaults;
   }
 
   /**
    * Set the configuration
+   * @param {Object} options
    */
   set Defaults(options) {
-    /**
-     * @type {Object}
-     */
     this.defaults = options;
   }
 

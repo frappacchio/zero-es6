@@ -3,9 +3,7 @@ import EventWrapper from '../events/event-wrapper';
 import Broadcast from '../events/broadcats';
 import Inflector from '../utils/inflector';
 import EventMap from '../events/event-map';
-/**
- * The Logger
- */
+
 const Log = new Logger('Component');
 /**
  * It define a basic component
@@ -19,44 +17,29 @@ class Component extends EventWrapper {
     return new Inflector(this.constructor.name).dasherize();
   }
 
-  /**
-   * @return {Object}
-   */
   get Messages() {
-    /**
-     * @type {Object} msg the object with all messages
-     */
     return this.messages;
   }
 
   /**
    * Set all message which will be read from the component
    * by the Broadcast
+   * @set
+   * @param {Object} messages
    */
   set Messages(messages) {
-    /**
-     * @type {Object} msg the object with all messages
-     */
     this.messages = messages;
   }
 
   /**
    * Set the broadcast
+   * @param {Broadcast} broadcast
    */
   set Broadcast(broadcast) {
-    /**
-     * @type {Broadcast}
-     */
     this.broadcast = broadcast;
   }
 
-  /**
-   * @return {Broadcast}
-   */
   get Broadcast() {
-    /**
-     * @type {Broadcast}
-     */
     return this.broadcast;
   }
 
@@ -125,9 +108,6 @@ class Component extends EventWrapper {
       this.element.setAttribute('data-component', this.Name);
     }
     this.Broadcast = broadcast;
-    /**
-     * @type {EventMap}
-     */
     this.broadcastMap = new EventMap();
     this.Messages = Object.assign({}, this.Messages);
     Log.log(`initializing ${this.constructor.name} with [data-component="${this.Name}"]`);
