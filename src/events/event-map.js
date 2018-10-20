@@ -1,7 +1,5 @@
-import Logger from '@openmind/litelog';
 import EventItem from './event-item';
 
-const Log = new Logger('EventMap');
 /**
  * Manage all the component events for given namespace
  *@class
@@ -27,6 +25,11 @@ class EventMap {
     return this.map;
   }
 
+  /**
+   * Returns the index of given `eventItem` within the map
+   * @param {EventItem} eventItem
+   * @returns {Number}
+   */
   eventIndex(eventItem) {
     return this.Map.indexOf(eventItem);
   }
@@ -45,9 +48,11 @@ class EventMap {
 
   /**
    * Remove an event from given object.
-   * If no callback has passed it removes anonimous functions such arrow functions
+   * If no callback has passed it removes anonimous functions
+   * such anonimous arrow functions
    * @param {String} eventName
-   * @param {Function} callback
+   * @param {Function|Object} callback
+   * @param {Boolean} [strict=false] strict
    * @returns {Array}
    */
   deleteEvent(eventName, callback = { name: '' }, strict = false) {
@@ -57,10 +62,19 @@ class EventMap {
     return this.Map.filter(obj => obj.event === eventName && obj.callback.name === callback.name);
   }
 
+  /**
+   * Remove an event from given object using the `uuid` of given event
+   * @param {String} eventName
+   * @param {String} uuid
+   * @returns {Array}
+   */
   strictDeleteEvent(eventName, uuid) {
     return this.Map.filter(obj => obj.event === eventName && obj.uuid === uuid);
   }
 
+  /**
+   * Create an empty Map
+   */
   constructor() {
     /**
      * @type {Object}

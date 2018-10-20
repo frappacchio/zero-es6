@@ -16,24 +16,19 @@ class Broadcast extends EventWrapper {
    */
   get Defaults() {
     /**
-     * @return {Object}
+     * @type {Object}
      */
     return this.defaults;
   }
 
   /**
    * Set the configuration
-   * @param {Object}
    */
   set Defaults(options) {
+    /**
+     * @type {Object}
+     */
     this.defaults = options;
-  }
-
-  /**
-   * @param {String} msg the message
-   */
-  getNamespace(msg) {
-    return `${this.Defaults.namespace}:${msg}`;
   }
 
   /**
@@ -42,8 +37,8 @@ class Broadcast extends EventWrapper {
    * @param {Object} obj callback to execute on message receiving
    */
   cast(msg, obj = {}) {
-    Log.log(`cast => ${this.getNamespace(msg)}`);
-    this.trigger(this.getNamespace(msg), obj);
+    Log.log(`cast => ${msg}`);
+    this.trigger(msg, obj);
   }
 
   /**
@@ -53,8 +48,8 @@ class Broadcast extends EventWrapper {
    * @param {Object} options
    */
   grab(msg, callback, options = {}) {
-    Log.log(`grab => ${this.getNamespace(msg)}`);
-    return this.on(this.getNamespace(msg), callback, options);
+    Log.log(`grab => ${msg}`);
+    return this.on(msg, callback, options);
   }
 
   /**
@@ -63,11 +58,17 @@ class Broadcast extends EventWrapper {
    * @param {Function} callback callback to execute on message receiving
    */
   ungrab(msg, callback) {
-    Log.log(`ungrab => ${this.getNamespace(msg)}`);
+    Log.log(`ungrab => ${msg}`);
     const strictMode = typeof callback === 'string' && callback.length > 1;
-    this.off(this.getNamespace(msg), callback, strictMode);
+    this.off(msg, callback, strictMode);
   }
 
+  /**
+   * Create a broadcast and overrides the
+   * default configuration if some options are given by `options`
+   * @param {Element|Object} element
+   * @param {Object} options
+   */
   constructor(element, options = { namespace: 'msg' }) {
     super(element);
     this.Defaults = Object.assign({}, options);

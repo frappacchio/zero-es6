@@ -7,7 +7,7 @@
   "scripts": {
     "markdown": "jsdoc2md ./src/**/*.js",
     "test": "jest --config jest.config.json",
-    "doc": "npx esdoc",
+    "doc": "rm -rf ./docs; npx esdoc;",
     "build": "npx webpack --config webpack.config.js"
   },
   "devDependencies": {

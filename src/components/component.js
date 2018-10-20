@@ -30,14 +30,18 @@ class Component extends EventWrapper {
   }
 
   /**
-   * @return {Object}
+   * Set all message which will be read from the component
+   * by the Broadcast
    */
   set Messages(messages) {
+    /**
+     * @type {Object} msg the object with all messages
+     */
     this.messages = messages;
   }
 
   /**
-   * @param {Broadcast}
+   * Set the broadcast
    */
   set Broadcast(broadcast) {
     /**
@@ -58,8 +62,7 @@ class Component extends EventWrapper {
 
   /**
    * Grabs the broadcast message
-   * @param {String} message message to broadcast
-   * @param {Function} callback callback to exectute
+   * @param {...any} args message to broadcast
    * @returns {Component} the instance of the class
    */
   GRAB(...args) {
@@ -70,8 +73,7 @@ class Component extends EventWrapper {
 
   /**
    * Grabs the broadcast message
-   * @param {String} message message to broadcast
-   * @param {Function} callback callback to exectute
+   * @param {...any} args message to broadcast
    * @returns {Component} the instance of the class
    */
   UNGRAB(...args) {
@@ -123,6 +125,9 @@ class Component extends EventWrapper {
       this.element.setAttribute('data-component', this.Name);
     }
     this.Broadcast = broadcast;
+    /**
+     * @type {EventMap}
+     */
     this.broadcastMap = new EventMap();
     this.Messages = Object.assign({}, this.Messages);
     Log.log(`initializing ${this.constructor.name} with [data-component="${this.Name}"]`);

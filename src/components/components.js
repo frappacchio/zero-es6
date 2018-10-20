@@ -1,7 +1,7 @@
 import UserException from '../core/user-exception';
 
 /**
- * It store the list of components and instances and allow to register and create a component
+ * It stores the list of components and instances and allow to register and create a component
  * @type {Object}
  */
 const Components = {

@@ -1,5 +1,6 @@
 import Logger from '@openmind/litelog';
 import EventMap from './event-map';
+import EventItem from './event-item';
 /**
  * The Logger
  */
@@ -57,6 +58,7 @@ class EventWrapper {
    * @see https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
    * @alias addEventListener
    * @param  {...any} args
+   * @return {EventItem}
    */
   on(...args) {
     const eventItem = this.EventMap.addEvent(args[0], args[1]);
@@ -70,6 +72,7 @@ class EventWrapper {
    * @see https://developers.google.com/web/updates/2016/10/addeventlistener-once
    * @alias addEventListener
    * @param  {...any} args
+   * @return {EventItem}
    */
   one(...args) {
     const params = Object.assign({}, { once: true }, args[3]);
@@ -82,6 +85,7 @@ class EventWrapper {
    * @see https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/removeEventListener
    * @alias removeEventListener
    * @param  {...any} args
+   * @return {Array}
    */
   off(...args) {
     const deletedEvent = this.EventMap.deleteEvent(args[0], args[1], args[2]);
@@ -93,21 +97,12 @@ class EventWrapper {
     return deletedEvent;
   }
 
-  /* offStrict(...args) {
-    const deletedEvent = this.EventMap.strictDeleteEvent(args[0], args[1]);
-    deletedEvent.forEach((event) => {
-      this.element.removeEventListener(event.event, event.callback);
-
-      Log.log('index', this.EventMap.eventIndex(event));
-    });
-    return deletedEvent;
-  } */
-
   /**
-   * @see https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/dispatchEvent
+   *
    * @alias dispatchEvent
    * @param  {...any} args
    * @see @see https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent#Polyfill
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/dispatchEvent
    */
   trigger(...args) {
     const detail = Object.assign({}, {
@@ -123,6 +118,7 @@ class EventWrapper {
   /**
    * @alias on
    * @param  {...any} args
+   * @return {EventItem}
    */
   addEventListener(...args) {
     return this.on(...args);
@@ -131,6 +127,7 @@ class EventWrapper {
   /**
    * @alias off
    * @param  {...any} args
+   * @returns {Array}
    */
   removeEventListener(...args) {
     this.off(...args);
