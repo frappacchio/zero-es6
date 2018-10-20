@@ -65,6 +65,7 @@ class Component extends EventWrapper {
       deletedEvent.forEach((event) => {
         this.Broadcast.ungrab(args[0], event.uuid);
       });
+      return deletedEvent;
     });
     return this;
   }
