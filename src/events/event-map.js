@@ -27,6 +27,10 @@ class EventMap {
     return this.map;
   }
 
+  eventIndex(eventItem) {
+    return this.Map.indexOf(eventItem);
+  }
+
   /**
    * Add event to the map
    * @param {String} eventName
@@ -46,8 +50,15 @@ class EventMap {
    * @param {Function} callback
    * @returns {Array}
    */
-  deleteEvent(eventName, callback = { name: '' }) {
-    return this.Map.filter(obj => obj.message === eventName && obj.callback.name === callback.name);
+  deleteEvent(eventName, callback = { name: '' }, strict = false) {
+    if (strict) {
+      return this.Map.filter(obj => obj.event === eventName && obj.uuid === callback);
+    }
+    return this.Map.filter(obj => obj.event === eventName && obj.callback.name === callback.name);
+  }
+
+  strictDeleteEvent(eventName, uuid) {
+    return this.Map.filter(obj => obj.event === eventName && obj.uuid === uuid);
   }
 
   constructor() {

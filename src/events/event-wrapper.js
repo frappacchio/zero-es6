@@ -73,7 +73,9 @@ class EventWrapper {
    */
   one(...args) {
     const params = Object.assign({}, { once: true }, args[3]);
-    return this.on(args[1], args[2], params);
+    const eventItem = this.EventMap.addEvent(args[0], args[1]);
+    this.element.addEventListener(args[0], args[1], params);
+    return eventItem;
   }
 
   /**
@@ -82,12 +84,24 @@ class EventWrapper {
    * @param  {...any} args
    */
   off(...args) {
-    const deletedEvent = this.EventMap.deleteEvent(args[0], args[1]);
+    const deletedEvent = this.EventMap.deleteEvent(args[0], args[1], args[2]);
     deletedEvent.forEach((event) => {
-      this.element.removeEventListener(event.message, event.callback);
+      this.element.removeEventListener(event.event, event.callback);
+      const index = this.EventMap.eventIndex(event);
+      this.EventMap.Map.splice(index, 1);
     });
     return deletedEvent;
   }
+
+  /* offStrict(...args) {
+    const deletedEvent = this.EventMap.strictDeleteEvent(args[0], args[1]);
+    deletedEvent.forEach((event) => {
+      this.element.removeEventListener(event.event, event.callback);
+
+      Log.log('index', this.EventMap.eventIndex(event));
+    });
+    return deletedEvent;
+  } */
 
   /**
    * @see https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/dispatchEvent

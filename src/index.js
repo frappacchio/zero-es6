@@ -45,22 +45,40 @@ component.GRAB('message', () => {
 
 broadcats.cast('message');
  */
-
-const component = new Component();
-component.on('messaggio', () => {
+/* const broadcats = new Broadcast();
+const component = new Component(document.createElement('span'), broadcats);
+const otherComponent = new Component(document.createElement('span'), broadcats);
+otherComponent.GRAB('messaggio', () => {
+  Log.log('othercomponent');
+});
+component.GRAB('messaggio', () => {
   Log.log('pippo');
 });
-component.on('messaggio', () => {
+component.GRAB('messaggio', () => {
   Log.log('pluto');
 });
-component.on('messaggio', () => {
-  Log.log('pluto');
-});
-Log.log(test);
-component.trigger('messaggio');
-component.trigger('messaggio');
-component.trigger('messaggio');
-component.off('messaggio');
-component.trigger('messaggio');
-component.trigger('messaggio');
-component.trigger('messaggio');
+component.CAST('messaggio');
+component.CAST('messaggio');
+component.CAST('messaggio');
+component.UNGRAB('messaggio');
+component.CAST('messaggio');
+component.CAST('messaggio');
+component.CAST('messaggio');
+component.CAST('messaggio');
+component.CAST('messaggio');
+component.CAST('messaggio');
+component.CAST('messaggio');
+component.CAST('messaggio');
+component.CAST('messaggio');
+component.CAST('messaggio');
+component.CAST('messaggio');
+component.CAST('messaggio');
+Log.log(component.EventMap.Map); */
+
+const component = new Component();
+const mockCallbackA = () => {};
+const mockCallbackB = () => {};
+component.GRAB('messaggio', mockCallbackB);
+component.GRAB('messaggio', mockCallbackA);
+component.destroy();
+Log.log(component.Broadcast.EventMap.Map);

@@ -5,6 +5,7 @@ import EventWrapper from './event-wrapper';
  * The Logger
  */
 const Log = new Logger('Broadcast');
+// Log.mute = true;
 /**
  * Grab and dispatch messages throug the dom
  * @class
@@ -62,7 +63,9 @@ class Broadcast extends EventWrapper {
    * @param {Function} callback callback to execute on message receiving
    */
   ungrab(msg, callback) {
-    this.off(this.getNamespace(msg), callback);
+    Log.log(`ungrab => ${this.getNamespace(msg)}`);
+    const strictMode = typeof callback === 'string' && callback.length > 1;
+    this.off(this.getNamespace(msg), callback, strictMode);
   }
 
   constructor(element, options = { namespace: 'msg' }) {

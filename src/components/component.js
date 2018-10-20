@@ -2,7 +2,7 @@ import Logger from '@openmind/litelog';
 import EventWrapper from '../events/event-wrapper';
 import Broadcast from '../events/broadcats';
 import Inflector from '../utils/inflector';
-
+import EventMap from '../events/event-map';
 /**
  * The Logger
  */
@@ -63,8 +63,8 @@ class Component extends EventWrapper {
    * @returns {Component} the instance of the class
    */
   GRAB(...args) {
-    const emitter = this.Broadcast.on(this.Broadcast.getNamespace(args[0]), args[1]);
-    Log.log(emitter);
+    const emitter = this.Broadcast.grab(args[0], args[1]);
+    this.broadcastMap.Map.push(emitter);
     return this;
   }
 
@@ -75,7 +75,12 @@ class Component extends EventWrapper {
    * @returns {Component} the instance of the class
    */
   UNGRAB(...args) {
-    this.Broadcast.off(args[0], args[1]);
+    this.broadcastMap.Map.filter((obj) => {
+      const deletedEvent = this.broadcastMap.strictDeleteEvent(obj.event, obj.uuid);
+      deletedEvent.forEach((event) => {
+        this.Broadcast.ungrab(args[0], event.uuid);
+      });
+    });
     return this;
   }
 
@@ -96,8 +101,11 @@ class Component extends EventWrapper {
    * @returns {void}
    */
   destroy() {
-    Object.keys(this.Messages).forEach((key) => {
-      this.UNGRAB(key, this.Messages[key]);
+    /* Object.keys(this.Messages).forEach((key) => {
+      this.UNGRAB(key);
+    }); */
+    this.broadcastMap.Map.forEach((obj) => {
+      this.UNGRAB(obj.event.replace(`${this.Broadcast.Defaults.namespace}:`, ''), obj.uuid);
     });
     Log.log('destroyed', this.constructor.name, 'on', this.element);
     // this.trigger(`${this.constructor.name}:destroy`, { component: this });
@@ -115,6 +123,7 @@ class Component extends EventWrapper {
       this.element.setAttribute('data-component', this.Name);
     }
     this.Broadcast = broadcast;
+    this.broadcastMap = new EventMap();
     this.Messages = Object.assign({}, this.Messages);
     Log.log(`initializing ${this.constructor.name} with [data-component="${this.Name}"]`);
     Object.keys(this.Messages).forEach((key) => {
