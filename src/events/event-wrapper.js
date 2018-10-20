@@ -9,25 +9,27 @@ const Log = new Logger('EventWrapper');
  */
 class EventWrapper {
   /**
+   * Get the event map
+   * @type {EventMap} the map
+   */
+  get EventMap() {
+    return this.eventMap;
+  }
+
+  /**
    * Set the event map
    * @param {EventMap} map
    */
   set EventMap(map) {
-    /**
-     * @type {EventMap}
-     */
     this.eventMap = map;
   }
 
   /**
-   * Get the event map
-   * @return {EventMap} the map
+   * Get the Element which represent the current component
+   * @type {Element}
    */
-  get EventMap() {
-    /**
-     * @type {EventMap}
-     */
-    return this.eventMap;
+  get element() {
+    return this.domElement;
   }
 
   /**
@@ -35,21 +37,7 @@ class EventWrapper {
    * @param {Element} domElement
    */
   set element(domElement) {
-    /**
-     * @type {Element}
-     */
     this.domElement = domElement;
-  }
-
-  /**
-   * Get the Element which represent the current component
-   * @return {Element} domElement
-   */
-  get element() {
-    /**
-     * @type {Element}
-     */
-    return this.domElement;
   }
 
   /**

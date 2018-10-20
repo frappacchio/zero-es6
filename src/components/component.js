@@ -1,7 +1,7 @@
 import Logger from '@openmind/litelog';
+import kebabCase from 'lodash/kebabCase';
 import EventWrapper from '../events/event-wrapper';
 import Broadcast from '../events/broadcats';
-import Inflector from '../utils/inflector';
 import EventMap from '../events/event-map';
 
 const Log = new Logger('Component');
@@ -14,7 +14,7 @@ class Component extends EventWrapper {
    * @returns {String} the kebab-case name of given component class
    */
   get Name() {
-    return new Inflector(this.constructor.name).dasherize();
+    return kebabCase(this.constructor.name);
   }
 
   get Messages() {

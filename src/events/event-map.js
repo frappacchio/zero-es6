@@ -6,24 +6,19 @@ import EventItem from './event-item';
  */
 class EventMap {
   /**
-   * @returns {Array}
+   * @type {Array}
    */
-  set Map(map) {
-    /**
-     * @type {Array}
-     */
-    this.map = map;
+  get Map() {
+    return this.map;
   }
 
   /**
-   * @returns {Array}
+   * @param {Array} map
    */
-  get Map() {
-    /**
-     * @type {Array}
-     */
-    return this.map;
+  set Map(map) {
+    this.map = map;
   }
+
 
   /**
    * Returns the index of given `eventItem` within the map
@@ -76,9 +71,6 @@ class EventMap {
    * Create an empty Map
    */
   constructor() {
-    /**
-     * @type {Object}
-     */
     this.Map = [];
   }
 }

@@ -5,9 +5,8 @@
   "main": "src/index.js",
   "license": "MIT",
   "scripts": {
-    "documentation": "npx documentation build src/** -f html -o docs",
+    "documentation": "rm -rf ./docs; npx documentation build src/** -f html -o docs",
     "test": "jest --config jest.config.json",
-    "doc": "rm -rf ./docs; npx esdoc;",
     "build": "npx webpack --config webpack.config.js"
   },
   "devDependencies": {

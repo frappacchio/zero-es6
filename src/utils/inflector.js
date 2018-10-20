@@ -16,22 +16,17 @@ import startCase from 'lodash/startCase';
  */
 class Inflector {
   /**
-   * @returns {String}
+   * @type {String}
    */
   get String() {
-    /**
-     * @type {String}
-     */
     return this.string;
   }
 
   /**
-   * @param {string} string
+   * @type {string}
+   * @param {String} string
    */
   set String(string) {
-    /**
-     * @type {String}
-     */
     this.string = trim(string);
   }
 
@@ -85,9 +80,6 @@ class Inflector {
    * @returns {Inflector}
    */
   constructor(string) {
-    /**
-     * @type {String}
-     */
     this.String = string;
     // If you want to make a Singleton return This (nome della classe)
     // return Inflector;

@@ -2,9 +2,7 @@
 import Logger from '@openmind/litelog';
 
 const Log = new Logger('DomReader');
-/**
- * @type {Object} Default settings
- */
+
 const Defaults = {
   selector: '[data-component]',
   element: document,
