@@ -8,24 +8,18 @@ import Broadcast from './events/broadcats';
 const Log = new Logger('MAIN');
 
 
-const broadcats = new Broadcast();
-const component = new Component(document.createElement('span'), broadcats);
-const otherComponent = new Component(document.createElement('span'), broadcats);
+const component = new Component(document.createElement('span'));
+
 const mockCallbackA = () => { Log.log('A'); };
 const mockCallbackB = () => { Log.log('B'); };
-otherComponent.listen('messaggio', () => { Log.log('anonimo'); });
-component.listen('messaggio', mockCallbackA);
-component.emit('messaggio');
-component.unlisten('messaggio');
-component.emit('messaggio');
-component.emit('messaggio');
-component.emit('messaggio');
-component.emit('messaggio');
-component.emit('messaggio');
-component.emit('messaggio');
-component.emit('messaggio');
-component.emit('messaggio');
-component.emit('messaggio');
-component.emit('messaggio');
-component.emit('messaggio');
-component.emit('messaggio');
+const mockCallbackC = () => { Log.log('A'); };
+
+component.on('messaggio', mockCallbackA);
+component.on('messaggio', mockCallbackB);
+component.trigger('messaggio');
+component.trigger('messaggio');
+component.trigger('messaggio');
+component.off('messaggio', mockCallbackA);
+component.trigger('messaggio');
+component.trigger('messaggio');
+component.trigger('messaggio');

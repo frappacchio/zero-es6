@@ -1,4 +1,5 @@
 import Logger from '@openmind/litelog';
+import isFunction from 'lodash/isFunction';
 import EventMap from './event-map';
 
 const Log = new Logger('EvenTwrapper');
@@ -116,6 +117,7 @@ class EventWrapper {
    */
   removeEventListener(event, callback = '') {
     let deletedEvent;
+
     if (typeof event === 'string') {
       deletedEvent = this.EventMap.deleteEvent(event, callback);
     } else if (typeof event === 'object') {
@@ -124,7 +126,7 @@ class EventWrapper {
 
     deletedEvent.forEach((obj) => {
       this.element.removeEventListener(obj.event, obj.callback);
-      const index = this.EventMap.eventIndex(obj);
+      const index = this.EventMap.Map.indexOf(obj);
       this.EventMap.Map.splice(index, 1);
     });
     return deletedEvent;

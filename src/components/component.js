@@ -105,7 +105,13 @@ class Component extends EventWrapper {
    * @deprecated use `unlisten`
    */
   unlisten(msg, callback = '') {
-    const deletedEvents = this.broadcastMap.Map.filter(obj => obj.event === msg);
+    let deletedEvents;
+    if (callback === '') {
+      deletedEvents = this.broadcastMap.Map.filter(obj => obj.event === msg);
+    } else {
+      deletedEvents = this.broadcastMap.Map.filter(obj => obj.event === msg && obj.callback.name === callback.name);
+    }
+
     deletedEvents.forEach((obj) => {
       this.Broadcast.unlisten(obj);
     });

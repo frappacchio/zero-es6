@@ -18,17 +18,6 @@ class EventMap {
     return this.map;
   }
 
-
-  /**
-   * Returns the index of given `eventItem` within the map
-   * If no event match the name will returns -1
-   * @param {EventItem} eventItem
-   * @returns {number}
-   */
-  eventIndex(eventItem) {
-    return this.Map.indexOf(eventItem);
-  }
-
   /**
    * Add event to the map
    * @param {String} eventName
