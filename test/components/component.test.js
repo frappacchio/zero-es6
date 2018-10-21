@@ -10,8 +10,8 @@ describe('Component', () => {
     const component = new Component();
     const mockCallbackA = jest.fn(() => {});
     const mockCallbackB = jest.fn(() => {});
-    component.grab('messaggio', mockCallbackB);
-    component.grab('messaggio', mockCallbackA);
+    component.listen('messaggio', mockCallbackB);
+    component.listen('messaggio', mockCallbackA);
     expect(component.Broadcast.EventMap.Map.length).toBe(2);
   });
   test('destroy component', () => {

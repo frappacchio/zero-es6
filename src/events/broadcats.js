@@ -2,7 +2,7 @@ import Logger from '@openmind/litelog';
 import EventWrapper from './event-wrapper';
 
 const Log = new Logger('Broadcast');
-// Log.mute = true;
+Log.mute = true;
 /**
    * Creates a broadcast and emit/listen events
    * throug the DOM
@@ -36,17 +36,17 @@ class Broadcast extends EventWrapper {
    * @deprecated use `emit`
    */
   cast(msg, obj = {}) {
-    this.emit(msg, obj);
+    return this.emit(msg, obj);
   }
 
   /**
-   * Emit a message throug the Broadcast
-   * @param {string} msg message to cast
-   * @param {object} obj callback to execute on message receiving
+   * An alias for {@link #broadcastunlisten unlisten} method
+   * @param {string} msg message to remove the listen to
+   * @param {function} [callback=()=>{}] callback to execute on message receiving
+   * @deprecated use `unlisten`
    */
-  emit(msg, obj = {}) {
-    Log.log(`emit => ${msg}`);
-    this.trigger(msg, obj);
+  ungrab(msg, callback = () => {}) {
+    return this.unlisten(msg, callback);
   }
 
   /**
@@ -58,7 +58,17 @@ class Broadcast extends EventWrapper {
    * @deprecated use `listen`
    */
   grab(msg, callback = () => {}, options = {}) {
-    this.listen(msg, callback, options);
+    return this.listen(msg, callback, options);
+  }
+
+  /**
+   * Emit a message throug the Broadcast
+   * @param {string} msg message to cast
+   * @param {object} obj callback to execute on message receiving
+   */
+  emit(msg, obj = {}) {
+    Log.log(`emit => ${msg}`);
+    return this.trigger(msg, obj);
   }
 
   /**
@@ -69,28 +79,18 @@ class Broadcast extends EventWrapper {
    */
   listen(msg, callback = () => {}, options = {}) {
     Log.log(`listen => ${msg}`);
-    return this.on(msg, callback, options);
+    return this.addEventListener(msg, callback, options);
   }
 
-  /**
-   * An alias for {@link #broadcastunlisten unlisten} method
-   * @param {string} msg message to remove the listen to
-   * @param {function} [callback=()=>{}] callback to execute on message receiving
-   * @deprecated use `unlisten`
-   */
-  ungrab(msg, callback = () => {}) {
-    this.unlisten(msg, callback);
-  }
 
   /**
    * Remove the listener for given message
    * @param {string} msg message to cast
-   * @param {function} [callback=()=>{}] callback to execute on message receiving
+   * @param {string|function} [callback = ''] callback to stop exectue
    */
-  unlisten(msg, callback = () => {}) {
-    Log.log(`ungrab => ${msg}`);
-    const strictMode = typeof callback === 'string' && callback.length > 1;
-    this.off(msg, callback, strictMode);
+  unlisten(msg, callback = '') {
+    Log.log(`unlisten => ${msg}`);
+    this.removeEventListener(msg, callback);
   }
 
   constructor(element, options = { namespace: 'msg' }) {

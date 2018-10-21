@@ -1,5 +1,7 @@
+import Logger from '@openmind/litelog';
 import EventItem from './event-item';
 
+const Log = new Logger('EventMap');
 /**
  * Stores all the events to an `Array`
  *
@@ -45,14 +47,17 @@ class EventMap {
    * such anonimous arrow functions
    * @param {String} eventName
    * @param {Function|Object} callback
-   * @param {Boolean} [strict=false] strict
    * @returns {Array}
    */
-  deleteEvent(eventName, callback = { name: '' }, strict = false) {
-    if (strict) {
-      return this.Map.filter(obj => obj.event === eventName && obj.uuid === callback);
+  deleteEvent(eventName, callback = '') {
+    if (callback === '') {
+      return this.Map.filter(obj => obj.event === eventName);
     }
     return this.Map.filter(obj => obj.event === eventName && obj.callback.name === callback.name);
+  }
+
+  strictDeleteEvent(eventObj) {
+    return this.Map.filter(obj => obj.uuid === eventObj.uuid);
   }
 
   /**
@@ -61,9 +66,9 @@ class EventMap {
    * @param {String} uuid
    * @returns {Array}
    */
-  strictDeleteEvent(eventName, uuid) {
+  /* strictDeleteEvent(eventName, uuid) {
     return this.Map.filter(obj => obj.event === eventName && obj.uuid === uuid);
-  }
+  } */
 
   constructor() {
     this.map = [];

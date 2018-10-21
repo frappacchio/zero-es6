@@ -84,6 +84,7 @@ class Component extends EventWrapper {
   listen(msg, callback = () => {}) {
     const emitter = this.Broadcast.listen(msg, callback);
     this.broadcastMap.Map.push(emitter);
+    // this.Broadcast.listen(msg, callback);
   }
 
   /**
@@ -98,17 +99,15 @@ class Component extends EventWrapper {
 
   /**
    * Stop listen to the given message
-   * @param {string} msg message to broadcast
+   * @param {string} msg message to stop to listen to
+   * @param {string|function} [callback = ''] callback to stop exectue
    * @returns {void}
    * @deprecated use `unlisten`
    */
-  unlisten(msg) {
-    this.broadcastMap.Map.filter((obj) => {
-      const deletedEvent = this.broadcastMap.strictDeleteEvent(obj.event, obj.uuid);
-      deletedEvent.forEach((event) => {
-        this.Broadcast.ungrab(msg, event.uuid);
-      });
-      return deletedEvent;
+  unlisten(msg, callback = '') {
+    const deletedEvents = this.broadcastMap.Map.filter(obj => obj.event === msg);
+    deletedEvents.forEach((obj) => {
+      this.Broadcast.unlisten(obj);
     });
   }
 
@@ -136,7 +135,7 @@ class Component extends EventWrapper {
    */
   destroy() {
     this.broadcastMap.Map.forEach((obj) => {
-      this.unlisten(obj.event.replace(`${this.Broadcast.Defaults.namespace}:`, ''), obj.uuid);
+      this.unlisten(obj.event);
     });
     Log.log('destroyed', this.constructor.name, 'on', this.element);
     this.Broadcast.emit(`${this.constructor.name}:destroy`);

@@ -1,16 +1,19 @@
 import Logger from '@openmind/litelog';
 import EventMap from './event-map';
-import EventItem from './event-item';
 
-const Log = new Logger('EventWrapper');
+const Log = new Logger('EvenTwrapper');
+
 /**
  * A simple wrapper which allows to use method like .on(...), .off(...)
- * @class
+ * @param {element} [element = document.createElement('span')] the element to wrap
+ * @class EventWrapper
  */
 class EventWrapper {
   /**
-   * Get the event map
-   * @type {EventMap} the map
+   * Returns the EventMap
+   * @returns {EventMap}
+   * @readonly
+   * @memberof EventWrapper
    */
   get EventMap() {
     return this.eventMap;
@@ -26,7 +29,9 @@ class EventWrapper {
 
   /**
    * Get the Element which represent the current component
-   * @type {Element}
+   * @returns {Element}
+   * @readonly
+   * @memberof EventWrapper
    */
   get element() {
     return this.domElement;
@@ -35,103 +40,111 @@ class EventWrapper {
   /**
    * Set the Element which represent the current component
    * @param {Element} domElement
+   * @readonly
+   * @memberof EventMap
    */
   set element(domElement) {
     this.domElement = domElement;
   }
 
   /**
+   * An alias for {@link #eventwrapperaddeventlistener addEventListener}
    * @see https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
-   * @alias addEventListener
-   * @param  {...any} args
+   * @param  {string} event the event name
+   * @param {function} [callback = ()=>{}] the callback to exectue
+   * @param {object} [options={}] the options
    * @return {EventItem}
    */
-  on(...args) {
-    const eventItem = this.EventMap.addEvent(args[0], args[1]);
-    this.element.addEventListener(args[0], args[1]);
-    return eventItem;
+  on(event, callback = () => {}, options = {}) {
+    return this.addEventListener(event, callback, options);
   }
 
   /**
    * It listen only for the first occurence of the event
    * and then it removes the listner
    * @see https://developers.google.com/web/updates/2016/10/addeventlistener-once
-   * @alias addEventListener
-   * @param  {...any} args
+   * @param  {string} event the event name
+   * @param {function} [callback = ()=>{}] the callback to exectue
+   * @param {object} [options={}] the options
    * @return {EventItem}
    */
-  one(...args) {
-    const params = Object.assign({}, { once: true }, args[3]);
-    const eventItem = this.EventMap.addEvent(args[0], args[1]);
-    this.element.addEventListener(args[0], args[1], params);
+  one(event, callback = () => {}, options = {}) {
+    const params = Object.assign({}, options, { once: true });
+    return this.addEventListener(event, callback, params);
+  }
+
+  /**
+   * An alias for {@link #eventwrapperremoveeventlistener removeEventListener}
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/removeEventListener
+   * @param {string} event the event name
+   * @param {function} [callback = ()=>{}] the callback to exectue
+   * @return {Array}
+   */
+  off(event, callback = '') {
+    return this.removeEventListener(event, callback);
+  }
+
+  /**
+   * An alias for {@link #eventwrapperdispatchevent dispatchEvent}
+   * @param  {string} event the event to dispatch
+   * @param  {details} details params to dispatch with the event
+   * @see @see https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent#Polyfill
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/dispatchEvent
+   */
+  trigger(event, details = {}) {
+    return this.dispatchEvent(event, details);
+  }
+
+  /**
+   * Add event listener to the element
+   * @param  {string} event the event name
+   * @param {function} [callback = ()=>{}] the callback to exectue
+   * @param {object} [options={}] the options
+   * @return {EventItem}
+   */
+  addEventListener(event, callback = () => {}, options = {}) {
+    const eventItem = this.EventMap.addEvent(event, callback);
+    this.element.addEventListener(eventItem.event, eventItem.callback, options);
     return eventItem;
   }
 
   /**
-   * @see https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/removeEventListener
-   * @alias removeEventListener
-   * @param  {...any} args
-   * @return {Array}
+   * Stop to Listen to given event
+   * @param {string} event the event to stop listen to
+   * @param {string|function} [callback = ''] callback to stop exectue
+   * @returns {Array}
    */
-  off(...args) {
-    const deletedEvent = this.EventMap.deleteEvent(args[0], args[1], args[2]);
-    deletedEvent.forEach((event) => {
-      this.element.removeEventListener(event.event, event.callback);
-      const index = this.EventMap.eventIndex(event);
+  removeEventListener(event, callback = '') {
+    let deletedEvent;
+    if (typeof event === 'string') {
+      deletedEvent = this.EventMap.deleteEvent(event, callback);
+    } else if (typeof event === 'object') {
+      deletedEvent = this.EventMap.strictDeleteEvent(event, callback);
+    }
+
+    deletedEvent.forEach((obj) => {
+      this.element.removeEventListener(obj.event, obj.callback);
+      const index = this.EventMap.eventIndex(obj);
       this.EventMap.Map.splice(index, 1);
     });
     return deletedEvent;
   }
 
   /**
-   *
-   * @alias dispatchEvent
-   * @param  {...any} args
-   * @see @see https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent#Polyfill
-   * @see https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/dispatchEvent
+   * Dispatch the event
+   * @param  {string} event the event to dispatch
+   * @param  {details} details params to dispatch with the event
    */
-  trigger(...args) {
+  dispatchEvent(event, details = {}) {
     const detail = Object.assign({}, {
       detail: {},
     }, {
-      detail: args[1],
+      detail: details,
     });
-    const event = new CustomEvent(args[0], detail);
-    this.element.dispatchEvent(event);
-    return this;
+    const customEvent = new CustomEvent(event, detail);
+    return this.element.dispatchEvent(customEvent);
   }
 
-  /**
-   * @alias on
-   * @param  {...any} args
-   * @return {EventItem}
-   */
-  addEventListener(...args) {
-    return this.on(...args);
-  }
-
-  /**
-   * @alias off
-   * @param  {...any} args
-   * @returns {Array}
-   */
-  removeEventListener(...args) {
-    this.off(...args);
-    return this;
-  }
-
-  /**
-   * @alias trigger
-   * @param  {...any} args
-   */
-  dispatchEvent(...args) {
-    return this.trigger(...args);
-  }
-
-  /**
-   * Create the wrapper
-   * @param {Element} element
-   */
   constructor(element = document.createElement('span')) {
     // Controllo sulla configurazione dell'app
     this.element = element;
