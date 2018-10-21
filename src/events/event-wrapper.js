@@ -117,11 +117,10 @@ class EventWrapper {
    */
   removeEventListener(event, callback = '') {
     let deletedEvent;
-
-    if (typeof event === 'string') {
-      deletedEvent = this.EventMap.deleteEvent(event, callback);
-    } else if (typeof event === 'object') {
+    if (Object.prototype.hasOwnProperty.call(event, 'event')) {
       deletedEvent = this.EventMap.strictDeleteEvent(event, callback);
+    } else {
+      deletedEvent = this.EventMap.deleteEvent(event, callback);
     }
 
     deletedEvent.forEach((obj) => {

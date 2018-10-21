@@ -11,25 +11,6 @@ Log.mute = true;
    */
 class Broadcast extends EventWrapper {
   /**
-   * Get the default settings
-   * @return {object}
-   * @memberof Broadcast
-   */
-  get Defaults() {
-    return this.defaults;
-  }
-
-  /**
-   * Set the configuration
-   * @param {object} options
-   * @memberof Broadcast
-   */
-  set Defaults(options) {
-    this.defaults = options;
-  }
-
-
-  /**
    * An alias for {@link #broadcastemit emit} method
    * @param {string} msg message to cast
    * @param {object} [obj={}] callback to execute on message receiving
@@ -91,11 +72,6 @@ class Broadcast extends EventWrapper {
   unlisten(msg, callback = '') {
     Log.log(`unlisten => ${msg}`);
     this.removeEventListener(msg, callback);
-  }
-
-  constructor(element, options = { namespace: 'msg' }) {
-    super(element);
-    this.Defaults = Object.assign({}, options);
   }
 }
 

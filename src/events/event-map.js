@@ -39,10 +39,10 @@ class EventMap {
    * @returns {Array}
    */
   deleteEvent(eventName, callback = '') {
-    if (callback === '') {
-      return this.Map.filter(obj => obj.event === eventName);
+    if (Object.prototype.hasOwnProperty.call(callback, 'name')) {
+      return this.Map.filter(obj => obj.event === eventName && obj.callback.name === callback.name);
     }
-    return this.Map.filter(obj => obj.event === eventName && obj.callback.name === callback.name);
+    return this.Map.filter(obj => obj.event === eventName);
   }
 
   strictDeleteEvent(eventObj) {

@@ -2,10 +2,6 @@ import Broadcast from '../../src/events/broadcats';
 
 
 describe('Broadcast', () => {
-  test('the deafult namespace is `msg`', () => {
-    const broadcats = new Broadcast(document.createElement('span'));
-    expect(broadcats.Defaults.namespace).toBe('msg');
-  });
   test('if an event is casted the broadcast listen to it', () => {
     const mokedCallback = jest.fn(() => {});
     const broadcats = new Broadcast(document.createElement('span'));
