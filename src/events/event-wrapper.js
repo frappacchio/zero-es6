@@ -1,6 +1,6 @@
 import Logger from '@openmind/litelog';
-import isFunction from 'lodash/isFunction';
 import EventMap from './event-map';
+import DomWrapper from '../dom/dom-wrapper';
 
 const Log = new Logger('EvenTwrapper');
 
@@ -9,7 +9,7 @@ const Log = new Logger('EvenTwrapper');
  * @param {element} [element = document.createElement('span')] the element to wrap
  * @class EventWrapper
  */
-class EventWrapper {
+class EventWrapper extends DomWrapper {
   /**
    * Returns the EventMap
    * @returns {EventMap}
@@ -26,26 +26,6 @@ class EventWrapper {
    */
   set EventMap(map) {
     this.eventMap = map;
-  }
-
-  /**
-   * Get the Element which represent the current component
-   * @returns {Element}
-   * @readonly
-   * @memberof EventWrapper
-   */
-  get element() {
-    return this.domElement;
-  }
-
-  /**
-   * Set the Element which represent the current component
-   * @param {Element} domElement
-   * @readonly
-   * @memberof EventMap
-   */
-  set element(domElement) {
-    this.domElement = domElement;
   }
 
   /**
@@ -146,9 +126,8 @@ class EventWrapper {
     return this.element.dispatchEvent(customEvent);
   }
 
-  constructor(element = document.createElement('span')) {
-    // Controllo sulla configurazione dell'app
-    this.element = element;
+  constructor(element) {
+    super(element);
     this.EventMap = new EventMap();
   }
 }

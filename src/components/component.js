@@ -149,9 +149,9 @@ class Component extends EventWrapper {
 
   constructor(element, broadcast = new Broadcast()) {
     super(element);
-    if (!this.element.getAttribute('[data-component]')) {
+    /* if (!this.element.getAttribute('[data-component]')) {
       this.element.setAttribute('data-component', this.Name);
-    }
+    } */
     this.Broadcast = broadcast;
     this.broadcastMap = new EventMap();
     this.Messages = Object.assign({}, this.Messages);
