@@ -88,7 +88,7 @@ class Component extends EventWrapper {
   }
 
   /**
-   * An alias for {@link #componentunlisten unlisten} method
+   * An alias for {@link #unlisten unlisten} method
    * @param {string} msg message to broadcast
    * @returns {void}
    * @deprecated use `unlisten`
@@ -102,7 +102,6 @@ class Component extends EventWrapper {
    * @param {string} msg message to stop to listen to
    * @param {string|function} [callback = ''] callback to stop exectue
    * @returns {void}
-   * @deprecated use `unlisten`
    */
   unlisten(msg, callback = '') {
     let deletedEvents;

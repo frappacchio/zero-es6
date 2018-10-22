@@ -1,664 +1,860 @@
-### Table of Contents
+## Classes
 
--   [Component][1]
-    -   [Parameters][2]
-    -   [Name][3]
-    -   [Messages][4]
-        -   [Parameters][5]
-    -   [Broadcast][6]
-        -   [Parameters][7]
-    -   [GRAB][8]
-        -   [Parameters][9]
-    -   [UNGRAB][10]
-        -   [Parameters][11]
-    -   [CAST][12]
-        -   [Parameters][13]
-    -   [destroy][14]
--   [EventWrapper][15]
-    -   [Parameters][16]
-    -   [EventMap][17]
-        -   [Parameters][18]
-    -   [EventMap][19]
-    -   [eventMap][20]
-    -   [element][21]
-        -   [Parameters][22]
-    -   [element][23]
-    -   [domElement][24]
-    -   [addEventListener][25]
-        -   [Parameters][26]
-    -   [addEventListener][27]
-        -   [Parameters][28]
-    -   [removeEventListener][29]
-        -   [Parameters][30]
-    -   [dispatchEvent][31]
-        -   [Parameters][32]
-    -   [on][33]
-        -   [Parameters][34]
-    -   [off][35]
-        -   [Parameters][36]
-    -   [trigger][37]
-        -   [Parameters][38]
--   [eventMap][39]
--   [domElement][40]
--   [Broadcast][41]
-    -   [Parameters][42]
-    -   [Defaults][43]
-    -   [Defaults][44]
-        -   [Parameters][45]
-    -   [cast][46]
-        -   [Parameters][47]
-    -   [grab][48]
-        -   [Parameters][49]
-    -   [ungrab][50]
-        -   [Parameters][51]
--   [Inflector][52]
-    -   [Parameters][53]
-    -   [String][54]
-    -   [String][55]
-        -   [Parameters][56]
-    -   [String][57]
-    -   [string][58]
-    -   [underscore][59]
-    -   [camelize][60]
-        -   [Parameters][61]
-    -   [kebab][62]
-    -   [kebab][63]
-    -   [humanize][64]
--   [string][65]
--   [EventMap][66]
-    -   [Map][67]
-        -   [Parameters][68]
-    -   [Map][69]
-    -   [Map][70]
-    -   [map][71]
-    -   [eventIndex][72]
-        -   [Parameters][73]
-    -   [addEvent][74]
-        -   [Parameters][75]
-    -   [deleteEvent][76]
-        -   [Parameters][77]
-    -   [strictDeleteEvent][78]
-        -   [Parameters][79]
--   [map][80]
+<dl>
+<dt><a href="#Component">Component</a> ⇐ <code><a href="#EventWrapper">EventWrapper</a></code></dt>
+<dd></dd>
+<dt><a href="#UserException">UserException</a></dt>
+<dd></dd>
+<dt><a href="#DomWrapper">DomWrapper</a> ⇐ <code>Wrapper</code></dt>
+<dd></dd>
+<dt><a href="#DomWrapper">DomWrapper</a></dt>
+<dd></dd>
+<dt><a href="#Broadcast">Broadcast</a></dt>
+<dd><p>Creates a broadcast and emit/listen events
+throug the DOM</p>
+</dd>
+<dt><a href="#EventItem">EventItem</a></dt>
+<dd></dd>
+<dt><a href="#EventMap">EventMap</a></dt>
+<dd></dd>
+<dt><a href="#EventWrapper">EventWrapper</a></dt>
+<dd></dd>
+<dt><a href="#Inflector">Inflector</a></dt>
+<dd><p><a href="module:lodash/trim">module:lodash/trim</a>
+<a href="module:lodash/snakeCase">module:lodash/snakeCase</a>
+<a href="module:lodash/camelCase">module:lodash/camelCase</a>
+<a href="module:lodash/upperFirst">module:lodash/upperFirst</a>
+<a href="module:lodash/kebabCase">module:lodash/kebabCase</a>
+<a href="module:lodash/startCase">module:lodash/startCase</a></p>
+</dd>
+</dl>
 
-## Component
+## Constants
 
-**Extends EventWrapper**
+<dl>
+<dt><a href="#Components">Components</a> : <code>Object</code></dt>
+<dd><p>It stores the list of components and instances and allow to register and create a component</p>
+</dd>
+</dl>
 
-It define a basic component
+## Functions
 
-### Parameters
+<dl>
+<dt><a href="#kebab">kebab()</a></dt>
+<dd></dd>
+</dl>
 
--   `element` **[Element][81]**
--   `broadcast` **[Broadcast][82]** the broadcast for this component (optional, default `newBroadcast()`)
+<a name="Component"></a>
 
-### Name
+## Component ⇐ [<code>EventWrapper</code>](#EventWrapper)
+**Kind**: global class
+**Extends**: [<code>EventWrapper</code>](#EventWrapper)
 
-Returns **[String][83]** the kebab-case name of given component class
+* [Component](#Component) ⇐ [<code>EventWrapper</code>](#EventWrapper)
+    * [new Component(element, [broadcast])](#new_Component_new)
+    * [.Name](#Component+Name) ⇒ <code>string</code>
+    * [.Messages](#Component+Messages) ⇒ <code>object</code>
+    * [.Messages](#Component+Messages)
+    * [.Broadcast](#Component+Broadcast) ⇒ [<code>Broadcast</code>](#Broadcast)
+    * [.Broadcast](#Component+Broadcast)
+    * [.EventMap](#EventWrapper+EventMap) ⇒ [<code>EventMap</code>](#EventMap)
+    * ~~[.grab(msg, callback)](#Component+grab) ⇒ <code>void</code>~~
+    * [.listen(msg, [callback])](#Component+listen) ⇒ <code>void</code>
+    * ~~[.ungrab(msg)](#Component+ungrab) ⇒ <code>void</code>~~
+    * [.unlisten(msg, [callback])](#Component+unlisten) ⇒ <code>void</code>
+    * ~~[.cast(message, [object])](#Component+cast)~~
+    * [.emit(message, [object])](#Component+emit)
+    * [.destroy()](#Component+destroy)
+    * [.on(event, [callback], [options])](#EventWrapper+on) ⇒ [<code>EventItem</code>](#EventItem)
+    * [.one(event, [callback], [options])](#EventWrapper+one) ⇒ [<code>EventItem</code>](#EventItem)
+    * [.off(event, [callback])](#EventWrapper+off) ⇒ <code>Array</code>
+    * [.trigger(event, details)](#EventWrapper+trigger)
+    * [.addEventListener(event, [callback], [options])](#EventWrapper+addEventListener) ⇒ [<code>EventItem</code>](#EventItem)
+    * [.removeEventListener(event, [callback])](#EventWrapper+removeEventListener) ⇒ <code>Array</code>
+    * [.dispatchEvent(event, details)](#EventWrapper+dispatchEvent)
 
-### Messages
+<a name="new_Component_new"></a>
 
+### new Component(element, [broadcast])
+A basic component class
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| element | <code>element</code> |  | the DOM element which represents the component |
+| [broadcast] | [<code>Broadcast</code>](#Broadcast) | <code>new Broadcast()</code> | the Broadcast for this component |
+
+<a name="Component+Name"></a>
+
+### component.Name ⇒ <code>string</code>
+Gets the kebab-case name of component
+
+**Kind**: instance property of [<code>Component</code>](#Component)
+**Read only**: true
+**Example**
+```js
+`SuperClass` will returns `super-class`
+```
+<a name="Component+Messages"></a>
+
+### component.Messages ⇒ <code>object</code>
+Gets the component messages
+
+**Kind**: instance property of [<code>Component</code>](#Component)
+**Read only**: true
+<a name="Component+Messages"></a>
+
+### component.Messages
 Set all message which will be read from the component
 by the Broadcast
 
-#### Parameters
+**Kind**: instance property of [<code>Component</code>](#Component)
 
--   `messages` **[Object][84]**
+| Param | Type |
+| --- | --- |
+| messages | <code>object</code> |
 
-### Broadcast
+<a name="Component+Broadcast"></a>
 
+### component.Broadcast ⇒ [<code>Broadcast</code>](#Broadcast)
+Returns the Broadcast for the component instance
+
+**Kind**: instance property of [<code>Component</code>](#Component)
+**Read only**: true
+<a name="Component+Broadcast"></a>
+
+### component.Broadcast
 Set the broadcast
 
-#### Parameters
+**Kind**: instance property of [<code>Component</code>](#Component)
 
--   `broadcast` **[Broadcast][82]**
+| Param | Type |
+| --- | --- |
+| broadcast | [<code>Broadcast</code>](#Broadcast) |
 
-### GRAB
+<a name="EventWrapper+EventMap"></a>
 
-Grabs the broadcast message
+### component.EventMap ⇒ [<code>EventMap</code>](#EventMap)
+Returns the EventMap
 
-#### Parameters
+**Kind**: instance property of [<code>Component</code>](#Component)
+**Overrides**: [<code>EventMap</code>](#EventWrapper+EventMap)
+**Read only**: true
+<a name="Component+grab"></a>
 
--   `args` **...any** message to broadcast
+### ~~component.grab(msg, callback) ⇒ <code>void</code>~~
+***Deprecated***
 
-Returns **[Component][85]** the instance of the class
+An alias for [listen](#componentlisten) method
 
-### UNGRAB
+**Kind**: instance method of [<code>Component</code>](#Component)
 
-Grabs the broadcast message
+| Param | Type | Description |
+| --- | --- | --- |
+| msg | <code>string</code> | message to broadcast |
+| callback | <code>function</code> | message to broadcast |
 
-#### Parameters
+<a name="Component+listen"></a>
 
--   `args` **...any** message to broadcast
+### component.listen(msg, [callback]) ⇒ <code>void</code>
+Listen to the broadcast message
 
-Returns **[Component][85]** the instance of the class
+**Kind**: instance method of [<code>Component</code>](#Component)
 
-### CAST
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| msg | <code>string</code> |  | message to broadcast |
+| [callback] | <code>function</code> | <code>()&#x3D;&gt;{}</code> | message to broadcast |
 
-Broadcast a message to the broadcast
+<a name="Component+ungrab"></a>
 
-#### Parameters
+### ~~component.ungrab(msg) ⇒ <code>void</code>~~
+***Deprecated***
 
--   `message` **[String][83]** message to broadcast
--   `obj` **...any**
+An alias for [unlisten](#unlisten) method
 
-Returns **[Component][85]** the instance of the class
+**Kind**: instance method of [<code>Component</code>](#Component)
 
-### destroy
+| Param | Type | Description |
+| --- | --- | --- |
+| msg | <code>string</code> | message to broadcast |
 
-Destroy the component instance
+<a name="Component+unlisten"></a>
 
-Returns **void**
+### component.unlisten(msg, [callback]) ⇒ <code>void</code>
+Stop listen to the given message
 
-## EventWrapper
+**Kind**: instance method of [<code>Component</code>](#Component)
 
-A simple wrapper which allows to use method like .on(...), .off(...)
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| msg | <code>string</code> |  | message to stop to listen to |
+| [callback] | <code>string</code> \| <code>function</code> | <code>&quot;&#x27;&#x27;&quot;</code> | callback to stop exectue |
 
-### Parameters
+<a name="Component+cast"></a>
 
--   `element` **[Element][81]**  (optional, default `document.createElement('span')`)
+### ~~component.cast(message, [object])~~
+***Deprecated***
 
-### EventMap
+An alias for [cast](#componentcast) method
 
-Set the event map
+**Kind**: instance method of [<code>Component</code>](#Component)
 
-#### Parameters
+| Param | Type | Default |
+| --- | --- | --- |
+| message | <code>string</code> |  |
+| [object] | <code>object</code> | <code>{}</code> |
 
--   `map` **[EventMap][86]**
+<a name="Component+emit"></a>
 
-### EventMap
+### component.emit(message, [object])
+Emit the message to the component Broadcast
 
-Get the event map
+**Kind**: instance method of [<code>Component</code>](#Component)
 
-Returns **[EventMap][86]** the map
+| Param | Type | Default |
+| --- | --- | --- |
+| message | <code>string</code> |  |
+| [object] | <code>object</code> | <code>{}</code> |
 
-### eventMap
+<a name="Component+destroy"></a>
 
-Type: [EventMap][86]
+### component.destroy()
+Destroy and stop to listen for Broadcast messages
 
-### element
+**Kind**: instance method of [<code>Component</code>](#Component)
+<a name="EventWrapper+on"></a>
 
-Set the Element which represent the current component
+### component.on(event, [callback], [options]) ⇒ [<code>EventItem</code>](#EventItem)
+An alias for [addEventListener](#eventwrapperaddeventlistener)
 
-#### Parameters
+**Kind**: instance method of [<code>Component</code>](#Component)
+**See**: https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
 
--   `domElement` **[Element][81]**
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| event | <code>string</code> |  | the event name |
+| [callback] | <code>function</code> | <code>()&#x3D;&gt;{}</code> | the callback to exectue |
+| [options] | <code>object</code> | <code>{}</code> | the options |
 
-### element
+<a name="EventWrapper+one"></a>
 
-Get the Element which represent the current component
-
-Returns **[Element][81]** domElement
-
-### domElement
-
-Type: [Element][81]
-
-### addEventListener
-
--   **See: [https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener][87]**
-
-#### Parameters
-
--   `args` **...any**
-
-Returns **EventItem**
-
-### addEventListener
-
--   **See: [https://developers.google.com/web/updates/2016/10/addeventlistener-once][88]**
-
+### component.one(event, [callback], [options]) ⇒ [<code>EventItem</code>](#EventItem)
 It listen only for the first occurence of the event
 and then it removes the listner
 
-#### Parameters
+**Kind**: instance method of [<code>Component</code>](#Component)
+**See**: https://developers.google.com/web/updates/2016/10/addeventlistener-once
 
--   `args` **...any**
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| event | <code>string</code> |  | the event name |
+| [callback] | <code>function</code> | <code>()&#x3D;&gt;{}</code> | the callback to exectue |
+| [options] | <code>object</code> | <code>{}</code> | the options |
 
-Returns **EventItem**
+<a name="EventWrapper+off"></a>
 
-### removeEventListener
+### component.off(event, [callback]) ⇒ <code>Array</code>
+An alias for [removeEventListener](#eventwrapperremoveeventlistener)
 
--   **See: [https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/removeEventListener][89]**
+**Kind**: instance method of [<code>Component</code>](#Component)
+**See**: https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/removeEventListener
 
-#### Parameters
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| event | <code>string</code> |  | the event name |
+| [callback] | <code>function</code> | <code>()&#x3D;&gt;{}</code> | the callback to exectue |
 
--   `args` **...any**
+<a name="EventWrapper+trigger"></a>
 
-Returns **[Array][90]**
+### component.trigger(event, details)
+An alias for [dispatchEvent](#eventwrapperdispatchevent)
 
-### dispatchEvent
+**Kind**: instance method of [<code>Component</code>](#Component)
+**See**
 
--   **See: @see [https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent#Polyfill][91]**
--   **See: [https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/dispatchEvent][92]**
+- @see https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent#Polyfill
+- https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/dispatchEvent
 
-#### Parameters
 
--   `args` **...any**
+| Param | Type | Description |
+| --- | --- | --- |
+| event | <code>string</code> | the event to dispatch |
+| details | <code>details</code> | params to dispatch with the event |
 
-### on
+<a name="EventWrapper+addEventListener"></a>
 
-#### Parameters
+### component.addEventListener(event, [callback], [options]) ⇒ [<code>EventItem</code>](#EventItem)
+Add event listener to the element
 
--   `args` **...any**
+**Kind**: instance method of [<code>Component</code>](#Component)
 
-Returns **EventItem**
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| event | <code>string</code> |  | the event name |
+| [callback] | <code>function</code> | <code>()&#x3D;&gt;{}</code> | the callback to exectue |
+| [options] | <code>object</code> | <code>{}</code> | the options |
 
-### off
+<a name="EventWrapper+removeEventListener"></a>
 
-#### Parameters
+### component.removeEventListener(event, [callback]) ⇒ <code>Array</code>
+Stop to Listen to given event
 
--   `args` **...any**
+**Kind**: instance method of [<code>Component</code>](#Component)
 
-Returns **[Array][90]**
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| event | <code>string</code> |  | the event to stop listen to |
+| [callback] | <code>string</code> \| <code>function</code> | <code>&quot;&#x27;&#x27;&quot;</code> | callback to stop exectue |
 
-### trigger
+<a name="EventWrapper+dispatchEvent"></a>
 
-#### Parameters
+### component.dispatchEvent(event, details)
+Dispatch the event
 
--   `args` **...any**
+**Kind**: instance method of [<code>Component</code>](#Component)
 
-## eventMap
+| Param | Type | Description |
+| --- | --- | --- |
+| event | <code>string</code> | the event to dispatch |
+| details | <code>details</code> | params to dispatch with the event |
 
-Type: [EventMap][86]
+<a name="UserException"></a>
 
-## domElement
+## UserException
+**Kind**: global class
+<a name="new_UserException_new"></a>
 
-Type: [Element][81]
+### new UserException(message, [type])
+UserException
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| message | <code>string</code> |  | the message to Throw |
+| [type] | <code>string</code> | <code>&quot;&#x27;UserException&#x27;&quot;</code> | the type of exception |
+
+<a name="DomWrapper"></a>
+
+## DomWrapper ⇐ <code>Wrapper</code>
+**Kind**: global class
+**Extends**: <code>Wrapper</code>
+
+* [DomWrapper](#DomWrapper) ⇐ <code>Wrapper</code>
+    * [new DomWrapper()](#new_DomWrapper_new)
+    * [.find([selector])](#DomWrapper+find) ⇒ <code>Array</code>
+
+<a name="new_DomWrapper_new"></a>
+
+### new DomWrapper()
+A simple DOM wrapper
+
+<a name="DomWrapper+find"></a>
+
+### domWrapper.find([selector]) ⇒ <code>Array</code>
+Find all the elements matching the query passed and return them
+as list of [EventWrapper](#eventwrapper)
+
+**Kind**: instance method of [<code>DomWrapper</code>](#DomWrapper)
+**Returns**: <code>Array</code> - all the dom elements returned by the query
+
+| Param | Type | Default |
+| --- | --- | --- |
+| [selector] | <code>string</code> | <code>&quot;&#x27;*&#x27;&quot;</code> |
+
+<a name="DomWrapper"></a>
+
+## DomWrapper
+**Kind**: global class
+**Todo**
+
+- [ ] fare in modo di sostituire un reale elmento del dom con uno fake
+
+
+* [DomWrapper](#DomWrapper)
+    * [new DomWrapper()](#new_DomWrapper_new)
+    * [.find([selector])](#DomWrapper+find) ⇒ <code>Array</code>
+
+<a name="new_DomWrapper_new"></a>
+
+### new DomWrapper()
+A simple DOM wrapper
+
+<a name="DomWrapper+find"></a>
+
+### domWrapper.find([selector]) ⇒ <code>Array</code>
+Find all the elements matching the query passed and return them
+as list of [EventWrapper](#eventwrapper)
+
+**Kind**: instance method of [<code>DomWrapper</code>](#DomWrapper)
+**Returns**: <code>Array</code> - all the dom elements returned by the query
+
+| Param | Type | Default |
+| --- | --- | --- |
+| [selector] | <code>string</code> | <code>&quot;&#x27;*&#x27;&quot;</code> |
+
+<a name="Broadcast"></a>
 
 ## Broadcast
+Creates a broadcast and emit/listen events
+throug the DOM
 
-**Extends EventWrapper**
+**Kind**: global class
 
-Grab and dispatch messages throug the dom
+* [Broadcast](#Broadcast)
+    * [new Broadcast(element, options)](#new_Broadcast_new)
+    * ~~[.cast(msg, [obj])](#Broadcast+cast)~~
+    * ~~[.ungrab(msg, [callback])](#Broadcast+ungrab)~~
+    * ~~[.grab(msg, [callback], options)](#Broadcast+grab) ⇒ <code>void</code>~~
+    * [.emit(msg, obj)](#Broadcast+emit)
+    * [.listen(msg, [callback], options)](#Broadcast+listen)
+    * [.unlisten(msg, [callback])](#Broadcast+unlisten)
 
-### Parameters
+<a name="new_Broadcast_new"></a>
 
--   `element` **([Element][81] \| [Object][84])**
--   `options` **[Object][84]**  (optional, default `{namespace:'msg'}`)
+### new Broadcast(element, options)
 
-### Defaults
+| Param | Type |
+| --- | --- |
+| element | <code>element</code> \| <code>object</code> |
+| options | <code>object</code> |
 
-Get the default settings
+<a name="Broadcast+cast"></a>
 
-Returns **[Object][84]**
+### ~~broadcast.cast(msg, [obj])~~
+***Deprecated***
 
-### Defaults
+An alias for [emit](#broadcastemit) method
 
-Set the configuration
+**Kind**: instance method of [<code>Broadcast</code>](#Broadcast)
 
-#### Parameters
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| msg | <code>string</code> |  | message to cast |
+| [obj] | <code>object</code> | <code>{}</code> | callback to execute on message receiving |
 
--   `options` **[Object][84]**
+<a name="Broadcast+ungrab"></a>
 
-### cast
+### ~~broadcast.ungrab(msg, [callback])~~
+***Deprecated***
 
-Cast a message throug the dom
+An alias for [unlisten](#broadcastunlisten) method
 
-#### Parameters
+**Kind**: instance method of [<code>Broadcast</code>](#Broadcast)
 
--   `msg` **[String][83]** message to cast
--   `obj` **[Object][84]** callback to execute on message receiving (optional, default `{}`)
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| msg | <code>string</code> |  | message to remove the listen to |
+| [callback] | <code>function</code> | <code>()&#x3D;&gt;{}</code> | callback to execute on message receiving |
 
-### grab
+<a name="Broadcast+grab"></a>
 
+### ~~broadcast.grab(msg, [callback], options) ⇒ <code>void</code>~~
+***Deprecated***
+
+An alias for [listen](#broadcastlisten) method
+
+**Kind**: instance method of [<code>Broadcast</code>](#Broadcast)
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| msg | <code>string</code> |  | message to cast |
+| [callback] | <code>function</code> | <code>()&#x3D;&gt;{}</code> | callback to execute on message receiving |
+| options | <code>object</code> |  |  |
+
+<a name="Broadcast+emit"></a>
+
+### broadcast.emit(msg, obj)
+Emit a message throug the Broadcast
+
+**Kind**: instance method of [<code>Broadcast</code>](#Broadcast)
+
+| Param | Type | Description |
+| --- | --- | --- |
+| msg | <code>string</code> | message to cast |
+| obj | <code>object</code> | callback to execute on message receiving |
+
+<a name="Broadcast+listen"></a>
+
+### broadcast.listen(msg, [callback], options)
 Add the listener for given event and dispatch the event
 
-#### Parameters
+**Kind**: instance method of [<code>Broadcast</code>](#Broadcast)
 
--   `msg` **[String][83]** message to cast
--   `callback` **[Function][93]** callback to execute on message receiving
--   `options` **[Object][84]**  (optional, default `{}`)
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| msg | <code>string</code> |  | message to cast |
+| [callback] | <code>function</code> | <code>()&#x3D;&gt;{}</code> | callback to execute on message receiving |
+| options | <code>object</code> |  |  |
 
-### ungrab
+<a name="Broadcast+unlisten"></a>
 
+### broadcast.unlisten(msg, [callback])
 Remove the listener for given message
 
-#### Parameters
+**Kind**: instance method of [<code>Broadcast</code>](#Broadcast)
 
--   `msg` **[String][83]** message to cast
--   `callback` **[Function][93]** callback to execute on message receiving
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| msg | <code>string</code> |  | message to cast |
+| [callback] | <code>string</code> \| <code>function</code> | <code>&quot;&#x27;&#x27;&quot;</code> | callback to stop exectue |
 
-## Inflector
+<a name="EventItem"></a>
 
-String manipulation utility uses Lodash
+## EventItem
+**Kind**: global class
+**See**: https://github.com/kelektiv/node-uuid
+<a name="new_EventItem_new"></a>
 
-### Parameters
+### new EventItem(event, [callback])
+An object which represent an Event
+A `uuid` will be set in order to make the event unique
 
--   `string` **[String][83]**
 
-### String
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| event | <code>string</code> |  | the name of the event |
+| [callback] | <code>function</code> | <code>()&#x3D;&gt;{}</code> | the callback to exectue |
 
-Returns **[String][83]**
-
-### String
-
-#### Parameters
-
--   `string` **[string][94]**
-
-### String
-
-Type: [String][83]
-
-### string
-
-Type: [String][83]
-
-### underscore
-
--   **See: [https://lodash.com/docs/4.17.10#snakeCase][95]**
-
-convert the string to snake case {'Foo Bar' => 'foo_bar'}
-
-Returns **[String][83]**
-
-### camelize
-
--   **See: [https://lodash.com/docs/4.17.10#camelCase][96]**
-
-convert the string to snake case {'Foo Bar' => 'fooBar'}
-
-#### Parameters
-
--   `firstUpperCase`   (optional, default `false`)
-
-Returns **[String][83]**
-
-### kebab
-
--   **See: [https://lodash.com/docs/4.17.10#kebabCase][97]**
-
-convert the string to kebab case {'Foo Bar' => 'foo-bar'}
-
-Returns **[String][83]**
-
-### kebab
-
-### humanize
-
--   **See: [https://lodash.com/docs/4.17.10#startCase][98]**
-
-convert the string to human readable string {'--foo-bar--' >= 'Foo Bar'}
-
-Returns **[String][83]**
-
-## string
-
-Type: [String][83]
+<a name="EventMap"></a>
 
 ## EventMap
+**Kind**: global class
 
-Manage all the component events for given namespace
+* [EventMap](#EventMap)
+    * [new EventMap()](#new_EventMap_new)
+    * _instance_
+        * [.Map](#EventMap+Map) ⇒ <code>Array</code>
+        * [.addEvent(eventName, callback)](#EventMap+addEvent) ⇒ [<code>EventItem</code>](#EventItem)
+        * [.deleteEvent(eventName, callback)](#EventMap+deleteEvent) ⇒ <code>Array</code>
+    * _static_
+        * [.DomWrapper#element](#EventMap.DomWrapper+element)
 
-### Map
+<a name="new_EventMap_new"></a>
 
-#### Parameters
+### new EventMap()
+Stores all the events to an `Array`
 
--   `map`
+<a name="EventMap+Map"></a>
 
-Returns **[Array][90]**
+### eventMap.Map ⇒ <code>Array</code>
+Returns the Map
 
-### Map
+**Kind**: instance property of [<code>EventMap</code>](#EventMap)
+**Read only**: true
+<a name="EventMap+addEvent"></a>
 
-Returns **[Array][90]**
-
-### Map
-
-Type: [Object][84]
-
-### map
-
-Type: [Array][90]
-
-### eventIndex
-
-Returns the index of given `eventItem` within the map
-
-#### Parameters
-
--   `eventItem` **EventItem**
-
-Returns **[Number][99]**
-
-### addEvent
-
+### eventMap.addEvent(eventName, callback) ⇒ [<code>EventItem</code>](#EventItem)
 Add event to the map
 
-#### Parameters
+**Kind**: instance method of [<code>EventMap</code>](#EventMap)
 
--   `eventName` **[String][83]**
--   `callback` **[Function][93]**
+| Param | Type |
+| --- | --- |
+| eventName | <code>String</code> |
+| callback | <code>function</code> |
 
-Returns **[Map][100]** map
+<a name="EventMap+deleteEvent"></a>
 
-### deleteEvent
-
+### eventMap.deleteEvent(eventName, callback) ⇒ <code>Array</code>
 Remove an event from given object.
 If no callback has passed it removes anonimous functions
 such anonimous arrow functions
 
-#### Parameters
+**Kind**: instance method of [<code>EventMap</code>](#EventMap)
 
--   `eventName` **[String][83]**
--   `callback` **([Function][93] \| [Object][84])**  (optional, default `{name:''}`)
--   `strict` **[Boolean][101]** strict (optional, default `false`)
+| Param | Type |
+| --- | --- |
+| eventName | <code>String</code> |
+| callback | <code>function</code> \| <code>Object</code> |
 
-Returns **[Array][90]**
+<a name="EventMap.DomWrapper+element"></a>
 
-### strictDeleteEvent
+### EventMap.DomWrapper#element
+Set the Element which represent the current component
 
-Remove an event from given object using the `uuid` of given event
+**Kind**: static property of [<code>EventMap</code>](#EventMap)
+**Read only**: true
 
-#### Parameters
+| Param | Type |
+| --- | --- |
+| domElement | <code>Element</code> |
 
--   `eventName` **[String][83]**
--   `uuid` **[String][83]**
+<a name="EventWrapper"></a>
 
-Returns **[Array][90]**
+## EventWrapper
+**Kind**: global class
 
-## map
+* [EventWrapper](#EventWrapper)
+    * [new EventWrapper([element])](#new_EventWrapper_new)
+    * _instance_
+        * [.EventMap](#EventWrapper+EventMap) ⇒ [<code>EventMap</code>](#EventMap)
+        * [.EventMap](#EventWrapper+EventMap)
+        * [.on(event, [callback], [options])](#EventWrapper+on) ⇒ [<code>EventItem</code>](#EventItem)
+        * [.one(event, [callback], [options])](#EventWrapper+one) ⇒ [<code>EventItem</code>](#EventItem)
+        * [.off(event, [callback])](#EventWrapper+off) ⇒ <code>Array</code>
+        * [.trigger(event, details)](#EventWrapper+trigger)
+        * [.addEventListener(event, [callback], [options])](#EventWrapper+addEventListener) ⇒ [<code>EventItem</code>](#EventItem)
+        * [.removeEventListener(event, [callback])](#EventWrapper+removeEventListener) ⇒ <code>Array</code>
+        * [.dispatchEvent(event, details)](#EventWrapper+dispatchEvent)
+    * _static_
+        * [.DomWrapper#element](#EventWrapper.DomWrapper+element) ⇒ <code>Element</code>
 
-Type: [Array][90]
+<a name="new_EventWrapper_new"></a>
 
-[1]: #component
+### new EventWrapper([element])
+A simple wrapper which allows to use method like .on(...), .off(...)
 
-[2]: #parameters
 
-[3]: #name
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [element] | <code>element</code> | <code>document.createElement(&#x27;span&#x27;)</code> | the element to wrap |
 
-[4]: #messages
+<a name="EventWrapper+EventMap"></a>
 
-[5]: #parameters-1
+### eventWrapper.EventMap ⇒ [<code>EventMap</code>](#EventMap)
+Returns the EventMap
 
-[6]: #broadcast
+**Kind**: instance property of [<code>EventWrapper</code>](#EventWrapper)
+**Read only**: true
+<a name="EventWrapper+EventMap"></a>
 
-[7]: #parameters-2
+### eventWrapper.EventMap
+Set the event map
 
-[8]: #grab
+**Kind**: instance property of [<code>EventWrapper</code>](#EventWrapper)
 
-[9]: #parameters-3
+| Param | Type |
+| --- | --- |
+| map | [<code>EventMap</code>](#EventMap) |
 
-[10]: #ungrab
+<a name="EventWrapper+on"></a>
 
-[11]: #parameters-4
+### eventWrapper.on(event, [callback], [options]) ⇒ [<code>EventItem</code>](#EventItem)
+An alias for [addEventListener](#eventwrapperaddeventlistener)
 
-[12]: #cast
+**Kind**: instance method of [<code>EventWrapper</code>](#EventWrapper)
+**See**: https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
 
-[13]: #parameters-5
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| event | <code>string</code> |  | the event name |
+| [callback] | <code>function</code> | <code>()&#x3D;&gt;{}</code> | the callback to exectue |
+| [options] | <code>object</code> | <code>{}</code> | the options |
 
-[14]: #destroy
+<a name="EventWrapper+one"></a>
 
-[15]: #eventwrapper
+### eventWrapper.one(event, [callback], [options]) ⇒ [<code>EventItem</code>](#EventItem)
+It listen only for the first occurence of the event
+and then it removes the listner
 
-[16]: #parameters-6
+**Kind**: instance method of [<code>EventWrapper</code>](#EventWrapper)
+**See**: https://developers.google.com/web/updates/2016/10/addeventlistener-once
 
-[17]: #eventmap
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| event | <code>string</code> |  | the event name |
+| [callback] | <code>function</code> | <code>()&#x3D;&gt;{}</code> | the callback to exectue |
+| [options] | <code>object</code> | <code>{}</code> | the options |
 
-[18]: #parameters-7
+<a name="EventWrapper+off"></a>
 
-[19]: #eventmap-1
+### eventWrapper.off(event, [callback]) ⇒ <code>Array</code>
+An alias for [removeEventListener](#eventwrapperremoveeventlistener)
 
-[20]: #eventmap-2
+**Kind**: instance method of [<code>EventWrapper</code>](#EventWrapper)
+**See**: https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/removeEventListener
 
-[21]: #element
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| event | <code>string</code> |  | the event name |
+| [callback] | <code>function</code> | <code>()&#x3D;&gt;{}</code> | the callback to exectue |
 
-[22]: #parameters-8
+<a name="EventWrapper+trigger"></a>
 
-[23]: #element-1
+### eventWrapper.trigger(event, details)
+An alias for [dispatchEvent](#eventwrapperdispatchevent)
 
-[24]: #domelement
+**Kind**: instance method of [<code>EventWrapper</code>](#EventWrapper)
+**See**
 
-[25]: #addeventlistener
+- @see https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent#Polyfill
+- https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/dispatchEvent
 
-[26]: #parameters-9
 
-[27]: #addeventlistener-1
+| Param | Type | Description |
+| --- | --- | --- |
+| event | <code>string</code> | the event to dispatch |
+| details | <code>details</code> | params to dispatch with the event |
 
-[28]: #parameters-10
+<a name="EventWrapper+addEventListener"></a>
 
-[29]: #removeeventlistener
+### eventWrapper.addEventListener(event, [callback], [options]) ⇒ [<code>EventItem</code>](#EventItem)
+Add event listener to the element
 
-[30]: #parameters-11
+**Kind**: instance method of [<code>EventWrapper</code>](#EventWrapper)
 
-[31]: #dispatchevent
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| event | <code>string</code> |  | the event name |
+| [callback] | <code>function</code> | <code>()&#x3D;&gt;{}</code> | the callback to exectue |
+| [options] | <code>object</code> | <code>{}</code> | the options |
 
-[32]: #parameters-12
+<a name="EventWrapper+removeEventListener"></a>
 
-[33]: #on
+### eventWrapper.removeEventListener(event, [callback]) ⇒ <code>Array</code>
+Stop to Listen to given event
 
-[34]: #parameters-13
+**Kind**: instance method of [<code>EventWrapper</code>](#EventWrapper)
 
-[35]: #off
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| event | <code>string</code> |  | the event to stop listen to |
+| [callback] | <code>string</code> \| <code>function</code> | <code>&quot;&#x27;&#x27;&quot;</code> | callback to stop exectue |
 
-[36]: #parameters-14
+<a name="EventWrapper+dispatchEvent"></a>
 
-[37]: #trigger
+### eventWrapper.dispatchEvent(event, details)
+Dispatch the event
 
-[38]: #parameters-15
+**Kind**: instance method of [<code>EventWrapper</code>](#EventWrapper)
 
-[39]: #eventmap-3
+| Param | Type | Description |
+| --- | --- | --- |
+| event | <code>string</code> | the event to dispatch |
+| details | <code>details</code> | params to dispatch with the event |
 
-[40]: #domelement-1
+<a name="EventWrapper.DomWrapper+element"></a>
 
-[41]: #broadcast-1
+### EventWrapper.DomWrapper#element ⇒ <code>Element</code>
+Get the Element which represent the current component
 
-[42]: #parameters-16
+**Kind**: static property of [<code>EventWrapper</code>](#EventWrapper)
+**Read only**: true
+<a name="Inflector"></a>
 
-[43]: #defaults
+## Inflector
+[module:lodash/trim](module:lodash/trim)
+[module:lodash/snakeCase](module:lodash/snakeCase)
+[module:lodash/camelCase](module:lodash/camelCase)
+[module:lodash/upperFirst](module:lodash/upperFirst)
+[module:lodash/kebabCase](module:lodash/kebabCase)
+[module:lodash/startCase](module:lodash/startCase)
 
-[44]: #defaults-1
+**Kind**: global class
 
-[45]: #parameters-17
+* [Inflector](#Inflector)
+    * [new Inflector(string)](#new_Inflector_new)
+    * [.String](#Inflector+String) : <code>String</code>
+    * [.String](#Inflector+String) : <code>string</code>
+    * [.underscore()](#Inflector+underscore) ⇒ <code>String</code>
+    * [.camelize()](#Inflector+camelize) ⇒ <code>String</code>
+    * [.kebab()](#Inflector+kebab) ⇒ <code>String</code>
+    * [.humanize()](#Inflector+humanize) ⇒ <code>String</code>
 
-[46]: #cast-1
+<a name="new_Inflector_new"></a>
 
-[47]: #parameters-18
+### new Inflector(string)
+create an instance
 
-[48]: #grab-1
 
-[49]: #parameters-19
+| Param | Type |
+| --- | --- |
+| string | <code>String</code> |
 
-[50]: #ungrab-1
+<a name="Inflector+String"></a>
 
-[51]: #parameters-20
+### inflector.String : <code>String</code>
+**Kind**: instance property of [<code>Inflector</code>](#Inflector)
+<a name="Inflector+String"></a>
 
-[52]: #inflector
+### inflector.String : <code>string</code>
+**Kind**: instance property of [<code>Inflector</code>](#Inflector)
 
-[53]: #parameters-21
+| Param | Type |
+| --- | --- |
+| string | <code>String</code> |
 
-[54]: #string
+<a name="Inflector+underscore"></a>
 
-[55]: #string-1
+### inflector.underscore() ⇒ <code>String</code>
+convert the string to snake case {'Foo Bar' => 'foo_bar'}
 
-[56]: #parameters-22
+**Kind**: instance method of [<code>Inflector</code>](#Inflector)
+**See**: https://lodash.com/docs/4.17.10#snakeCase
+<a name="Inflector+camelize"></a>
 
-[57]: #string-2
+### inflector.camelize() ⇒ <code>String</code>
+convert the string to snake case {'Foo Bar' => 'fooBar'}
 
-[58]: #string-3
+**Kind**: instance method of [<code>Inflector</code>](#Inflector)
+**See**: https://lodash.com/docs/4.17.10#camelCase
+<a name="Inflector+kebab"></a>
 
-[59]: #underscore
+### inflector.kebab() ⇒ <code>String</code>
+convert the string to kebab case {'Foo Bar' => 'foo-bar'}
 
-[60]: #camelize
+**Kind**: instance method of [<code>Inflector</code>](#Inflector)
+**See**: https://lodash.com/docs/4.17.10#kebabCase
+<a name="Inflector+humanize"></a>
 
-[61]: #parameters-23
+### inflector.humanize() ⇒ <code>String</code>
+convert the string to human readable string {'--foo-bar--' >= 'Foo Bar'}
 
-[62]: #kebab
+**Kind**: instance method of [<code>Inflector</code>](#Inflector)
+**See**: https://lodash.com/docs/4.17.10#startCase
+<a name="Components"></a>
 
-[63]: #kebab-1
+## Components : <code>Object</code>
+It stores the list of components and instances and allow to register and create a component
 
-[64]: #humanize
+**Kind**: global constant
 
-[65]: #string-4
+* [Components](#Components) : <code>Object</code>
+    * [.exists(component)](#Components.exists) ⇒ <code>undefined</code> \| <code>\*</code>
+    * [.register(component)](#Components.register)
+    * [.create(element, component)](#Components.create) ⇒ <code>\*</code>
 
-[66]: #eventmap-4
+<a name="Components.exists"></a>
 
-[67]: #map
+### Components.exists(component) ⇒ <code>undefined</code> \| <code>\*</code>
+Check if already exists a component within the list
 
-[68]: #parameters-24
+**Kind**: static method of [<code>Components</code>](#Components)
 
-[69]: #map-1
+| Param | Type |
+| --- | --- |
+| component | <code>\*</code> |
 
-[70]: #map-2
+<a name="Components.register"></a>
 
-[71]: #map-3
+### Components.register(component)
+Register new component and add it to the List
 
-[72]: #eventindex
+**Kind**: static method of [<code>Components</code>](#Components)
 
-[73]: #parameters-25
+| Param | Type |
+| --- | --- |
+| component | <code>\*</code> |
 
-[74]: #addevent
+<a name="Components.create"></a>
 
-[75]: #parameters-26
+### Components.create(element, component) ⇒ <code>\*</code>
+Create an instance of the new component and add it to the Intances list
 
-[76]: #deleteevent
+**Kind**: static method of [<code>Components</code>](#Components)
+**Returns**: <code>\*</code> - instance
+**Throws**:
 
-[77]: #parameters-27
+- [<code>UserException</code>](#UserException) if the component has not been registered
 
-[78]: #strictdeleteevent
 
-[79]: #parameters-28
+| Param | Type |
+| --- | --- |
+| element | <code>Element</code> |
+| component | <code>\*</code> |
 
-[80]: #map-4
+<a name="kebab"></a>
 
-[81]: https://developer.mozilla.org/docs/Web/API/Element
-
-[82]: #broadcast
-
-[83]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
-
-[84]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
-
-[85]: #component
-
-[86]: #eventmap
-
-[87]: https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
-
-[88]: https://developers.google.com/web/updates/2016/10/addeventlistener-once
-
-[89]: https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/removeEventListener
-
-[90]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
-
-[91]: https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent#Polyfill
-
-[92]: https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/dispatchEvent
-
-[93]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
-
-[94]: #string
-
-[95]: https://lodash.com/docs/4.17.10#snakeCase
-
-[96]: https://lodash.com/docs/4.17.10#camelCase
-
-[97]: https://lodash.com/docs/4.17.10#kebabCase
-
-[98]: https://lodash.com/docs/4.17.10#startCase
-
-[99]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
-
-[100]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Map
-
-[101]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+## kebab()
+**Kind**: global function
