@@ -1,9 +1,11 @@
 import Logger from '@openmind/litelog';
 import Component from '../../src/components/component';
 
+const Log = new Logger('Hogwarts');
+
 class HarryPotter extends Component {
   static magic() {
-    Logger.warn('Stupeficum');
+    Log.warn('STUPEFICIUM');
   }
 
   constructor(element) {

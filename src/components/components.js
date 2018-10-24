@@ -38,12 +38,13 @@ const Components = {
    */
   create(element) {
     const componentClass = element.dataset.component.split(',');
-    Log.log(componentClass);
     componentClass.forEach((dataComponentValue) => {
       if (Components.List.has(dataComponentValue)) {
         const ClassName = Components.List.get(dataComponentValue);
         const instance = new ClassName(element);
+        instance.Name = dataComponentValue;
         Components.Intances.set(element, instance);
+        instance.emit(`${instance.Name}:created`);
         return instance;
       }
       throw new UserException(`You have to register class '${dataComponentValue}' before create a component`);

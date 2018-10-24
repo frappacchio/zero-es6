@@ -70,7 +70,6 @@ class Application {
     components.forEach((element) => {
       this.Components.create(element);
     });
-    Log.log(components);
   }
 }
 export default Application;

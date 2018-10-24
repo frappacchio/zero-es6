@@ -1,5 +1,6 @@
 import Logger from '@openmind/litelog';
-import kebabCase from 'lodash/kebabCase';
+import { v4 as uuid } from 'uuid';
+import Inflector from '../utils/inflector';
 import EventWrapper from '../events/event-wrapper';
 import Broadcast from '../events/broadcats';
 import EventMap from '../events/event-map';
@@ -13,15 +14,42 @@ const Log = new Logger('Component');
  * @extends {EventWrapper}
  */
 class Component extends EventWrapper {
+  get ClassName() {
+    return this.className;
+  }
+
+  set ClassName(name) {
+    this.className = name;
+  }
+
+  get Name() {
+    return this.name;
+  }
+
+  set Name(name) {
+    this.name = name;
+    this.ClassName = new Inflector(this.Name).camelize(true);
+  }
+
+
   /**
-   * Gets the kebab-case name of component
-   * @example `SuperClass` will returns `super-class`
+   * Gets the component UUID
+   * @returns {string}
    * @readonly
    * @memberof Component
-   * @returns {string}
    */
-  static get Name() {
-    return kebabCase(this.name);
+  get UUID() {
+    return this.uuid;
+  }
+
+  /**
+   * Set UUID of component
+   * by the Broadcast
+   * @param {string} uuidString
+   * @memberof Component
+   */
+  set UUID(uuidString) {
+    this.uuid = uuidString;
   }
 
   /**
@@ -160,18 +188,14 @@ class Component extends EventWrapper {
 
   constructor(element, broadcast = new Broadcast()) {
     super(element);
-    /* if (!this.element.getAttribute('[data-component]')) {
-      this.element.setAttribute('data-component', this.Name);
-    } */
     this.Broadcast = broadcast;
     this.broadcastMap = new EventMap();
     this.Messages = Object.assign({}, this.Messages);
-    /* Object.keys(this.Messages).forEach((key) => {
-      this.listen(key, this.Messages[key]);
-    }); */
     this.addListeners();
-    Log.log(`initializing ${this.constructor.name} with [data-component="${this.Name}"]`);
-    this.Broadcast.emit(`${this.constructor.name}:create`);
+    this.UUID = uuid();
+    if (element instanceof Element || element instanceof HTMLDocument) {
+      this.element.dataset.uuid = this.UUID;
+    }
   }
 }
 
