@@ -8,6 +8,14 @@ import EventWrapper from './events/event-wrapper';
 import EventItem from './events/event-item';
 import EventMap from './events/event-map';
 
-export default {
-  Application, Components, Component, UserException, DomWrapper, Broadcast, EventWrapper, EventItem, EventMap,
+export {
+  Application,
+  Components,
+  Component,
+  UserException,
+  DomWrapper,
+  Broadcast,
+  EventWrapper,
+  EventItem,
+  EventMap,
 };
