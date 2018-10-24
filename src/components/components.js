@@ -14,8 +14,8 @@ const Components = {
    * @param {*} component
    * @returns {undefined|*}
    */
-  exists(component) {
-    return Components.List.has(component.name);
+  exists(name) {
+    return Components.List.has(name);
   },
   /**
    * Register new component and add it to the List
@@ -23,7 +23,7 @@ const Components = {
    * @param {*} component
    */
   register(name, component) {
-    if (!Components.exists(component)) {
+    if (!Components.exists(name)) {
       Components.List.set(name, component);
     } else {
       throw new UserException(`The component '${component.name}' already exists`);
@@ -37,18 +37,22 @@ const Components = {
    * @throws {UserException} if the component has not been registered
    */
   create(element) {
-    const componentClass = element.dataset.component.split(',');
-    componentClass.forEach((dataComponentValue) => {
-      if (Components.List.has(dataComponentValue)) {
-        const ClassName = Components.List.get(dataComponentValue);
-        const instance = new ClassName(element);
-        instance.Name = dataComponentValue;
-        Components.Intances.set(element, instance);
-        instance.emit(`${instance.Name}:created`);
-        return instance;
-      }
-      throw new UserException(`You have to register class '${dataComponentValue}' before create a component`);
-    });
+    if ('component' in element.dataset) {
+      const componentClass = element.dataset.component.split(',');
+      componentClass.forEach((dataComponentValue) => {
+        if (Components.List.has(dataComponentValue)) {
+          const ClassName = Components.List.get(dataComponentValue);
+          const instance = new ClassName(element);
+          instance.Name = dataComponentValue;
+          Components.Intances.set(element, instance);
+          instance.emit(`${instance.Name}:created`);
+          return instance;
+        }
+        throw new UserException(`You have to register class '${dataComponentValue}' before create a component`);
+      });
+    } else {
+      throw new UserException(`The element is not a valid component for '${dataComponentValue}' `);
+    }
   },
 };
 

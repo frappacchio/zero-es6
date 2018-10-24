@@ -7,8 +7,9 @@
       "!**/vendor/**",
       "!**/docs/**",
       "!**/dist/**",
+      "!**/example/**",
       "!**/jest-coverage-report/**",
-      "!webpack.config.js",
+      "!webpack.*.js",
       "!src/index.js"
     ],
     "coverageDirectory":"./jest-coverage-report"
