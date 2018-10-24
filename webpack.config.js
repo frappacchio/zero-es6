@@ -1,26 +1,21 @@
+const merge = require('webpack-merge');
+const yargs = require('yargs');
 const path = require('path');
+const webpackDev = require('./webpack.dev');
+const webpackProd = require('./webpack.prod');
 
-module.exports = {
-  mode: 'development',
-  entry: './src/index.js',
-  watch: true,
+const PRODUCTION = !!(yargs.argv.production);
+const CONFIG = !PRODUCTION ? webpackDev : webpackProd;
+
+module.exports = merge(CONFIG, {
   output: {
-    filename: 'main.js',
+    filename: 'index.js',
     path: path.resolve(__dirname, 'dist'),
-
-    /* path: path.resolve(__dirname, 'umd'),
-    filename: 'zero.js',
-    libraryTarget: 'umd',
-    library: 'zero',
-    umdNamedDefine: true,
-    globalObject: 'this', */
-
   },
   module: {
     rules: [
       {
-        test: /\.m?js$/,
-        exclude: /(node_modules|bower_components)/,
+        test: /\.js$/,
         use: {
           loader: 'babel-loader',
           options: {
@@ -31,4 +26,9 @@ module.exports = {
       },
     ],
   },
-};
+
+  plugins: [],
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
+});

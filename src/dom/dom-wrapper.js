@@ -38,8 +38,9 @@ class DomWrapper {
   }
 
   set innerHTML(string) {
-    Log.log(string);
-    this.element.innerHTML = string;
+    const newElement = this.element.innerHTML = string;
+    Log.log(`append: ${string}`);
+    return newElement;
   }
 
   /**

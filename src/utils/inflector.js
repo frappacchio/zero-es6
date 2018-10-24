@@ -7,12 +7,6 @@ import startCase from 'lodash/startCase';
 /**
  * String manipulation utility uses Lodash
  * @class
- * {@link module:lodash/trim}
- * {@link module:lodash/snakeCase}
- * {@link module:lodash/camelCase}
- * {@link module:lodash/upperFirst}
- * {@link module:lodash/kebabCase}
- * {@link module:lodash/startCase}
  */
 class Inflector {
   /**

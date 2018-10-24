@@ -1,5 +1,7 @@
+import Logger from '@openmind/litelog';
 import UserException from '../core/user-exception';
 
+const Log = new Logger('Components');
 /**
  * It stores the list of components and instances and allow to register and create a component
  * @type {Object}
@@ -17,11 +19,12 @@ const Components = {
   },
   /**
    * Register new component and add it to the List
+   * @param {string} name the String name of component
    * @param {*} component
    */
-  register(component) {
+  register(name, component) {
     if (!Components.exists(component)) {
-      Components.List.set(component.name, component);
+      Components.List.set(name, component);
     } else {
       throw new UserException(`The component '${component.name}' already exists`);
     }
@@ -33,14 +36,18 @@ const Components = {
    * @returns {*} instance
    * @throws {UserException} if the component has not been registered
    */
-  create(element, component) {
-    if (Components.List.has(component.name)) {
-      const ClassName = Components.List.get(component.name);
-      const instance = new ClassName(element);
-      Components.Intances.set(element, instance);
-      return instance;
-    }
-    throw new UserException(`You have to register class '${component.name}' before create a component`);
+  create(element) {
+    const componentClass = element.dataset.component.split(',');
+    Log.log(componentClass);
+    componentClass.forEach((dataComponentValue) => {
+      if (Components.List.has(dataComponentValue)) {
+        const ClassName = Components.List.get(dataComponentValue);
+        const instance = new ClassName(element);
+        Components.Intances.set(element, instance);
+        return instance;
+      }
+      throw new UserException(`You have to register class '${dataComponentValue}' before create a component`);
+    });
   },
 };
 

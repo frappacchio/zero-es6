@@ -2,7 +2,7 @@ import Logger from '@openmind/litelog';
 import EventWrapper from './event-wrapper';
 
 const Log = new Logger('Broadcast');
-Log.mute = true;
+// Log.mute = true;
 /**
    * Creates a broadcast and emit/listen events
    * throug the DOM

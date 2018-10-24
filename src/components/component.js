@@ -20,8 +20,8 @@ class Component extends EventWrapper {
    * @memberof Component
    * @returns {string}
    */
-  get Name() {
-    return kebabCase(this.constructor.name);
+  static get Name() {
+    return kebabCase(this.name);
   }
 
   /**
@@ -42,6 +42,7 @@ class Component extends EventWrapper {
    */
   set Messages(messages) {
     this.messages = messages;
+    this.addListeners();
   }
 
   /**
@@ -61,6 +62,11 @@ class Component extends EventWrapper {
    */
   set Broadcast(broadcast) {
     this.broadcast = broadcast;
+  }
+
+  set innerHTML(string) {
+    super.innerHTML = string;
+    this.Broadcast.emit('domChanged');
   }
 
 
@@ -146,6 +152,12 @@ class Component extends EventWrapper {
     this.Broadcast.emit(`${this.constructor.name}:destroy`);
   }
 
+  addListeners() {
+    Object.keys(this.Messages).forEach((key) => {
+      this.listen(key, this.Messages[key]);
+    });
+  }
+
   constructor(element, broadcast = new Broadcast()) {
     super(element);
     /* if (!this.element.getAttribute('[data-component]')) {
@@ -154,9 +166,10 @@ class Component extends EventWrapper {
     this.Broadcast = broadcast;
     this.broadcastMap = new EventMap();
     this.Messages = Object.assign({}, this.Messages);
-    Object.keys(this.Messages).forEach((key) => {
+    /* Object.keys(this.Messages).forEach((key) => {
       this.listen(key, this.Messages[key]);
-    });
+    }); */
+    this.addListeners();
     Log.log(`initializing ${this.constructor.name} with [data-component="${this.Name}"]`);
     this.Broadcast.emit(`${this.constructor.name}:create`);
   }

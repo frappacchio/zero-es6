@@ -1,14 +1,13 @@
-import Logger from '@openmind/litelog';
-import DomWrapper from './dom/dom-wrapper';
+import Application from './application/application';
+import Components from './components/components';
 import Component from './components/component';
+import UserException from './core/user-exception';
+import DomWrapper from './dom/dom-wrapper';
+import Broadcast from './events/broadcats';
+import EventWrapper from './events/event-wrapper';
+import EventItem from './events/event-item';
+import EventMap from './events/event-map';
 
-const Log = new Logger('Main');
-
-const pageReader = new DomWrapper(document);
-const elements = pageReader.find('[data-component="fake-component"]');
-
-elements.forEach((element) => {
-  const component = new Component(element);
-  component.innerHTML = '<p>Test</p>';
-  Log.log(component.find('[data-component]'));
-});
+export default {
+  Application, Components, Component, UserException, DomWrapper, Broadcast, EventWrapper, EventItem, EventMap,
+};
