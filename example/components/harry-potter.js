@@ -16,7 +16,6 @@ class HarryPotter extends Component {
     this.on('click', () => {
       this.emit('magic');
     });
-    Log.log(this.element.data);
   }
 }
 export default HarryPotter;

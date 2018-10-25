@@ -25,7 +25,7 @@ describe('Components', () => {
     const element = document.createElement('span');
     element.dataset.component = 'component';
     Components.create(element);
-    expect(Components.Intances.size).toBe(1);
+    expect(Components.Instances.size).toBe(1);
   });
   test('Cannot create an instance of component which has not been registered', () => {
     expect(() => {
