@@ -8,7 +8,7 @@ const Log = new Logger('Components');
  */
 const Components = {
   List: new Map(),
-  Intances: new Map(),
+  Instances: new Map(),
   /**
    * Check if already exists a component within the list
    * @param {*} component
@@ -30,7 +30,7 @@ const Components = {
     }
   },
   /**
-   * Create an instance of the new component and add it to the Intances list
+   * Create an instance of the new component and add it to the Instances list
    * @param {Element} element
    * @param {*} component
    * @returns {*} instance
@@ -44,7 +44,7 @@ const Components = {
           const ClassName = Components.List.get(dataComponentValue);
           const instance = new ClassName(element);
           instance.Name = dataComponentValue;
-          Components.Intances.set(element, instance);
+          Components.Instances.set(element, instance);
           instance.emit(`${instance.Name}:created`);
           return instance;
         }

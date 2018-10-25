@@ -7,6 +7,7 @@ import Broadcast from './events/broadcats';
 import EventWrapper from './events/event-wrapper';
 import EventItem from './events/event-item';
 import EventMap from './events/event-map';
+import JSONData from './utils/json-data';
 
 export {
   Application,
@@ -18,4 +19,5 @@ export {
   EventWrapper,
   EventItem,
   EventMap,
+  JSONData,
 };

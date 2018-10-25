@@ -1,4 +1,5 @@
 import Logger from '@openmind/litelog';
+import JSONData from '../utils/json-data';
 
 const Log = new Logger('DomWrapper');
 /**
@@ -25,6 +26,17 @@ class DomWrapper {
    */
   set element(domElement) {
     this.domElement = domElement;
+  }
+
+  /**
+   * Get data-attributes object evaluated
+   * @returns {object}
+   * @readonly
+   * @memberof DomWrapper
+   */
+  get data() {
+    const jsonData = new JSONData(this.element);
+    return jsonData.data;
   }
 
   /**
