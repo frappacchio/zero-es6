@@ -8,6 +8,7 @@
       "!**/docs/**",
       "!**/dist/**",
       "!**/example/**",
+      "!**/dev/**",
       "!**/jest-coverage-report/**",
       "!webpack.*.js",
       "!src/index.js"

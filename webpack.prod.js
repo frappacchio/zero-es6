@@ -2,6 +2,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   mode: 'production',
+  watch: true,
   output: {
     libraryTarget: 'umd',
     library: 'zero',

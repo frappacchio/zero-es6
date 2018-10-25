@@ -27,4 +27,10 @@ describe('Components', () => {
     Components.create(element);
     expect(Components.Intances.size).toBe(1);
   });
+  test('Cannot create an instance of component which has not been registered', () => {
+    expect(() => {
+      const element = document.createElement('span');
+      Components.create(element);
+    }).toThrow(UserException);
+  });
 });

@@ -51,7 +51,7 @@ const Components = {
         throw new UserException(`You have to register class '${dataComponentValue}' before create a component`);
       });
     } else {
-      throw new UserException(`The element is not a valid component for '${dataComponentValue}' `);
+      throw new UserException('The element is not a valid component');
     }
   },
 };

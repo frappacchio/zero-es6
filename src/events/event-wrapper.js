@@ -97,8 +97,8 @@ class EventWrapper extends DomWrapper {
    */
   removeEventListener(event, callback = '') {
     let deletedEvent;
-    if (Object.prototype.hasOwnProperty.call(event, 'event')) {
-      deletedEvent = this.EventMap.strictDeleteEvent(event, callback);
+    if (Object.prototype.hasOwnProperty.call(event, 'event') && Object.prototype.hasOwnProperty.call(event, 'callback')) {
+      deletedEvent = this.EventMap.strictDeleteEvent(event);
     } else {
       deletedEvent = this.EventMap.deleteEvent(event, callback);
     }
