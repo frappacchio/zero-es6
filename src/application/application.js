@@ -46,7 +46,7 @@ class Application {
    * Get the application Broadcast
    * @return {Broadcast}
    * @readonly
-   * @memberOf Application
+   * @memberof Application
    */
   get Broadcast() {
     return this.broadcast;
@@ -55,7 +55,7 @@ class Application {
   /**
    * Set the main broadcast for application
    * @param {Broadcast} broadcast
-   * @memberOf Application
+   * @memberof Application
    */
   set Broadcast(broadcast) {
     this.broadcast = broadcast;
@@ -65,7 +65,7 @@ class Application {
    * Get the application component list
    * @return {Components}
    * @readonly
-   * @memberOf Application
+   * @memberof Application
    */
   get Components() {
     return this.components;
@@ -74,7 +74,7 @@ class Application {
   /**
    * Set the component list for application
    * @param {Components} components
-   * @memberOf Application
+   * @memberof Application
    */
   set Components(components) {
     this.components = components;
@@ -85,7 +85,7 @@ class Application {
    * Get the application DOM
    * @return {DomWrapper}
    * @readonly
-   * @memberOf Application
+   * @memberof Application
    */
   get DOM() {
     return this.dom;
@@ -94,7 +94,7 @@ class Application {
   /**
    * Set the main DOM for application
    * @param {DomWrapper} dom
-   * @memberOf Application
+   * @memberof Application
    */
   set DOM(dom) {
     this.dom = dom;
@@ -104,7 +104,7 @@ class Application {
    * Get the filter attribute
    * @return {string}
    * @readonly
-   * @memberOf Application
+   * @memberof Application
    */
   get FilterAttribute() {
     return this.filterAttribute;
@@ -113,7 +113,7 @@ class Application {
   /**
    * Set filter attribute
    * @param {string} dom
-   * @memberOf Application
+   * @memberof Application
    */
   set FilterAttribute(filterAttribute) {
     this.filterAttribute = filterAttribute;
@@ -122,7 +122,6 @@ class Application {
   /**
    * Initialize the application
    * @returns {Application}
-   * @memberof Application
    */
   start() {
     Log.log('app initialized');
@@ -155,6 +154,7 @@ class Application {
     this.Components = this.Config.components;
     this.FilterAttribute = this.Config.filterAttribute;
     this.DOM = this.Config.dom;
+    this.Components.Broadcast = this.Broadcast;
   }
 }
 export default Application;

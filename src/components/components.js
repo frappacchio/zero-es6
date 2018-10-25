@@ -1,5 +1,6 @@
 import Logger from '@openmind/litelog';
 import UserException from '../core/user-exception';
+import Broadcast from '../events/broadcats';
 
 const Log = new Logger('Components');
 /**
@@ -9,6 +10,12 @@ const Log = new Logger('Components');
 const Components = {
   List: new Map(),
   Instances: new Map(),
+  get Broadcast() {
+    return typeof this.broadcast === 'undefined' ? new Broadcast(document.createElement('span')) : this.broadcast;
+  },
+  set Broadcast(broadcast) {
+    this.broadcast = broadcast;
+  },
   /**
    * Check if already exists a component within the list
    * @param {*} component
@@ -41,14 +48,16 @@ const Components = {
       const componentClass = element.dataset.component.split(',');
       componentClass.forEach((dataComponentValue) => {
         if (Components.List.has(dataComponentValue)) {
-          const ClassName = Components.List.get(dataComponentValue);
-          const instance = new ClassName(element);
+          const className = Components.List.get(dataComponentValue);
+          const instance = new className(element);
+          instance.Broadcast = this.Broadcast;
           instance.Name = dataComponentValue;
+          instance.addListeners();
           Components.Instances.set(element, instance);
           instance.emit(`${instance.Name}:created`);
-          return instance;
+        } else {
+          throw new UserException(`You have to register class '${dataComponentValue}' before create a component`);
         }
-        throw new UserException(`You have to register class '${dataComponentValue}' before create a component`);
       });
     } else {
       throw new UserException('The element is not a valid component');

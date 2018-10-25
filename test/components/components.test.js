@@ -1,4 +1,3 @@
-import { spawn } from 'child_process';
 import Components from '../../src/components/components';
 import Component from '../../src/components/component';
 import UserException from '../../src/core/user-exception';

@@ -70,7 +70,6 @@ class Component extends EventWrapper {
    */
   set Messages(messages) {
     this.messages = messages;
-    this.addListeners();
   }
 
   /**
@@ -90,6 +89,7 @@ class Component extends EventWrapper {
    */
   set Broadcast(broadcast) {
     this.broadcast = broadcast;
+    Log.log('Broadcast added');
   }
 
   set innerHTML(string) {
@@ -118,7 +118,6 @@ class Component extends EventWrapper {
   listen(msg, callback = () => {}) {
     const emitter = this.Broadcast.listen(msg, callback);
     this.broadcastMap.Map.push(emitter);
-    // this.Broadcast.listen(msg, callback);
   }
 
   /**
@@ -186,12 +185,10 @@ class Component extends EventWrapper {
     });
   }
 
-  constructor(element, broadcast = new Broadcast()) {
+  constructor(element) {
     super(element);
-    this.Broadcast = broadcast;
     this.broadcastMap = new EventMap();
     this.Messages = Object.assign({}, this.Messages);
-    this.addListeners();
     this.UUID = uuid();
     if (element instanceof Element || element instanceof HTMLDocument) {
       this.element.dataset.uuid = this.UUID;
