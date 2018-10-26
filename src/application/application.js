@@ -125,7 +125,7 @@ class Application {
    */
   start() {
     Log.log('app initialized');
-    const components = this.DOM.find('[data-component]');
+    const components = this.DOM.find(this.Config.filterAttribute);
     components.forEach((element) => {
       this.Components.create(element);
     });

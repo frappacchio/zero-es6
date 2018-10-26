@@ -24,6 +24,7 @@
     "eslint-plugin-import": "^2.14.0",
     "jest": "^23.6.0",
     "jsdoc-to-markdown": "^4.0.1",
+    "jsdom": "^12.2.0",
     "regenerator-runtime": "^0.12.1",
     "uglifyjs-webpack-plugin": "^2.0.1",
     "webpack": "^4.20.2",
