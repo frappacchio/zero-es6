@@ -73,6 +73,11 @@ class Broadcast extends EventWrapper {
     Log.log(`unlisten => ${msg}`);
     this.removeEventListener(msg, callback);
   }
+
+  constructor(element) {
+    super(element);
+    Log.log('creo broadcast');
+  }
 }
 
 export default Broadcast;

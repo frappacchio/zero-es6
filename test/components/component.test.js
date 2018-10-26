@@ -4,10 +4,12 @@ import Broadcast from '../../src/events/broadcats';
 describe('Component', () => {
   test('create component without specify a DOM element', () => {
     const component = new Component();
+    component.Broadcast = new Broadcast(document.createElement('span'));
     expect(component.element.tagName).toBe('SPAN');
   });
   test('grab/cast an event', () => {
     const component = new Component();
+    component.Broadcast = new Broadcast(document.createElement('span'));
     const mockCallbackA = jest.fn(() => {});
     const mockCallbackB = jest.fn(() => {});
     component.listen('messaggio', mockCallbackB);
@@ -16,6 +18,7 @@ describe('Component', () => {
   });
   test('destroy component', () => {
     const component = new Component();
+    component.Broadcast = new Broadcast(document.createElement('span'));
     const mockCallbackA = jest.fn(() => {});
     const mockCallbackB = jest.fn(() => {});
     component.grab('messaggio', mockCallbackB);
@@ -25,8 +28,10 @@ describe('Component', () => {
   });
   test('it ungrabs only msg for given component', () => {
     const broadcats = new Broadcast();
-    const component = new Component(document.createElement('span'), broadcats);
-    const otherComponent = new Component(document.createElement('span'), broadcats);
+    const component = new Component(document.createElement('span'));
+    const otherComponent = new Component(document.createElement('span'));
+    component.Broadcast = broadcats;
+    otherComponent.Broadcast = broadcats;
     const mockCallbackA = jest.fn(() => {});
     const mockCallbackB = jest.fn(() => {});
     otherComponent.grab('messaggio', mockCallbackA);
@@ -52,10 +57,9 @@ describe('Component', () => {
   });
   test('If no callback has passed as argument it stops to listen for all given messages', () => {
     const component = new Component(document.createElement('span'));
-
+    component.Broadcast = new Broadcast(document.createElement('span'));
     const mockCallbackA = jest.fn(() => {});
     const mockCallbackB = jest.fn(() => {});
-
     component.grab('messaggio', mockCallbackA);
     component.cast('messaggio');
     component.cast('messaggio');
@@ -77,9 +81,8 @@ describe('Component', () => {
   });
   test('It add event to component and then stop to listen', () => {
     const component = new Component(document.createElement('span'));
-
+    component.Broadcast = new Broadcast(document.createElement('span'));
     const mockCallbackA = jest.fn(() => {});
-
     component.on('messaggio', mockCallbackA);
     component.trigger('messaggio');
     component.trigger('messaggio');

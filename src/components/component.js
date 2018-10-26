@@ -79,7 +79,7 @@ class Component extends EventWrapper {
    * @memberof Component
    */
   get Broadcast() {
-    return this.broadcast;
+    return typeof this.broadcast === 'undefined' ? new Broadcast(document.createElement('span')) : this.broadcast;
   }
 
   /**
