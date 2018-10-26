@@ -79,7 +79,7 @@ class Component extends EventWrapper {
    * @memberof Component
    */
   get Broadcast() {
-    return typeof this.broadcast === 'undefined' ? new Broadcast(document.createElement('span')) : this.broadcast;
+    return this.broadcast;
   }
 
   /**
@@ -123,11 +123,12 @@ class Component extends EventWrapper {
   /**
    * An alias for {@link #unlisten unlisten} method
    * @param {string} msg message to broadcast
+   * @param {string|function} [callback = ''] callback to stop exectue
    * @returns {void}
    * @deprecated use `unlisten`
    */
-  ungrab(msg) {
-    return this.unlisten(msg);
+  ungrab(msg, callback = '') {
+    return this.unlisten(msg, callback);
   }
 
   /**
@@ -137,8 +138,9 @@ class Component extends EventWrapper {
    * @returns {void}
    */
   unlisten(msg, callback = '') {
+    Log.log('name: ', callback.name);
     let deletedEvents;
-    if (callback === '') {
+    if (callback === '' || callback.name === 'undefined') {
       deletedEvents = this.broadcastMap.Map.filter(obj => obj.event === msg);
     } else {
       deletedEvents = this.broadcastMap.Map.filter(obj => obj.event === msg && obj.callback.name === callback.name);
