@@ -164,11 +164,19 @@ describe('Component', () => {
     component.addListeners();
     expect(component.Broadcast.EventMap.Map.length).toBe(1);
   });
-  test('if no Messages object has passed you couldn\'t listen for messages', () => {
+  test('on `innerHtml` method call it emit a `domChanged` event to Broadcast', () => {
     let counter = 0;
     const methodB = () => {
       counter += 1;
     };
+    component.Messages = {
+      domChanged: methodB,
+    };
+    component.addListeners();
+    component.innerHTML = '<p>test</p>';
+    expect(counter).toBe(1);
+  });
+  test('if no Messages object has passed you couldn\'t listen for messages', () => {
     component.Messages = {};
     component.addListeners();
     expect(component.Broadcast.EventMap.Map.length).toBe(0);

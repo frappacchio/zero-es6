@@ -1,9 +1,18 @@
 import Components from '../../src/components/components';
 import Component from '../../src/components/component';
 import UserException from '../../src/core/user-exception';
+import Broadcast from '../../src/events/broadcats';
 
 
 describe('Components', () => {
+  test('if no Broadcast element is passed it create a new one in runtime', () => {
+    expect(Components.Broadcast).not.toBeUndefined();
+  });
+  test('it accept a Broadcast object in order to pass it through components', () => {
+    Components.Broadcast = new Broadcast(document.createElement('span'));
+    expect(Components.Broadcast).not.toBeUndefined();
+  });
+
   test('Add a component to the list', () => {
     Components.register('component', Component);
     expect(Components.List.size).toBe(1);
