@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/frappacchio/zero-es6.svg?branch=master)](https://travis-ci.com/frappacchio/zero-es6)
 ## Classes
 
 <dl>
