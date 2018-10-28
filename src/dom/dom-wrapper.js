@@ -51,7 +51,6 @@ class DomWrapper {
 
   set innerHTML(string) {
     this.element.innerHTML = string;
-    Log.log(`append: ${string}`);
     return this.element;
   }
 
