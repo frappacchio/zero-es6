@@ -37,7 +37,7 @@
     "IE 11"
   ],
   "dependencies": {
-    "@openmind/litelog": "^3.0.6",
+    "@openmind/litelog": "3.0.4",
     "immutable": "^3.8.2",
     "lodash": "^4.17.11",
     "uuid": "^3.3.2"
